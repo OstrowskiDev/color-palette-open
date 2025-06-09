@@ -22,10 +22,7 @@ code {
 }
 
 .app-wrapper {
-  --background-color: #282c34;
-  --border-color: hsl(0, 0%, 31%);
   --border-transparent: hsla(0 0%. 31%, 0);
-  --font-color-mild: darkgrey;
 }
 
 .color-selector-collapse,
@@ -129,12 +126,12 @@ code {
 .color-selector-collapse::before,
 .palettes-collapse::before,
 .conversions-collapse::before {
-  color: var(--font-color-mild);
+  color: var(--color-app-font-light);
   padding: 0px 8px;
   position: absolute;
   top: -14px;
   left: 14px;
-  background-color: var(--background-color);
+  background-color: var(--color-app-bg-secondary);
 }
 
 .color-selector-collapse::before {
@@ -155,13 +152,13 @@ code {
   top: -14px;
   right: 20px;
   padding: 0px 8px;
-  color: var(--font-color-mild);
-  background-color: var(--background-color);
+  color: var(--color-app-font-light);
+  background-color: var(--color-app-bg-secondary);
 }
 
 .collapse-btn:hover {
   cursor: pointer;
-  color: white;
+  color: var(--color-app-font-strong);
 }
 
 .collapse-container {
@@ -188,7 +185,7 @@ code {
 
 .conv-container .copy-on-click {
   -webkit-user-select: none;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-gray-700);
   border-radius: 4px;
   min-width: 70px;
   margin: 6px;
@@ -198,19 +195,19 @@ code {
 
 .conv-container .copy-on-click:hover {
   cursor: pointer;
-  background-color: hsl(0, 0%, 35%);
+  background-color: var(--color-gray-700);
 }
 
 .conv-container .copy-on-click:active {
-  background-color: hsl(0, 0%, 25%);
+  background-color: var(--color-gray-800);
 }
 
 .copy-on-click .tooltip-text {
   visibility: hidden;
   position: absolute;
   bottom: 42px;
-  background-color: hsl(0, 0%, 25%);
-  border: 1px solid hsl(0, 0%, 30%);
+  background-color: var(--color-gray-800);
+  border: 1px solid var(--color-gray-700);
   border-radius: 4px;
   padding: 4px;
   transition: 1s 0.5s;
@@ -234,14 +231,14 @@ code {
 
 .conv-container p {
   font-size: 15px;
-  color: var(--font-color-mild);
+  color: var(--color-app-font-light);
 }
 
 .conv-container-label {
   margin: 0 auto;
   width: 80px;
   text-align: left;
-  color: var(--font-color-mild);
+  color: var(--color-app-font-light);
 }
 
 .main-color {
@@ -271,7 +268,7 @@ code {
   background-color: hsl(0, 0%, 22%);
   border: 1px solid hsl(0, 0%, 40%);
   border-radius: 4px;
-  color: var(--font-color-mild);
+  color: var(--color-app-font-light);
 }
 
 .btn:hover {

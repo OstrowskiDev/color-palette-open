@@ -29,7 +29,7 @@ export default function Home() {
 
   return (
     <div
-      className="app-wrapper flex flex-row items-center justify-center h-[94vh] min-w-[540px] max-w-[1740px] text-white text-center bg-[var(--background-color)] overflow-hidden"
+      className="app-wrapper flex flex-row items-center justify-center h-[94vh] min-w-[540px] max-w-[1740px] text-white text-center overflow-hidden bg-app-background-secondary"
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
     >

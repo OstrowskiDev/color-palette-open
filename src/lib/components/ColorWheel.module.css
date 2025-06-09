@@ -35,7 +35,7 @@
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  background-color: var(--background-color);
+  background-color: var(--color-app-bg-secondary);
   position: relative;
   top: 50px;
   left: 50px;
