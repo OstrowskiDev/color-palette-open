@@ -19,20 +19,6 @@ code {
   --border-transparent: hsla(0 0%. 31%, 0);
 }
 
-.settings-container {
-  display: flex;
-  align-items: start;
-  margin: 4px 8px;
-}
-
-.settings {
-  display: flex;
-  padding-top: 6px;
-  gap: 8px;
-  height: 30px;
-  margin-left: auto;
-}
-
 .dot {
   position: absolute;
   height: 16px;

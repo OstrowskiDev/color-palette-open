@@ -4,15 +4,15 @@ import { positionDotsOnCircle, HueOffset } from '../utils/position'
 import styles from './ColorWheel.module.css'
 
 interface ColorWheelProps {
-  color: ColorHSL
-  setColor: SetColor
+  baseHue: number
+  setBaseHue: SetColor
   hueOffset: HueOffset
   isMouseDown: boolean
 }
 
 export default function ColorWheel({
-  color,
-  setColor,
+  baseHue,
+  setBaseHue,
   hueOffset,
   isMouseDown,
 }: ColorWheelProps) {
@@ -34,7 +34,7 @@ export default function ColorWheel({
 
   function getHueFromWheel() {
     const newHue = calcHue(vecAB, vecAC, coords)
-    setColor([newHue, color[1], color[2]])
+    setBaseHue(newHue)
   }
 
   function getMouseCoords(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -56,10 +56,14 @@ export default function ColorWheel({
       onMouseUp={handleMouseEvents}
     >
       {[1, 2, 3].map((num) => (
-        <div key={num} className={`dot dot-${num}`}></div>
+        <div
+          key={num}
+          className={`dot dot-${num}`}
+          style={{ visibility: 'hidden' }}
+        ></div>
       ))}
       <div className={`color-wheel-center ${styles['color-wheel-center']}`}>
-        <p>color[0]: {color[0]}</p>
+        <p>color: {baseHue}</p>
         <p>calcHue: {calcHue(vecAB, vecAC, coords)}</p>
         <p>coords: {`${b.x}, ${b.y}`}</p>
       </div>

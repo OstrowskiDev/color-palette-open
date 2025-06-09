@@ -4,7 +4,7 @@ export type Coords = { x: number; y: number }
 
 export type ColorHSL = [number, number, number]
 
-export type SetColor = (color: ColorHSL) => void
+export type SetColor = (color: number) => void
 
 export type PresetSL = {
   name: string

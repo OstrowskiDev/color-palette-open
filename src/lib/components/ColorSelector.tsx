@@ -3,15 +3,15 @@ import { HueOffset } from '../utils/position'
 import ColorWheel from './ColorWheel'
 
 interface ColorSelectorProps {
-  color: ColorHSL
-  setColor: SetColor
+  baseHue: number
+  setBaseHue: SetColor
   hueOffset: HueOffset
   isMouseDown: boolean
 }
 
 export default function ColorSelector({
-  color,
-  setColor,
+  baseHue,
+  setBaseHue,
   hueOffset,
   isMouseDown,
 }: ColorSelectorProps) {
@@ -19,8 +19,8 @@ export default function ColorSelector({
     <div className="color-selector relative my-[6px] py-[18px] pr-[16px] pb-[14px] pl-[16px]">
       <div className="color-selector-container" id="color-selector-container">
         <ColorWheel
-          color={color}
-          setColor={setColor}
+          baseHue={baseHue}
+          setBaseHue={setBaseHue}
           hueOffset={hueOffset}
           isMouseDown={isMouseDown}
         />

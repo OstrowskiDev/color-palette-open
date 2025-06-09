@@ -1,6 +1,7 @@
 .element-wrapper {
   width: 500px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 2px solid hsl(0, 0%, 34%);
