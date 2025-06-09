@@ -9,7 +9,7 @@ export default function Home() {
   const [color, setColor] = useState<ColorHSL>([0, 50, 50])
   // const [contrast, setContrast] = useState(80)
   const [hueOffset, setHueOffset] = useState<HueOffset>({
-    name: 'monochromatic',
+    name: 'monochrome',
     angle: 0,
   })
   // const [showHidePalettes, setSHPalettes] = useState('block')

@@ -1,4 +1,4 @@
-import { Vec2 } from './hue'
+import { calcHue, Vec2, Coords } from './hue'
 
 export interface HueOffset {
   name: string
@@ -28,19 +28,19 @@ export function calcPositionOnCircle(angle: number): { x: number; y: number } {
 }
 
 export function positionDotsOnCircle(
-  hueFn: (vecAB: Vec2, vecAC: Vec2) => number,
   vecAB: Vec2,
   vecAC: Vec2,
   hueOffset: HueOffset,
+  coords: Coords,
 ): void {
-  const hue = hueFn(vecAB, vecAC) + 180
+  const newAngle = calcHue(vecAB, vecAC, coords) + 180
 
   hueOffsets.forEach((dot) => {
-    const { x, y } = calcPositionOnCircle(hue + dot.angle)
+    const { x, y } = calcPositionOnCircle(newAngle + dot.angle)
     const dotElement = document.querySelector<HTMLDivElement>(
       `.dot-${dot.name}`,
     )
-    if (dotElement) {
+    if (dotElement?.classList.contains('dot-monochrome')) {
       dotElement.style.left = `${x}px`
       dotElement.style.top = `${y}px`
       dotElement.style.visibility =

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { calcHue, ColorHSL, SetColor } from '../utils/hue'
 import { positionDotsOnCircle, hueOffsets, HueOffset } from '../utils/position'
+import styles from './ColorWheel.module.css'
 
 interface ColorWheelProps {
   color: ColorHSL
@@ -28,11 +29,11 @@ export default function ColorWheel({
   const vecAC: [number, number] = [a.x - c.x, a.y - c.y]
 
   useEffect(() => {
-    positionDotsOnCircle(calcHue, vecAB, vecAC, hueOffset) // i tutaj kolizja z zastoswoaniem w kodzie
+    positionDotsOnCircle(vecAB, vecAC, hueOffset, coords)
   }, [coords, hueOffset])
 
   function getHueFromWheel() {
-    const newHue = calcHue(vecAB, vecAC)
+    const newHue = calcHue(vecAB, vecAC, coords)
     setColor([newHue, color[1], color[2]])
   }
 
@@ -44,23 +45,22 @@ export default function ColorWheel({
   function handleMouseEvents(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     getHueFromWheel()
     getMouseCoords(e)
-    positionDotsOnCircle(calcHue, vecAB, vecAC, hueOffset)
+    positionDotsOnCircle(vecAB, vecAC, hueOffset, coords)
   }
 
   return (
     <div
-      className="color-wheel"
+      className={`color-wheel ${styles['color-wheel']}`}
       onMouseMove={(e) => isMouseDown && handleMouseEvents(e)}
       onMouseDown={handleMouseEvents}
       onMouseUp={handleMouseEvents}
     >
-      {hueOffsets.map((dot) => (
-        <div key={dot.name} className={`dot dot-${dot.name}`}></div>
+      {hueOffsets.map((dotType) => (
+        <div key={dotType.name} className={`dot dot-${dotType.name}`}></div>
       ))}
-      <div className="dot-constructor"></div>
-      <div className="color-wheel-center">
+      <div className={`color-wheel-center ${styles['color-wheel-center']}`}>
         <p>color[0]: {color[0]}</p>
-        <p>calcHue: {calcHue(vecAB, vecAC)}</p>
+        <p>calcHue: {calcHue(vecAB, vecAC, coords)}</p>
         <p>coords: {`${b.x}, ${b.y}`}</p>
       </div>
     </div>

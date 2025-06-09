@@ -29,7 +29,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div
+          id="root"
+          className="root flex justify-center items-center h-[100vh] bg-appbackground"
+        >
+          {children}
+        </div>
       </body>
     </html>
   )
