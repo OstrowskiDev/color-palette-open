@@ -1,16 +1,22 @@
 'use client'
 
 import ColorSelector from '@/lib/components/ColorSelector'
-import { ColorHSL } from '@/lib/utils/hue'
+import { ColorHSL, PresetSL } from '@/lib/utils/hue'
 import { HueOffset } from '@/lib/utils/position'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
+  //!!!! baseHSL, setBaseHSL instead of color:
   const [color, setColor] = useState<ColorHSL>([0, 50, 50])
   // const [contrast, setContrast] = useState(80)
   const [hueOffset, setHueOffset] = useState<HueOffset>({
     name: 'monochrome',
     angle: 0,
+  })
+  const [presetSL, setPresetSL] = useState<PresetSL>({
+    name: 'soft',
+    sat: 80,
+    lightRange: [20, 95],
   })
   // const [showHidePalettes, setSHPalettes] = useState('block')
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)

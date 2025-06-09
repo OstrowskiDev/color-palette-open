@@ -6,6 +6,12 @@ export type ColorHSL = [number, number, number]
 
 export type SetColor = (color: ColorHSL) => void
 
+export type PresetSL = {
+  name: string
+  sat: number
+  lightRange: [number, number]
+}
+
 export function multiplyVectors(vecAB: Vec2, vecAC: Vec2): number {
   return vecAB[0] * vecAC[0] + vecAB[1] * vecAC[1]
 }
