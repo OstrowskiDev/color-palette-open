@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { calcHue, ColorHSL, SetColor } from '../utils/hue'
-import { positionDotsOnCircle, hueOffsets, HueOffset } from '../utils/position'
+import { positionDotsOnCircle, HueOffset } from '../utils/position'
 import styles from './ColorWheel.module.css'
 
 interface ColorWheelProps {
@@ -55,8 +55,8 @@ export default function ColorWheel({
       onMouseDown={handleMouseEvents}
       onMouseUp={handleMouseEvents}
     >
-      {hueOffsets.map((dotType) => (
-        <div key={dotType.name} className={`dot dot-${dotType.name}`}></div>
+      {[1, 2, 3].map((num) => (
+        <div key={num} className={`dot dot-${num}`}></div>
       ))}
       <div className={`color-wheel-center ${styles['color-wheel-center']}`}>
         <p>color[0]: {color[0]}</p>

@@ -1,6 +1,7 @@
 'use client'
 
 import ColorSelector from '@/lib/components/ColorSelector'
+import ElementWrapper from '@/lib/components/ElementWrapper'
 import { ColorHSL, PresetSL } from '@/lib/utils/hue'
 import { HueOffset } from '@/lib/utils/position'
 import { useEffect, useState } from 'react'
@@ -11,7 +12,7 @@ export default function Home() {
   // const [contrast, setContrast] = useState(80)
   const [hueOffset, setHueOffset] = useState<HueOffset>({
     name: 'monochrome',
-    angle: 0,
+    angle: [0],
   })
   const [presetSL, setPresetSL] = useState<PresetSL>({
     name: 'soft',
@@ -40,12 +41,14 @@ export default function Home() {
       onMouseUp={handleMouseUp}
     >
       <div className="main-app-container select-none flex flex-col items-center w-[1080px] h-[90vh] flex-wrap overflow-hidden">
-        <ColorSelector
-          color={color}
-          setColor={setColor}
-          hueOffset={hueOffset}
-          isMouseDown={isMouseDown}
-        />
+        <ElementWrapper label={'color settings'} tailwind={'h-[360px]'}>
+          <ColorSelector
+            color={color}
+            setColor={setColor}
+            hueOffset={hueOffset}
+            isMouseDown={isMouseDown}
+          />
+        </ElementWrapper>
       </div>
     </div>
   )

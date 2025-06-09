@@ -15,20 +15,8 @@ code {
     source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.main-app-container *,
-.settings-container * {
-  padding: 0px;
-  margin: 0px;
-}
-
 .app-wrapper {
   --border-transparent: hsla(0 0%. 31%, 0);
-}
-
-.color-selector-collapse,
-.palettes-collapse,
-.conversions-collapse {
-  width: 500px;
 }
 
 .settings-container {
@@ -56,22 +44,10 @@ code {
   visibility: hidden;
 }
 
-.dot-monochrome {
+.dot-1 {
   background-color: hsla(0, 0%, 80%, 0.7);
   border: 1px solid white;
   visibility: visible;
-}
-
-.color-selector-collapse,
-.palettes-collapse,
-.conversions-collapse {
-  border: 2px solid hsl(0, 0%, 34%);
-  box-shadow: 2px 2px 2px 1px hsl(0, 0%, 14%);
-  margin: 8px 0px 12px 0px;
-  padding: 4px 0px;
-  position: relative;
-  opacity: 1;
-  transition-duration: 1s;
 }
 
 /********************** layout transitions ***********************/
@@ -96,16 +72,7 @@ code {
   transition-duration: 0.6s;
 }
 
-.ex-body-container {
-  position: relative;
-  top: 0vh;
-  transition-property: top;
-  transition-duration: 0.8s;
-}
-
-.color-selector-collapse {
-  height: 440px;
-}
+/************************************************************/
 
 .collapse-container {
   height: auto;
@@ -114,56 +81,15 @@ code {
   overflow: hidden;
 }
 
-.color-selector-collapse .collapse-container {
-  height: 440px;
-}
-
 .collapse-container:active {
   transition-duration: 0.9s;
-}
-/************************************************************/
-
-.color-selector-collapse::before,
-.palettes-collapse::before,
-.conversions-collapse::before {
-  color: var(--color-app-font-light);
-  padding: 0px 8px;
-  position: absolute;
-  top: -14px;
-  left: 14px;
-  background-color: var(--color-app-bg-secondary);
-}
-
-.color-selector-collapse::before {
-  content: 'color settings';
-}
-
-.palettes-collapse::before {
-  content: 'palette settings';
-}
-
-.conversions-collapse::before {
-  content: 'color conversions';
-}
-
-.collapse-btn {
-  position: absolute;
-  z-index: 5;
-  top: -14px;
-  right: 20px;
-  padding: 0px 8px;
-  color: var(--color-app-font-light);
-  background-color: var(--color-app-bg-secondary);
-}
-
-.collapse-btn:hover {
-  cursor: pointer;
-  color: var(--color-app-font-strong);
 }
 
 .collapse-container {
   position: relative;
 }
+
+/************************************************************/
 
 .palette {
   margin: 8px 0px;
