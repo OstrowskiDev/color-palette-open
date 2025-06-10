@@ -26,7 +26,7 @@ export function SelectField({
     <Label tailwind="flex flex-row ml-6 ">
       {label && <span className="label mr-2">{label}: </span>}
       <select
-        className="px-2 py-[2px] border border-app-gray-600 rounded-md"
+        className="select-field px-2 py-[2px] border border-app-gray-600 rounded-md hover:cursor-pointer"
         value={JSON.stringify(value)}
         onChange={onChange}
       >

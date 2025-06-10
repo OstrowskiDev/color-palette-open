@@ -9,7 +9,7 @@ export type SetColor = (color: number) => void
 export type PresetSL = {
   name: string
   sat: number
-  lightRange: [number, number]
+  lightRange: number[]
 }
 
 export function multiplyVectors(vecAB: Vec2, vecAC: Vec2): number {

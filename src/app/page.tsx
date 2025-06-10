@@ -1,5 +1,6 @@
 'use client'
 
+import ColorPalettes from '@/lib/components/ColorPalettes'
 import ColorSelector from '@/lib/components/ColorSelector'
 import ColorSettings from '@/lib/components/ColorSettings'
 import ElementWrapper from '@/lib/components/ElementWrapper'
@@ -14,10 +15,11 @@ export default function Home() {
     angle: [0],
   })
   const [presetSL, setPresetSL] = useState<PresetSL>({
-    name: 'soft',
-    sat: 80,
-    lightRange: [20, 95],
+    name: 'contrasts',
+    sat: 100,
+    lightRange: [97, 94, 88, 78, 65, 55, 45, 35, 25, 18, 10],
   })
+
   // const [showHidePalettes, setSHPalettes] = useState('block')
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
 
@@ -52,6 +54,13 @@ export default function Home() {
             setBaseHue={setBaseHue}
             hueOffset={hueOffset}
             isMouseDown={isMouseDown}
+          />
+        </ElementWrapper>
+        <ElementWrapper label={'palettes'} tailwind={'h-[180px]'}>
+          <ColorPalettes
+            baseHue={baseHue}
+            hueOffset={hueOffset}
+            presetSL={presetSL}
           />
         </ElementWrapper>
       </div>
