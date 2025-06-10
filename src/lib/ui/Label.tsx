@@ -2,12 +2,20 @@ import React from 'react'
 
 interface LabelProps {
   children: React.ReactNode
-  tailwind?: string
+  label?: string
+  className?: string
 }
 
-export function Label({ children, tailwind = '' }: LabelProps) {
+export function Label({ children, className = '', label }: LabelProps) {
   return (
-    <label className={`label text-app-font-strong ${tailwind}`}>
+    <label className={`label-container flex flex-row w-full`}>
+      {label && (
+        <span
+          className={`label text-app-font-light w-14 mr-2 text-app-font-light ${className}`}
+        >
+          {`${label}:`}
+        </span>
+      )}
       {children}
     </label>
   )

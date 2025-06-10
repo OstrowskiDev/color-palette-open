@@ -20,6 +20,7 @@ export default function Home() {
     sat: 100,
     lightRange: [97, 94, 88, 78, 65, 55, 45, 35, 25, 18, 10],
   })
+  const [paletteName, setPaletteName] = useState<string>('new palette')
 
   // const [showHidePalettes, setSHPalettes] = useState('block')
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
@@ -50,6 +51,8 @@ export default function Home() {
             setHueOffset={setHueOffset}
             presetSL={presetSL}
             setPresetSL={setPresetSL}
+            paletteName={paletteName}
+            setPaletteName={setPaletteName}
           />
           <ColorSelector
             baseHue={baseHue}
