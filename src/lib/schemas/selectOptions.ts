@@ -3,7 +3,7 @@ export const hueOffsetOptions = [
   { value: { name: 'complementary', angle: [0, 180] }, label: 'complementary' },
   {
     value: { name: 'split-complementary', angle: [0, 150, -150] },
-    label: 'split complementary',
+    label: 'split comp.',
   },
   { value: { name: 'triadic', angle: [0, 120, -120] }, label: 'triadic' },
   { value: { name: 'analogous', angle: [0, 30, -30] }, label: 'analogous' },

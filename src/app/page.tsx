@@ -4,6 +4,7 @@ import ColorPalettes from '@/lib/components/ColorPalettes'
 import ColorSelector from '@/lib/components/ColorSelector'
 import ColorSettings from '@/lib/components/ColorSettings'
 import ElementWrapper from '@/lib/components/ElementWrapper'
+import TopBar from '@/lib/components/TopBar'
 import { PresetSL } from '@/lib/utils/hue'
 import { HueOffset } from '@/lib/utils/position'
 import { useEffect, useState } from 'react'
@@ -41,7 +42,8 @@ export default function Home() {
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
     >
-      <div className="main-app-container select-none flex flex-col items-center w-[1080px] h-[90vh] flex-wrap overflow-hidden">
+      <div className="main-app-container select-none flex flex-col items-center max-w-[1080px] h-[90vh] flex-wrap overflow-hidden">
+        <TopBar />
         <ElementWrapper label={'color settings'} tailwind={'h-[480px]'}>
           <ColorSettings
             hueOffset={hueOffset}
