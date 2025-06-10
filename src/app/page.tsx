@@ -4,6 +4,7 @@ import ColorPalettes from '@/lib/components/ColorPalettes'
 import ColorSelector from '@/lib/components/ColorSelector'
 import ColorSettings from '@/lib/components/ColorSettings'
 import ElementWrapper from '@/lib/components/ElementWrapper'
+import { ListenToResize } from '@/lib/components/ListenToResize'
 import TopBar from '@/lib/components/TopBar'
 import { PresetSL } from '@/lib/utils/hue'
 import { HueOffset } from '@/lib/utils/position'
@@ -39,12 +40,13 @@ export default function Home() {
 
   return (
     <div
-      className="app-wrapper flex flex-row items-center justify-center h-[94vh] min-w-[540px] max-w-[1740px] text-white text-center overflow-hidden bg-app-background-secondary"
+      className="app-wrapper h-[95vh] w-[540px] mx-auto flex flex-col justify-center text-white text-center overflow-hidden bg-app-background-secondary"
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
     >
-      <div className="main-app-container select-none flex flex-col items-center max-w-[1080px] h-[90vh] flex-wrap overflow-hidden">
-        <TopBar />
+      <ListenToResize trigger={1} />
+      <TopBar />
+      <div className="main-app-container select-none flex flex-col flex-wrap h-[90vh] px-5 gap-5">
         <ElementWrapper label={'color settings'} tailwind={'h-[480px]'}>
           <ColorSettings
             hueOffset={hueOffset}
@@ -61,12 +63,17 @@ export default function Home() {
             isMouseDown={isMouseDown}
           />
         </ElementWrapper>
-        <ElementWrapper label={'palettes'} tailwind={'h-[180px]'}>
+        <ElementWrapper label={'tailwind palettes'} tailwind={'h-[180px]'}>
           <ColorPalettes
             baseHue={baseHue}
             hueOffset={hueOffset}
             presetSL={presetSL}
           />
+        </ElementWrapper>
+        <ElementWrapper label={'output'} tailwind={'h-[180px]'}>
+          <div className="output-container h-12 w-full">
+            <p>output code will be rendered here</p>
+          </div>
         </ElementWrapper>
       </div>
     </div>

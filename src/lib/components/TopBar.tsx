@@ -2,7 +2,7 @@ import Button from '../ui/Button'
 
 export default function TopBar() {
   return (
-    <div className="app-top-bar w-full flex flex-row mt-1 mb-[2px]">
+    <div className="app-top-bar flex flex-row h-[5vh] mx-5 mt-2 mb-[2px]">
       <div className="app-logo w-56 relative bottom-2 flex flex-row">
         <span className="mr-1">dev</span>
         <p className="font-semibold">PALETTE TOOLS</p>

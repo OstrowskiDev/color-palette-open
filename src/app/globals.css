@@ -50,8 +50,7 @@ code {
   transition-duration: 0.8s;
 }
 
-.settings,
-.app-logo {
+.app-top-bar {
   position: relative;
   right: 0vw;
   transition-property: right;
@@ -73,113 +72,4 @@ code {
 
 .collapse-container {
   position: relative;
-}
-
-/************************************************************/
-
-.conv-container .copy-on-click {
-  -webkit-user-select: none;
-  border: 1px solid var(--color-gray-700);
-  border-radius: 4px;
-  min-width: 70px;
-  margin: 6px;
-  padding: 4px;
-  overflow: hidden;
-}
-
-.conv-container .copy-on-click:hover {
-  cursor: pointer;
-  background-color: var(--color-gray-700);
-}
-
-.conv-container .copy-on-click:active {
-  background-color: var(--color-gray-800);
-}
-
-.copy-on-click .tooltip-text {
-  visibility: hidden;
-  position: absolute;
-  bottom: 42px;
-  background-color: var(--color-gray-800);
-  border: 1px solid var(--color-gray-700);
-  border-radius: 4px;
-  padding: 4px;
-  transition: 1s 0.5s;
-  opacity: 0;
-  z-index: 10;
-}
-
-.copy-on-click:active .tooltip-text {
-  visibility: visible;
-  transition: 0s 0s;
-  opacity: 1;
-}
-
-.conv-container .hsl {
-  width: 160px;
-}
-
-.conv-container .rgb {
-  width: 144px;
-}
-
-.conv-container p {
-  font-size: 15px;
-  color: var(--color-app-font-light);
-}
-
-.conv-container-label {
-  margin: 0 auto;
-  width: 80px;
-  text-align: left;
-  color: var(--color-app-font-light);
-}
-
-.main-color {
-  margin: 12px 0px 12px 0px;
-  padding: 6px;
-  display: flex;
-  align-items: flex-end;
-  gap: 6px;
-}
-
-.disp-color,
-.main-color {
-  box-sizing: border-box;
-  width: 100%;
-  height: 120px;
-}
-
-.btn {
-  height: 20px;
-  margin: 6px 2px;
-  padding: 0px 6px;
-  background-color: hsl(0, 0%, 22%);
-  border: 1px solid hsl(0, 0%, 40%);
-  border-radius: 4px;
-  color: var(--color-app-font-light);
-}
-
-.btn:hover {
-  background-color: hsl(0, 0%, 30%);
-  border: 1px solid hsl(0, 0%, 50%);
-  box-shadow: 1px 1px 1px rgb(12, 12, 12);
-}
-
-.btn:active {
-  background-color: hsl(0, 0%, 15%);
-  border: 1px solid hsl(0, 0%, 25%);
-  box-shadow: none;
-}
-
-.btn-show-pal {
-  width: 100px;
-}
-
-.btn-show-colorwheel {
-  width: 120px;
-}
-
-.btn-hide-example {
-  width: 136px;
 }

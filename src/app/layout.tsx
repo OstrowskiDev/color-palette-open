@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <div
           id="root"
-          className="root flex justify-center items-center h-[100vh] bg-app-background-main"
+          className="root h-[100vh] w-full p-6 bg-app-background-main"
         >
           {children}
         </div>
