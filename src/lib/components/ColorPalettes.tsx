@@ -32,11 +32,30 @@ export default function ColorPalettes({
     return initialHue
   }
 
-  function calcLightness(lightRange: [number, number], i: number): number {
-    const [start, end] = lightRange
-    const steps = 10 // dla TW 11x HSL, więc 10 steps
-    const value = start + (end - start) * (i / steps)
-    return Math.round(value)
+  // poniżej korekta jasności dla ciemnoniebieksich barw, oraz jasnych żółci
+  // wykorzystuje gaussian do płynnych przejść
+  // !!!! może warto byłoby dodać opcję do włączania/wyłączanie tej korekty w UI
+  function correctHueLuminanceBias(hue: number): number {
+    function gaussian(
+      x: number,
+      mean: number,
+      sigma: number,
+      amplitude: number,
+    ): number {
+      return amplitude * Math.exp(-0.5 * Math.pow((x - mean) / sigma, 2))
+    }
+
+    // żółty: osłabia jasność w okolicy 8° od 55°
+    const yellowBias = gaussian(hue, 55, 8, -2)
+    // niebieski: rozjaśnia w okolicy 12° od 240°
+    const blueBias = gaussian(hue, 240, 12, 16)
+
+    return yellowBias + blueBias
+  }
+
+  function getCorrectedLightRange(hue: number, baseRange: number[]) {
+    const correction = correctHueLuminanceBias(hue)
+    return baseRange.map((l) => Math.min(100, Math.max(0, l + correction)))
   }
 
   function generatePalettes() {
@@ -44,7 +63,9 @@ export default function ColorPalettes({
     for (let i = 0; i < paletteNum; i++) {
       let colorPalette = []
       for (let j = 0; j < 11; j++) {
-        const lightnes = lightRange[j]
+        const correctedLightness = getCorrectedLightRange(hues[i]!, lightRange)
+        const lightnes = correctedLightness[j]
+        // const lightnes = lightRange[j]
         colorPalette.push([hues[i], sat, lightnes])
       }
       palettes.push(colorPalette)

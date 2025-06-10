@@ -1,13 +1,13 @@
 export const hueOffsetOptions = [
-  { value: { name: 'monochrome', angle: [0] }, label: 'Monochrome' },
-  { value: { name: 'complementary', angle: [0, 180] }, label: 'Complementary' },
+  { value: { name: 'monochrome', angle: [0] }, label: 'monochrome' },
+  { value: { name: 'complementary', angle: [0, 180] }, label: 'complementary' },
   {
     value: { name: 'split-complementary', angle: [0, 150, -150] },
-    label: 'Split Complementary',
+    label: 'split complementary',
   },
-  { value: { name: 'triadic', angle: [0, 120, -120] }, label: 'Triadic' },
-  { value: { name: 'analogous', angle: [0, 30, -30] }, label: 'Analogous' },
-  { value: { name: 'custom', angle: [0, 0, 0] }, label: 'Custom' },
+  { value: { name: 'triadic', angle: [0, 120, -120] }, label: 'triadic' },
+  { value: { name: 'analogous', angle: [0, 30, -30] }, label: 'analogous' },
+  { value: { name: 'custom', angle: [0, 0, 0] }, label: 'custom' },
 ]
 
 export const presetSLOptions = [
@@ -31,7 +31,7 @@ export const presetSLOptions = [
     value: {
       name: 'dark',
       sat: 80,
-      lightRange: [24, 21, 18, 15, 12, 10, 8, 6, 4, 2, 1], // ciemna baza
+      lightRange: [24, 21, 18, 15, 12, 10, 8, 6, 4, 2, 1],
     },
     label: 'dark',
   },
