@@ -73,3 +73,15 @@ code {
 .collapse-container {
   position: relative;
 }
+
+/* usuwanie strzałek z pól input typu number */
+/* Chrome, Safari, Edge */
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}

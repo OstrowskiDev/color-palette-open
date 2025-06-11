@@ -5,7 +5,9 @@ import { HueOffset } from '../utils/position'
 import InputField from './InputField'
 
 interface ColorSettingsProps {
-  hueOffset: any
+  baseHue: number
+  setBaseHue: (value: number) => void
+  hueOffset: HueOffset
   setHueOffset: (value: HueOffset) => void
   presetSL: any
   setPresetSL: (value: PresetSL) => void
@@ -14,6 +16,8 @@ interface ColorSettingsProps {
 }
 
 export default function ColorSettings({
+  baseHue,
+  setBaseHue,
   hueOffset,
   setHueOffset,
   presetSL,
@@ -39,11 +43,22 @@ export default function ColorSettings({
           label="shades"
         />
       </div>
-      <div className="shades-container flex flex-row">
+      <div className="palette-name-container flex flex-row">
         <InputField
           value={paletteName}
           setValue={setPaletteName}
           label="name"
+          type="text"
+        />
+      </div>
+      <div className="base-hue-container flex flex-row">
+        <InputField
+          value={baseHue}
+          setValue={(v) => setBaseHue(v === '' ? 0 : Number(v))}
+          label="hue"
+          type="number"
+          min={0}
+          max={360}
         />
       </div>
     </div>

@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react'
-import { calcHue, ColorHSL, SetColor } from '../utils/hue'
-import { positionDotsOnCircle, HueOffset } from '../utils/position'
+import { calcHue, SetColor } from '../utils/hue'
+import {
+  positionDotsFromCoords,
+  HueOffset,
+  positionDotsFromHue,
+} from '../utils/position'
 import styles from './ColorWheel.module.css'
 
 interface ColorWheelProps {
@@ -29,7 +33,11 @@ export default function ColorWheel({
   const vecAC: [number, number] = [a.x - c.x, a.y - c.y]
 
   useEffect(() => {
-    positionDotsOnCircle(vecAB, vecAC, hueOffset, coords)
+    positionDotsFromHue(baseHue, hueOffset)
+  }, [baseHue])
+
+  useEffect(() => {
+    positionDotsFromCoords(vecAB, vecAC, hueOffset, coords)
   }, [coords, hueOffset])
 
   function getHueFromWheel() {
@@ -45,7 +53,7 @@ export default function ColorWheel({
   function handleMouseEvents(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     getHueFromWheel()
     getMouseCoords(e)
-    positionDotsOnCircle(vecAB, vecAC, hueOffset, coords)
+    positionDotsFromCoords(vecAB, vecAC, hueOffset, coords)
   }
 
   return (

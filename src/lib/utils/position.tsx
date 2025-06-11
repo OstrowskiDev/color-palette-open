@@ -15,13 +15,7 @@ export function calcPositionOnCircle(angle: number): { x: number; y: number } {
   }
 }
 
-export function positionDotsOnCircle(
-  vecAB: Vec2,
-  vecAC: Vec2,
-  hueOffset: HueOffset,
-  coords: Coords,
-): void {
-  const newAngle = calcHue(vecAB, vecAC, coords) + 180
+function positionDotsOnCircle(hueOffset: HueOffset, newAngle: number) {
   const dotsNum = hueOffset.angle.length
   const dots = [1, 2, 3].map((num) => {
     return document.querySelector<HTMLDivElement>(`.dot-${num}`)
@@ -37,4 +31,19 @@ export function positionDotsOnCircle(
       dot.style.visibility = 'hidden'
     }
   })
+}
+
+export function positionDotsFromCoords(
+  vecAB: Vec2,
+  vecAC: Vec2,
+  hueOffset: HueOffset,
+  coords: Coords,
+): void {
+  const newAngle = calcHue(vecAB, vecAC, coords) + 180
+  positionDotsOnCircle(hueOffset, newAngle)
+}
+
+export function positionDotsFromHue(baseHue: number, hueOffset: HueOffset) {
+  const newAngle = baseHue + 180
+  positionDotsOnCircle(hueOffset, newAngle)
 }

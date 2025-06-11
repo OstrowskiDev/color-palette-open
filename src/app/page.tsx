@@ -4,11 +4,11 @@ import ColorPalettes from '@/lib/components/ColorPalettes'
 import ColorSelector from '@/lib/components/ColorSelector'
 import ColorSettings from '@/lib/components/ColorSettings'
 import ElementWrapper from '@/lib/components/ElementWrapper'
-import { ListenToResize } from '@/lib/components/ListenToResize'
+import ListenToResize from '@/lib/components/ListenToResize'
 import TopBar from '@/lib/components/TopBar'
 import { PresetSL } from '@/lib/utils/hue'
 import { HueOffset } from '@/lib/utils/position'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export default function Home() {
   const [baseHue, setBaseHue] = useState<number>(0)
@@ -22,14 +22,8 @@ export default function Home() {
     lightRange: [97, 94, 88, 78, 65, 55, 45, 35, 25, 18, 10],
   })
   const [paletteName, setPaletteName] = useState<string>('new palette')
-
-  // const [showHidePalettes, setSHPalettes] = useState('block')
+  const [trigger, setTrigger] = useState<number>(0)
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
-
-  // useEffect(() => {
-  //   autoCollapse('color-selector-collapse', hueOffset)
-  //   changeLayoutOnResize(hueOffset)
-  // }, [])
 
   function handleMouseDown() {
     setIsMouseDown(true)
@@ -44,11 +38,13 @@ export default function Home() {
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
     >
-      <ListenToResize trigger={1} />
+      <ListenToResize trigger={trigger} />
       <TopBar />
-      <div className="main-app-container select-none flex flex-col flex-wrap h-[90vh] px-5 gap-5">
+      <div className="main-app-container select-none flex flex-col flex-wrap h-[90vh] px-5 gap-x-5">
         <ElementWrapper label={'color settings'} tailwind={'h-[480px]'}>
           <ColorSettings
+            baseHue={baseHue}
+            setBaseHue={setBaseHue}
             hueOffset={hueOffset}
             setHueOffset={setHueOffset}
             presetSL={presetSL}

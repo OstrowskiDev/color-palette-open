@@ -11,7 +11,7 @@ interface ListenToResizeProps {
   trigger: number
 }
 
-export function ListenToResize({ trigger }: ListenToResizeProps) {
+export default function ListenToResize({ trigger }: ListenToResizeProps) {
   // zabezpieczenie dla SSR
   const [viewportDimensions, setViewportDimensions] =
     useState<ViewportDimensions>({
