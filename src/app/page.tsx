@@ -72,12 +72,13 @@ export default function Home() {
             presetSL={presetSL}
           />
         </ElementWrapper>
-        <ElementWrapper label={'output'} tailwind={'h-[360px]'}>
+        <ElementWrapper label={'output'} tailwind={'h-[480px]'}>
           <OutputPreview
             baseHue={baseHue}
             hueOffset={hueOffset}
             presetSL={presetSL}
             colorSetNames={colorSetNames}
+            setColorSetNames={setColorSetNames}
           />
         </ElementWrapper>
       </div>

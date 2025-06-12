@@ -4,14 +4,21 @@ interface LabelProps {
   children: React.ReactNode
   label?: string
   className?: string
+  labelWidth?: string
 }
 
-export function Label({ children, className = '', label }: LabelProps) {
+export function Label({
+  children,
+  className = '',
+  label,
+  labelWidth = '56px',
+}: LabelProps) {
   return (
     <label className={`label-container flex flex-row w-full`}>
       {label && (
         <span
-          className={`label text-app-font-light w-14 mr-2 text-app-font-light ${className}`}
+          className={`label text-app-font-light mr-2 ${className}`}
+          style={{ width: labelWidth }}
         >
           {`${label}:`}
         </span>
