@@ -5,6 +5,7 @@ import ColorSelector from '@/lib/components/ColorSelector'
 import ColorSettings from '@/lib/components/ColorSettings'
 import ElementWrapper from '@/lib/components/ElementWrapper'
 import ListenToResize from '@/lib/components/ListenToResize'
+import OutputPreview from '@/lib/components/OutputPreview'
 import TopBar from '@/lib/components/TopBar'
 import { ColorSetNames, PresetSL } from '@/lib/utils/hue'
 import { HueOffset } from '@/lib/utils/position'
@@ -71,10 +72,13 @@ export default function Home() {
             presetSL={presetSL}
           />
         </ElementWrapper>
-        <ElementWrapper label={'output'} tailwind={'h-[180px]'}>
-          <div className="output-container h-12 w-full">
-            <p>output code will be rendered here</p>
-          </div>
+        <ElementWrapper label={'output'} tailwind={'h-[360px]'}>
+          <OutputPreview
+            baseHue={baseHue}
+            hueOffset={hueOffset}
+            presetSL={presetSL}
+            colorSetNames={colorSetNames}
+          />
         </ElementWrapper>
       </div>
     </div>
