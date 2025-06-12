@@ -25,7 +25,7 @@ export default function OutputPreview({
     colorSetNames,
   )
   return (
-    <div className="output-container h-full w-full overflow-auto">
+    <div className="output-container h-full w-full">
       <div className="output-settings-container grid grid-cols-2 grid-rows-2 gap-y-2 gap-x-4 w-full px-6 mt-4">
         <div className="primary-color-input-container flex flex-row">
           <InputField
@@ -65,14 +65,16 @@ export default function OutputPreview({
         </div>
       </div>
 
-      <h3 className="output-label ml-4 mt-4 mb-1 text-left text-app-font-light">
-        code preview:
-      </h3>
-      <pre className="code-preview p-4 mx-4 mb-4 text-left text-app-font-strong bg-app-gray-900">
-        {/* druga wartość to replacer, tutaj nie będzie używana */}
-        {/* trzecia wartość to liczba spacji renderowanych w wcięciach */}
-        <code>{JSON.stringify(twColorsObj, null, 3)}</code>
-      </pre>
+      <div className="code-output-container h-[380px]">
+        <h3 className="output-label ml-4 mt-4 mb-1 text-left text-app-font-light">
+          code preview:
+        </h3>
+        <pre className="code-preview px-4 py-2 mx-4 mb-4 text-left text-app-font-strong bg-app-gray-900 overflow-auto h-[340px]">
+          {/* druga wartość to replacer, tutaj nie będzie używana */}
+          {/* trzecia wartość to liczba spacji renderowanych w wcięciach */}
+          <code>{JSON.stringify(twColorsObj, null, 3)}</code>
+        </pre>
+      </div>
     </div>
   )
 }
