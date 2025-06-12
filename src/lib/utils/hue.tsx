@@ -6,6 +6,8 @@ export type ColorHSL = [number, number, number]
 
 export type SetColor = (color: number) => void
 
+export type ColorSetNames = [string, string, string]
+
 export type PresetSL = {
   name: string
   sat: number

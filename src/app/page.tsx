@@ -6,7 +6,7 @@ import ColorSettings from '@/lib/components/ColorSettings'
 import ElementWrapper from '@/lib/components/ElementWrapper'
 import ListenToResize from '@/lib/components/ListenToResize'
 import TopBar from '@/lib/components/TopBar'
-import { PresetSL } from '@/lib/utils/hue'
+import { ColorSetNames, PresetSL } from '@/lib/utils/hue'
 import { HueOffset } from '@/lib/utils/position'
 import { useState } from 'react'
 
@@ -22,6 +22,11 @@ export default function Home() {
     lightRange: [97, 94, 88, 78, 65, 55, 45, 35, 25, 18, 10],
   })
   const [paletteName, setPaletteName] = useState<string>('new palette')
+  const [colorSetNames, setColorSetNames] = useState<ColorSetNames>([
+    'primary',
+    'accent',
+    'highlight',
+  ])
   const [trigger, setTrigger] = useState<number>(0)
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
 
