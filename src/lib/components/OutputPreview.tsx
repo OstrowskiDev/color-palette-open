@@ -1,3 +1,4 @@
+import Button from '../ui/Button'
 import generateTailwindColors from '../utils/generateTailwindColors'
 import { ColorSetNames, PresetSL } from '../utils/hue'
 import { HueOffset } from '../utils/position'
@@ -65,11 +66,20 @@ export default function OutputPreview({
         </div>
       </div>
 
-      <div className="code-output-container h-[380px]">
+      <div className="relative code-output-container h-[380px]">
+        <Button
+          tailwind="copy-on-click absolute top-10 right-8"
+          action={() =>
+            navigator.clipboard.writeText(JSON.stringify(twColorsObj, null, 3))
+          }
+          label="copy"
+          type="text"
+          successMessage="copied!"
+        />
         <h3 className="output-label ml-4 mt-4 mb-1 text-left text-app-font-light">
           code preview:
         </h3>
-        <pre className="code-preview px-4 py-2 mx-4 mb-4 text-left text-app-font-strong bg-app-gray-900 overflow-auto h-[340px]">
+        <pre className="code-preview px-4 py-2 mx-4 mb-4 text-left text-app-font-strong bg-app-gray-900 overflow-auto h-[340px] select-text">
           {/* druga wartość to replacer, tutaj nie będzie używana */}
           {/* trzecia wartość to liczba spacji renderowanych w wcięciach */}
           <code>{JSON.stringify(twColorsObj, null, 3)}</code>

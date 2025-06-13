@@ -6,6 +6,7 @@ type ButtonProps = {
   icon?: React.ReactNode
   label?: string
   type: 'icon' | 'text' | 'icon+text'
+  successMessage?: string
 }
 
 export default function Button({
@@ -14,6 +15,7 @@ export default function Button({
   icon,
   label,
   type,
+  successMessage,
 }: ButtonProps) {
   return (
     <button
@@ -28,6 +30,9 @@ export default function Button({
           {icon}
           {label}
         </span>
+      )}
+      {successMessage && (
+        <span className="button-tooltip bottom-8 left-6">{successMessage}</span>
       )}
     </button>
   )

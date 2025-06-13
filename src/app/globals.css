@@ -113,3 +113,23 @@ input[type='number'] {
   scrollbar-color: var(--color-gray-700) var(--color-gray-900);
   scrollbar-width: thin; /* auto | thin | none */
 }
+
+/*********************** clipboard tooltip ***********************/
+
+.copy-on-click .button-tooltip {
+  visibility: hidden;
+  position: absolute;
+  background-color: hsl(0, 0%, 25%);
+  border: 1px solid hsl(0, 0%, 30%);
+  border-radius: 4px;
+  padding: 0px 6px;
+  transition: 1s 0.5s;
+  opacity: 0;
+  z-index: 10;
+}
+
+.copy-on-click:active .button-tooltip {
+  visibility: visible;
+  transition: 0s 0s;
+  opacity: 1;
+}

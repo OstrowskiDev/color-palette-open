@@ -2,6 +2,8 @@
 
 const plugin = require('tailwindcss/plugin')
 
+const { testColors } = require('./src/lib/tailwind/testColors')
+
 module.exports = {
   content: [
     './src/app/**/*.{js,ts,jsx,tsx}',
@@ -11,6 +13,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        ...testColors,
         'app-background-main': 'hsl(220, 13%, 14%)',
         'app-background-secondary': 'hsl(222, 13%, 18%)',
         'app-font-strong': 'hsl(0, 0%, 90%)',

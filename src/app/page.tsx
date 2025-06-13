@@ -81,6 +81,11 @@ export default function Home() {
             setColorSetNames={setColorSetNames}
           />
         </ElementWrapper>
+        <ElementWrapper label={'tests'} tailwind={'h-[180px]'}>
+          <div>
+            <div className="w-20 h-20 bg-primary-500 border border-amber-100"></div>
+          </div>
+        </ElementWrapper>
       </div>
     </div>
   )
