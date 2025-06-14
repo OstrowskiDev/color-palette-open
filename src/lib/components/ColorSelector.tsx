@@ -1,5 +1,4 @@
-import { ColorHSL, SetColor } from '../utils/hue'
-import { HueOffset } from '../utils/position'
+import { HueOffset, SetColor } from '@/types/palette'
 import ColorWheel from './ColorWheel'
 
 interface ColorSelectorProps {

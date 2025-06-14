@@ -4,11 +4,12 @@ import ColorPalettes from '@/lib/components/ColorPalettes'
 import ColorSelector from '@/lib/components/ColorSelector'
 import ColorSettings from '@/lib/components/ColorSettings'
 import ElementWrapper from '@/lib/components/ElementWrapper'
+import InputField from '@/lib/components/InputField'
 import ListenToResize from '@/lib/components/ListenToResize'
 import OutputPreview from '@/lib/components/OutputPreview'
+import OverwriteColorsBtn from '@/lib/components/OverwriteColorsBtn'
 import TopBar from '@/lib/components/TopBar'
-import { ColorSetNames, PresetSL } from '@/lib/utils/hue'
-import { HueOffset } from '@/lib/utils/position'
+import { ColorSetNames, HueOffset, PresetSL } from '@/types/palette'
 import { useState } from 'react'
 
 export default function Home() {
@@ -28,6 +29,9 @@ export default function Home() {
     'accent',
     'highlight',
   ])
+  const [pathToTwFile, setPathToTwFile] = useState<string>(
+    'C:\\Tests\\colors.js',
+  )
   const [trigger, setTrigger] = useState<number>(0)
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
 
@@ -64,6 +68,15 @@ export default function Home() {
             hueOffset={hueOffset}
             isMouseDown={isMouseDown}
           />
+          <InputField
+            value={pathToTwFile}
+            setValue={setPathToTwFile}
+            label="path to file"
+            type="text"
+            labelWidth="90px"
+            inputWidth="260px"
+            labelClasses="ml-6"
+          />
         </ElementWrapper>
         <ElementWrapper label={'tailwind palettes'} tailwind={'h-[180px]'}>
           <ColorPalettes
@@ -84,6 +97,13 @@ export default function Home() {
         <ElementWrapper label={'tests'} tailwind={'h-[180px]'}>
           <div>
             <div className="w-20 h-20 bg-primary-500 border border-amber-100"></div>
+            <OverwriteColorsBtn
+              pathToTwFile={pathToTwFile}
+              baseHue={baseHue}
+              hueOffset={hueOffset}
+              presetSL={presetSL}
+              colorSetNames={colorSetNames}
+            />
           </div>
         </ElementWrapper>
       </div>

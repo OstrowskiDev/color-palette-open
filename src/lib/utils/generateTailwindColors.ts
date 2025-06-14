@@ -1,5 +1,9 @@
-import { ColorSetNames, PresetSL } from './hue'
-import { HueOffset } from './position'
+import {
+  ColorSetNames,
+  HueOffset,
+  PresetSL,
+  TailwindColors,
+} from '@/types/palette'
 
 export default function generateTailwindColors(
   baseHue: number,
@@ -8,7 +12,7 @@ export default function generateTailwindColors(
   colorSetNames: ColorSetNames,
 ) {
   const twBreakPts = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
-  const tailwindColors: Record<string, Record<number, string>> = {}
+  const tailwindColors: TailwindColors = {}
   for (let i = 0; i < 3; i++) {
     tailwindColors[colorSetNames[i]] = {}
     for (let j = 0; j < twBreakPts.length; j++) {

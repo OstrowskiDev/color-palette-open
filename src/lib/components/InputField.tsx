@@ -8,6 +8,7 @@ interface InputFieldProps {
   max?: number
   value: any
   setValue: (value: any) => void
+  labelClasses?: string
   labelWidth?: string
   inputWidth?: string
 }
@@ -19,6 +20,7 @@ export default function InputField({
   max,
   value,
   setValue,
+  labelClasses,
   labelWidth,
   inputWidth = '144px',
 }: InputFieldProps) {
@@ -27,7 +29,7 @@ export default function InputField({
   }
 
   return (
-    <Label className={`flex flex-row`} label={label} labelWidth={labelWidth}>
+    <Label label={label} labelWidth={labelWidth} labelClasses={labelClasses}>
       <input
         className="input-field px-2 text-app-font-light border border-app-gray-600 rounded-md text-[15px]"
         style={{ width: inputWidth }}

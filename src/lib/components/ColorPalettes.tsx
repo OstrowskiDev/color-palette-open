@@ -1,5 +1,4 @@
-import { PresetSL } from '../utils/hue'
-import { HueOffset } from '../utils/position'
+import { HueOffset, PresetSL } from '@/types/palette'
 
 interface ColorPalettesProps {
   baseHue: number

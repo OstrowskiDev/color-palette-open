@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react'
-import { calcHue, SetColor } from '../utils/hue'
-import {
-  positionDotsFromCoords,
-  HueOffset,
-  positionDotsFromHue,
-} from '../utils/position'
+import { calcHue } from '../utils/hue'
+import { positionDotsFromCoords, positionDotsFromHue } from '../utils/position'
 import styles from './ColorWheel.module.css'
+import { HueOffset, SetColor } from '@/types/palette'
 
 interface ColorWheelProps {
   baseHue: number

@@ -1,9 +1,5 @@
-import { calcHue, Vec2, Coords } from './hue'
-
-export interface HueOffset {
-  name: string
-  angle: number[]
-}
+import { Coords, HueOffset, Vec2 } from '@/types/palette'
+import { calcHue } from './hue'
 
 export function calcPositionOnCircle(angle: number): { x: number; y: number } {
   const r = 250 / 2

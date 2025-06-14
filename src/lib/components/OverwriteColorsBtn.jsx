@@ -1,22 +1,28 @@
 'use client'
 import { useState } from 'react'
+import generateTailwindColors from '../utils/generateTailwindColors'
+import { writeFileLocaly } from '../actions/writeFileLocaly'
 
-export default function OverwriteColorsBtn({ colorsObject }) {
+export default function OverwriteColorsBtn({
+  pathToTwFile,
+  baseHue,
+  hueOffset,
+  presetSL,
+  colorSetNames,
+}) {
   const [status, setStatus] = useState(null)
 
-  const handleClick = async () => {
+  async function handleClick() {
     setStatus('Saving...')
+    const colorsObject = generateTailwindColors(
+      baseHue,
+      hueOffset,
+      presetSL,
+      colorSetNames,
+    )
     try {
-      const res = await fetch('/api/write-test-colors', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ colorsObject }),
-      })
-
-      const data = await res.json()
-      setStatus(data.message)
+      const results = await writeFileLocaly(colorsObject, pathToTwFile)
+      setStatus(results.message)
     } catch (error) {
       console.error(error)
       setStatus('Error saving file')

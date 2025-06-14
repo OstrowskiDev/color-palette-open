@@ -1,18 +1,4 @@
-export type Vec2 = [number, number]
-
-export type Coords = { x: number; y: number }
-
-export type ColorHSL = [number, number, number]
-
-export type SetColor = (color: number) => void
-
-export type ColorSetNames = [string, string, string]
-
-export type PresetSL = {
-  name: string
-  sat: number
-  lightRange: number[]
-}
+import { Coords, Vec2 } from '@/types/palette'
 
 export function multiplyVectors(vecAB: Vec2, vecAC: Vec2): number {
   return vecAB[0] * vecAC[0] + vecAB[1] * vecAC[1]

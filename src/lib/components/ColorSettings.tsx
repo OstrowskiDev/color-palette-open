@@ -1,7 +1,6 @@
+import { HueOffset, PresetSL } from '@/types/palette'
 import { hueOffsetOptions, presetSLOptions } from '../schemas/selectOptions'
 import { SelectField } from '../ui/SelectField'
-import { PresetSL } from '../utils/hue'
-import { HueOffset } from '../utils/position'
 import InputField from './InputField'
 
 interface ColorSettingsProps {

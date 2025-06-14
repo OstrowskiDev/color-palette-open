@@ -1,9 +1,7 @@
+import { ColorSetNames, HueOffset, PresetSL } from '@/types/palette'
 import Button from '../ui/Button'
 import generateTailwindColors from '../utils/generateTailwindColors'
-import { ColorSetNames, PresetSL } from '../utils/hue'
-import { HueOffset } from '../utils/position'
 import InputField from './InputField'
-import OverwriteColorsBtn from './OverwriteColorsBtn'
 
 interface OutputPreviewProps {
   baseHue: number
@@ -86,8 +84,6 @@ export default function OutputPreview({
           <code>{JSON.stringify(twColorsObj, null, 3)}</code>
         </pre>
       </div>
-
-      <OverwriteColorsBtn colorsObject={twColorsObj} />
     </div>
   )
 }
