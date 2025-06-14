@@ -21,6 +21,22 @@ export interface HueOffset {
 
 export type TailwindColors = Record<string, Record<number, string>>
 
+// !!!! delete if no longer used
+// export interface ColorSettingsProps {
+//   state: {
+//     baseHue: number
+//     hueOffset: HueOffset
+//     presetSL: PresetSL
+//     paletteName: string
+//   }
+//   actions: {
+//     setBaseHue: (value: number) => void
+//     setHueOffset: (value: HueOffset) => void
+//     setPresetSL: (value: PresetSL) => void
+//     setPaletteName: (value: string) => void
+//   }
+// }
+
 // verify if types below are used:
 export type ShadeMap = Record<
   '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900',

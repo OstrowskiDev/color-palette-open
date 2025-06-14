@@ -2,15 +2,12 @@
 import { useState } from 'react'
 import generateTailwindColors from '../utils/generateTailwindColors'
 import { writeFileLocaly } from '../actions/writeFileLocaly'
+import { useColorSettings } from '../hooks/ColorSettingsContext'
 
-export default function OverwriteColorsBtn({
-  pathToTwFile,
-  baseHue,
-  hueOffset,
-  presetSL,
-  colorSetNames,
-}) {
+export default function OverwriteColorsBtn({ pathToTwFile, colorSetNames }) {
   const [status, setStatus] = useState(null)
+  const { state, actions } = useColorSettings()
+  const { baseHue, hueOffset, presetSL } = state
 
   async function handleClick() {
     setStatus('Saving...')

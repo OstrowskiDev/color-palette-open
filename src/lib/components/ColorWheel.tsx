@@ -2,21 +2,17 @@ import { useState, useEffect } from 'react'
 import { calcHue } from '../utils/hue'
 import { positionDotsFromCoords, positionDotsFromHue } from '../utils/position'
 import styles from './ColorWheel.module.css'
-import { HueOffset, SetColor } from '@/types/palette'
+import { useColorSettings } from '../hooks/ColorSettingsContext'
 
 interface ColorWheelProps {
-  baseHue: number
-  setBaseHue: SetColor
-  hueOffset: HueOffset
   isMouseDown: boolean
 }
 
-export default function ColorWheel({
-  baseHue,
-  setBaseHue,
-  hueOffset,
-  isMouseDown,
-}: ColorWheelProps) {
+export default function ColorWheel({ isMouseDown }: ColorWheelProps) {
+  const { state, actions } = useColorSettings()
+  const { baseHue, hueOffset } = state
+  const { setBaseHue } = actions
+
   const [coords, setCoords] = useState<{ x: number; y: number }>({
     x: 150,
     y: 150,

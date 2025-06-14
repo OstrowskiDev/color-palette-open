@@ -1,29 +1,12 @@
-import { HueOffset, PresetSL } from '@/types/palette'
 import { hueOffsetOptions, presetSLOptions } from '../schemas/selectOptions'
 import { SelectField } from '../ui/SelectField'
 import InputField from './InputField'
+import { useColorSettings } from '../hooks/ColorSettingsContext'
 
-interface ColorSettingsProps {
-  baseHue: number
-  setBaseHue: (value: number) => void
-  hueOffset: HueOffset
-  setHueOffset: (value: HueOffset) => void
-  presetSL: any
-  setPresetSL: (value: PresetSL) => void
-  paletteName: string
-  setPaletteName: (value: string) => void
-}
-
-export default function ColorSettings({
-  baseHue,
-  setBaseHue,
-  hueOffset,
-  setHueOffset,
-  presetSL,
-  setPresetSL,
-  paletteName,
-  setPaletteName,
-}: ColorSettingsProps) {
+export default function ColorSettings() {
+  const { state, actions } = useColorSettings()
+  const { baseHue, hueOffset, presetSL, paletteName } = state
+  const { setBaseHue, setHueOffset, setPresetSL, setPaletteName } = actions
   return (
     <div className="color-settings-container grid grid-cols-2 grid-rows-2 gap-y-2 gap-x-4 w-full px-6">
       <div className="hue-offset-container flex flex-row">

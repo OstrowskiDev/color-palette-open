@@ -1,16 +1,8 @@
-import { HueOffset, PresetSL } from '@/types/palette'
+import { useColorSettings } from '../hooks/ColorSettingsContext'
 
-interface ColorPalettesProps {
-  baseHue: number
-  hueOffset: HueOffset
-  presetSL: PresetSL
-}
-
-export default function ColorPalettes({
-  baseHue,
-  hueOffset,
-  presetSL,
-}: ColorPalettesProps) {
+export default function ColorPalettes() {
+  const { state } = useColorSettings()
+  const { baseHue, hueOffset, presetSL } = state
   //get basic HSL values for all palettes:
   let hues = [baseHue, null, null]
   let sat = presetSL.sat

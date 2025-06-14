@@ -9,21 +9,11 @@ import ListenToResize from '@/lib/components/ListenToResize'
 import OutputPreview from '@/lib/components/OutputPreview'
 import OverwriteColorsBtn from '@/lib/components/OverwriteColorsBtn'
 import TopBar from '@/lib/components/TopBar'
-import { ColorSetNames, HueOffset, PresetSL } from '@/types/palette'
+import { ColorSettingsProvider } from '@/lib/hooks/ColorSettingsContext'
+import { ColorSetNames } from '@/types/palette'
 import { useState } from 'react'
 
 export default function Home() {
-  const [baseHue, setBaseHue] = useState<number>(0)
-  const [hueOffset, setHueOffset] = useState<HueOffset>({
-    name: 'monochrome',
-    angle: [0],
-  })
-  const [presetSL, setPresetSL] = useState<PresetSL>({
-    name: 'contrasts',
-    sat: 100,
-    lightRange: [97, 94, 88, 78, 65, 55, 45, 35, 25, 18, 10],
-  })
-  const [paletteName, setPaletteName] = useState<string>('new palette')
   const [colorSetNames, setColorSetNames] = useState<ColorSetNames>([
     'primary',
     'accent',
@@ -43,70 +33,48 @@ export default function Home() {
   }
 
   return (
-    <div
-      className="app-wrapper h-[95vh] w-[540px] mx-auto flex flex-col justify-center text-white text-center overflow-hidden bg-app-background-secondary"
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-    >
-      <ListenToResize trigger={trigger} />
-      <TopBar />
-      <div className="main-app-container select-none flex flex-col flex-wrap h-[90vh] px-5 gap-x-5">
-        <ElementWrapper label={'color settings'} tailwind={'h-[480px]'}>
-          <ColorSettings
-            baseHue={baseHue}
-            setBaseHue={setBaseHue}
-            hueOffset={hueOffset}
-            setHueOffset={setHueOffset}
-            presetSL={presetSL}
-            setPresetSL={setPresetSL}
-            paletteName={paletteName}
-            setPaletteName={setPaletteName}
-          />
-          <ColorSelector
-            baseHue={baseHue}
-            setBaseHue={setBaseHue}
-            hueOffset={hueOffset}
-            isMouseDown={isMouseDown}
-          />
-          <InputField
-            value={pathToTwFile}
-            setValue={setPathToTwFile}
-            label="path to file"
-            type="text"
-            labelWidth="90px"
-            inputWidth="260px"
-            labelClasses="ml-6"
-          />
-        </ElementWrapper>
-        <ElementWrapper label={'tailwind palettes'} tailwind={'h-[180px]'}>
-          <ColorPalettes
-            baseHue={baseHue}
-            hueOffset={hueOffset}
-            presetSL={presetSL}
-          />
-        </ElementWrapper>
-        <ElementWrapper label={'output'} tailwind={'h-[480px]'}>
-          <OutputPreview
-            baseHue={baseHue}
-            hueOffset={hueOffset}
-            presetSL={presetSL}
-            colorSetNames={colorSetNames}
-            setColorSetNames={setColorSetNames}
-          />
-        </ElementWrapper>
-        <ElementWrapper label={'tests'} tailwind={'h-[180px]'}>
-          <div>
-            <div className="w-20 h-20 bg-primary-500 border border-amber-100"></div>
-            <OverwriteColorsBtn
-              pathToTwFile={pathToTwFile}
-              baseHue={baseHue}
-              hueOffset={hueOffset}
-              presetSL={presetSL}
-              colorSetNames={colorSetNames}
+    <ColorSettingsProvider>
+      <div
+        className="app-wrapper h-[95vh] w-[540px] mx-auto flex flex-col justify-center text-white text-center overflow-hidden bg-app-background-secondary"
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+      >
+        <ListenToResize trigger={trigger} />
+        <TopBar />
+        <div className="main-app-container select-none flex flex-col flex-wrap h-[90vh] px-5 gap-x-5">
+          <ElementWrapper label={'color settings'} tailwind={'h-[480px]'}>
+            <ColorSettings />
+            <ColorSelector isMouseDown={isMouseDown} />
+            <InputField
+              value={pathToTwFile}
+              setValue={setPathToTwFile}
+              label="path to file"
+              type="text"
+              labelWidth="90px"
+              inputWidth="260px"
+              labelClasses="ml-6"
             />
-          </div>
-        </ElementWrapper>
+          </ElementWrapper>
+          <ElementWrapper label={'tailwind palettes'} tailwind={'h-[180px]'}>
+            <ColorPalettes />
+          </ElementWrapper>
+          <ElementWrapper label={'output'} tailwind={'h-[480px]'}>
+            <OutputPreview
+              colorSetNames={colorSetNames}
+              setColorSetNames={setColorSetNames}
+            />
+          </ElementWrapper>
+          <ElementWrapper label={'tests'} tailwind={'h-[180px]'}>
+            <div>
+              <div className="w-20 h-20 bg-primary-500 border border-amber-100"></div>
+              <OverwriteColorsBtn
+                pathToTwFile={pathToTwFile}
+                colorSetNames={colorSetNames}
+              />
+            </div>
+          </ElementWrapper>
+        </div>
       </div>
-    </div>
+    </ColorSettingsProvider>
   )
 }
