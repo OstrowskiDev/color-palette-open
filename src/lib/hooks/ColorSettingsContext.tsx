@@ -1,4 +1,4 @@
-import { HueOffset, PresetSL } from '@/types/palette'
+import { ColorSetNames, HueOffset, PresetSL } from '@/types/palette'
 import { createContext, useContext, useState } from 'react'
 
 interface ColorSettingsState {
@@ -6,6 +6,7 @@ interface ColorSettingsState {
   hueOffset: HueOffset
   presetSL: PresetSL
   paletteName: string
+  colorSetNames: ColorSetNames
 }
 
 interface ColorSettingsActions {
@@ -13,6 +14,7 @@ interface ColorSettingsActions {
   setHueOffset: React.Dispatch<React.SetStateAction<HueOffset>>
   setPresetSL: React.Dispatch<React.SetStateAction<PresetSL>>
   setPaletteName: React.Dispatch<React.SetStateAction<string>>
+  setColorSetNames: React.Dispatch<React.SetStateAction<ColorSetNames>>
 }
 
 interface ColorSettingsContextType {
@@ -40,9 +42,20 @@ export function ColorSettingsProvider({
     lightRange: [97, 94, 88, 78, 65, 55, 45, 35, 25, 18, 10],
   })
   const [paletteName, setPaletteName] = useState<string>('new palette')
+  const [colorSetNames, setColorSetNames] = useState<ColorSetNames>([
+    'primary',
+    'accent',
+    'highlight',
+  ])
 
-  const state = { baseHue, hueOffset, presetSL, paletteName }
-  const actions = { setBaseHue, setHueOffset, setPresetSL, setPaletteName }
+  const state = { baseHue, hueOffset, presetSL, paletteName, colorSetNames }
+  const actions = {
+    setBaseHue,
+    setHueOffset,
+    setPresetSL,
+    setPaletteName,
+    setColorSetNames,
+  }
 
   return (
     <ColorSettingsContext.Provider value={{ state, actions }}>

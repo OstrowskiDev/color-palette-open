@@ -10,15 +10,9 @@ import OutputPreview from '@/lib/components/OutputPreview'
 import OverwriteColorsBtn from '@/lib/components/OverwriteColorsBtn'
 import TopBar from '@/lib/components/TopBar'
 import { ColorSettingsProvider } from '@/lib/hooks/ColorSettingsContext'
-import { ColorSetNames } from '@/types/palette'
 import { useState } from 'react'
 
 export default function Home() {
-  const [colorSetNames, setColorSetNames] = useState<ColorSetNames>([
-    'primary',
-    'accent',
-    'highlight',
-  ])
   const [pathToTwFile, setPathToTwFile] = useState<string>(
     'C:\\Tests\\colors.js',
   )
@@ -59,18 +53,12 @@ export default function Home() {
             <ColorPalettes />
           </ElementWrapper>
           <ElementWrapper label={'output'} tailwind={'h-[480px]'}>
-            <OutputPreview
-              colorSetNames={colorSetNames}
-              setColorSetNames={setColorSetNames}
-            />
+            <OutputPreview />
           </ElementWrapper>
           <ElementWrapper label={'tests'} tailwind={'h-[180px]'}>
             <div>
               <div className="w-20 h-20 bg-primary-500 border border-amber-100"></div>
-              <OverwriteColorsBtn
-                pathToTwFile={pathToTwFile}
-                colorSetNames={colorSetNames}
-              />
+              <OverwriteColorsBtn pathToTwFile={pathToTwFile} />
             </div>
           </ElementWrapper>
         </div>

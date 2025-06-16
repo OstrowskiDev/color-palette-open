@@ -4,10 +4,16 @@ import generateTailwindColors from '../utils/generateTailwindColors'
 import { writeFileLocaly } from '../actions/writeFileLocaly'
 import { useColorSettings } from '../hooks/ColorSettingsContext'
 
-export default function OverwriteColorsBtn({ pathToTwFile, colorSetNames }) {
-  const [status, setStatus] = useState(null)
+type OverwriteColorsBtnProps = {
+  pathToTwFile: string
+}
+
+export default function OverwriteColorsBtn({
+  pathToTwFile,
+}: OverwriteColorsBtnProps) {
+  const [status, setStatus] = useState<string | null>(null)
   const { state, actions } = useColorSettings()
-  const { baseHue, hueOffset, presetSL } = state
+  const { baseHue, hueOffset, presetSL, colorSetNames } = state
 
   async function handleClick() {
     setStatus('Saving...')

@@ -1,20 +1,12 @@
-import { ColorSetNames, HueOffset, PresetSL } from '@/types/palette'
 import Button from '../ui/Button'
 import generateTailwindColors from '../utils/generateTailwindColors'
 import InputField from './InputField'
 import { useColorSettings } from '../hooks/ColorSettingsContext'
 
-interface OutputPreviewProps {
-  colorSetNames: ColorSetNames
-  setColorSetNames: (value: ColorSetNames) => void
-}
-
-export default function OutputPreview({
-  colorSetNames,
-  setColorSetNames,
-}: OutputPreviewProps) {
+export default function OutputPreview() {
   const { state, actions } = useColorSettings()
-  const { baseHue, hueOffset, presetSL } = state
+  const { baseHue, hueOffset, presetSL, colorSetNames } = state
+  const { setColorSetNames } = actions
   const twColorsObj = generateTailwindColors(
     baseHue,
     hueOffset,
