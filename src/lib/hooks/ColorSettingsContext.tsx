@@ -1,4 +1,4 @@
-import { ColorSetNames, HueOffset, PresetSL } from '@/types/palette'
+import { AppMode, ColorSetNames, HueOffset, PresetSL } from '@/types/palette'
 import { createContext, useContext, useState } from 'react'
 
 interface ColorSettingsState {
@@ -31,6 +31,7 @@ export function ColorSettingsProvider({
 }: {
   children: React.ReactNode
 }) {
+  const [appMode, setAppMode] = useState<AppMode>('local')
   const [baseHue, setBaseHue] = useState<number>(0)
   const [hueOffset, setHueOffset] = useState<HueOffset>({
     name: 'monochrome',
@@ -48,8 +49,16 @@ export function ColorSettingsProvider({
     'highlight',
   ])
 
-  const state = { baseHue, hueOffset, presetSL, paletteName, colorSetNames }
+  const state = {
+    appMode,
+    baseHue,
+    hueOffset,
+    presetSL,
+    paletteName,
+    colorSetNames,
+  }
   const actions = {
+    setAppMode,
     setBaseHue,
     setHueOffset,
     setPresetSL,

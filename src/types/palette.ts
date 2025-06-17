@@ -8,6 +8,8 @@ export type SetColor = (color: number) => void
 
 export type ColorSetNames = [string, string, string]
 
+export type AppMode = 'local' | 'remote'
+
 export type PresetSL = {
   name: string
   sat: number
