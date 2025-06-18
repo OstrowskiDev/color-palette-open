@@ -3,8 +3,8 @@ import React from 'react'
 interface LabelProps {
   children: React.ReactNode
   label?: string
-  labelClasses?: string
   labelWidth?: string
+  labelClasses?: string
 }
 
 export function Label({
@@ -14,10 +14,10 @@ export function Label({
   labelWidth = '56px',
 }: LabelProps) {
   return (
-    <label className={`label-container flex flex-row w-full`}>
+    <label className={`label-container flex flex-row ${labelClasses}`}>
       {label && (
         <span
-          className={`label flex flex-row text-app-font-light mr-2 ${labelClasses}`}
+          className={`label flex flex-row text-app-font-light`}
           style={{ width: labelWidth }}
         >
           {`${label}:`}

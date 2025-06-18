@@ -1,3 +1,8 @@
+export const appModeOptions = [
+  { value: 'local', label: 'local' },
+  { value: 'remote', label: 'remote' },
+]
+
 export const hueOffsetOptions = [
   { value: { name: 'monochrome', angle: [0] }, label: 'monochrome' },
   { value: { name: 'complementary', angle: [0, 180] }, label: 'complementary' },

@@ -10,6 +10,9 @@ interface SelectFieldProps {
   value: any
   setValue: (value: any) => void
   label?: string
+  labelWidth?: string
+  labelClasses?: string
+  optionsWidth?: string
 }
 
 export function SelectField({
@@ -17,15 +20,19 @@ export function SelectField({
   value,
   setValue,
   label,
+  labelWidth,
+  labelClasses,
+  optionsWidth = '144px',
 }: SelectFieldProps) {
   function onChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const selected = JSON.parse(event.target.value)
     setValue(selected)
   }
   return (
-    <Label className="flex flex-row" label={label}>
+    <Label label={label} labelWidth={labelWidth} labelClasses={labelClasses}>
       <select
-        className="select-field w-36 px-2 text-app-font-light border border-app-gray-600 rounded-md hover:cursor-pointer text-[15px]"
+        className="select-field px-2 text-app-font-light border border-app-gray-600 rounded-md hover:cursor-pointer text-[15px]"
+        style={{ width: optionsWidth }}
         value={JSON.stringify(value)}
         onChange={onChange}
       >

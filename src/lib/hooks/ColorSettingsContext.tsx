@@ -2,6 +2,7 @@ import { AppMode, ColorSetNames, HueOffset, PresetSL } from '@/types/palette'
 import { createContext, useContext, useState } from 'react'
 
 interface ColorSettingsState {
+  appMode: AppMode
   baseHue: number
   hueOffset: HueOffset
   presetSL: PresetSL
@@ -10,6 +11,7 @@ interface ColorSettingsState {
 }
 
 interface ColorSettingsActions {
+  setAppMode: React.Dispatch<React.SetStateAction<AppMode>>
   setBaseHue: React.Dispatch<React.SetStateAction<number>>
   setHueOffset: React.Dispatch<React.SetStateAction<HueOffset>>
   setPresetSL: React.Dispatch<React.SetStateAction<PresetSL>>
