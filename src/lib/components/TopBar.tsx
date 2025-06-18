@@ -1,3 +1,4 @@
+import { saveLocaly } from '../actions/storeLocaly'
 import { useColorSettings } from '../hooks/ColorSettingsContext'
 import { appModeOptions } from '../schemas/selectOptions'
 import Button from '../ui/Button'
@@ -5,8 +6,27 @@ import { SelectField } from '../ui/SelectField'
 
 export default function TopBar() {
   const { state, actions } = useColorSettings()
-  const { appMode } = state
+  const { appMode, paletteName, baseHue, hueOffset, presetSL, colorSetNames } =
+    state
   const { setAppMode } = actions
+
+  const paletteOptions = {
+    paletteName,
+    baseHue,
+    hueOffset,
+    presetSL,
+    colorSetNames,
+  }
+
+  function handleSave() {
+    if (appMode === 'local') {
+      saveLocaly(paletteOptions)
+    } else {
+      //!!!! change to saveRemotely after creating saveRemotely
+      saveLocaly(paletteOptions)
+      // saveRemotely(paletteOptions)
+    }
+  }
 
   return (
     <div className="app-top-bar flex flex-row h-[5vh] mx-5 mt-2 mb-[2px]">
@@ -24,10 +44,11 @@ export default function TopBar() {
           labelClasses="mr-2"
           optionsWidth="82px"
         />
-        <Button type="text" label="save" action={() => {}} />
+        <Button type="text" label="save" action={handleSave} />
         <Button type="text" label="load" action={() => {}} />
-        <Button type="text" label="reset" action={() => {}} />
-        <Button type="text" label="settings" action={() => {}} />
+        <Button type="text" label="delete" action={() => {}} />
+        <Button type="text" label="export" action={() => {}} />
+        <Button type="text" label="import" action={() => {}} />
         <Button type="text" label="signin" action={() => {}} />
       </div>
     </div>
