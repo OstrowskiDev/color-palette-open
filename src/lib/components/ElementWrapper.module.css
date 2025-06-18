@@ -1,0 +1,38 @@
+.element-wrapper {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid hsl(0, 0%, 34%);
+  box-shadow: 2px 2px 2px 1px hsl(0, 0%, 14%);
+  margin: 8px 0px 12px 0px;
+  padding: 4px 0px;
+  position: relative;
+  opacity: 1;
+  transition-duration: 1s;
+}
+
+.beforeLabel {
+  color: var(--color-app-font-light);
+  padding: 0px 8px;
+  position: absolute;
+  top: -14px;
+  left: 14px;
+  background-color: var(--color-app-bg-secondary);
+}
+
+.collapse-btn {
+  position: absolute;
+  z-index: 5;
+  top: -14px;
+  right: 20px;
+  padding: 0px 8px;
+  color: var(--color-app-font-light);
+  background-color: var(--color-app-bg-secondary);
+}
+
+.collapse-btn:hover {
+  cursor: pointer;
+  color: var(--color-app-font-strong);
+}

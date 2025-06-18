@@ -1,0 +1,46 @@
+.color-wheel {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  border-radius: 50%;
+  background: conic-gradient(
+    hsl(0, 70%, 50%),
+    hsl(30, 70%, 50%),
+    hsl(60, 70%, 50%),
+    hsl(90, 70%, 50%),
+    hsl(120, 70%, 50%),
+    hsl(150, 70%, 50%),
+    hsl(180, 70%, 50%),
+    hsl(210, 70%, 50%),
+    hsl(240, 70%, 50%),
+    hsl(270, 70%, 50%),
+    hsl(300, 70%, 50%),
+    hsl(330, 70%, 50%),
+    hsl(360, 70%, 50%)
+  );
+  margin: 0 auto;
+  margin-bottom: 25px;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.color-wheel:hover {
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.color-wheel-center {
+  pointer-events: none;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: var(--color-app-bg-secondary);
+  position: relative;
+  top: 50px;
+  left: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
