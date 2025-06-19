@@ -8,7 +8,7 @@ export default function TopBar() {
   const { state, actions } = useColorSettings()
   const { appMode, paletteName, baseHue, hueOffset, presetSL, colorSetNames } =
     state
-  const { setAppMode } = actions
+  const { setAppMode, setOpenModal } = actions
 
   const paletteOptions = {
     paletteName,
@@ -44,12 +44,38 @@ export default function TopBar() {
           labelClasses="mr-2"
           optionsWidth="82px"
         />
-        <Button type="text" label="save" action={handleSave} />
-        <Button type="text" label="load" action={() => {}} />
-        <Button type="text" label="delete" action={() => {}} />
-        <Button type="text" label="export" action={() => {}} />
-        <Button type="text" label="import" action={() => {}} />
-        <Button type="text" label="signin" action={() => {}} />
+        {/* prettier-ignore */}
+        <Button 
+          type="text" 
+          label="save" 
+          action={handleSave} 
+        />
+        {/* prettier-ignore */}
+        <Button 
+          type="text" 
+          label="load" 
+          action={() => setOpenModal('load')} 
+        />
+        <Button
+          type="text"
+          label="delete"
+          action={() => setOpenModal('delete')}
+        />
+        <Button
+          type="text"
+          label="export"
+          action={() => setOpenModal('export')}
+        />
+        <Button
+          type="text"
+          label="import"
+          action={() => setOpenModal('import')}
+        />
+        <Button
+          type="text"
+          label="signin"
+          action={() => setOpenModal('signin')}
+        />
       </div>
     </div>
   )

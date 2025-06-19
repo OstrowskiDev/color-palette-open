@@ -1,3 +1,6 @@
+import { paletteSchema } from '@/lib/schemas/zodSchemas'
+import { z } from 'zod'
+
 export type Vec2 = [number, number]
 
 export type Coords = { x: number; y: number }
@@ -22,3 +25,12 @@ export interface HueOffset {
 }
 
 export type TailwindColors = Record<string, Record<number, string>>
+
+export type Setter<T> = React.Dispatch<React.SetStateAction<T>>
+
+export type Palette = z.infer<typeof paletteSchema>
+
+export type PaletteOption = {
+  value: Palette
+  label: string
+}
