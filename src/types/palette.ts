@@ -31,6 +31,7 @@ export type Setter<T> = React.Dispatch<React.SetStateAction<T>>
 export type Palette = z.infer<typeof paletteSchema>
 
 export type PaletteOption = {
-  value: Palette
+  value: Palette | ''
   label: string
+  hidden?: boolean
 }

@@ -4,6 +4,7 @@ import { Label } from './Label'
 interface Option {
   value: any
   label: string
+  hidden?: boolean
 }
 
 interface SelectFieldProps {
@@ -46,6 +47,7 @@ export function SelectField({
             className="text-app-gray-900"
             key={i}
             value={JSON.stringify(opt.value)}
+            hidden={opt?.hidden ?? false}
           >
             {opt.label}
           </option>
