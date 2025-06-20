@@ -17,14 +17,14 @@ export default function Modal({
 
   return (
     <div className="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">
-      <div className="bg-app-gray-700 p-6 rounded-xl shadow-xl w-full max-w-md border border-app-gray-500">
+      <div className="flex flex-col items-center bg-app-gray-800 px-6 py-4 rounded-xl shadow-xl w-full max-w-md border border-app-gray-600">
         {title && (
           <h2 className="text-2xl font-semibold text-app-gray-100 mb-4">
             {title}
           </h2>
         )}
-        <div>{children}</div>
-        <div className="mt-4 flex justify-end gap-2">{footer}</div>
+        {children}
+        <div className="w-full mt-6 flex justify-end gap-1">{footer}</div>
       </div>
     </div>
   )

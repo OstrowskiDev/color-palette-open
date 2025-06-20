@@ -5,9 +5,12 @@ import {
 import { getLocalPalettes } from '@/lib/actions/readLocaly'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import Modal from '@/lib/ui/Modal'
+import ModalApplyBtn from '@/lib/ui/ModalApplyBtn'
+import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 import { SelectField } from '@/lib/ui/SelectField'
 import { Palette, PaletteOption } from '@/types/palette'
 import { useEffect, useState } from 'react'
+import { NoPaletteFoundModal } from './NoPaletteFoundModal'
 
 export function LoadLocalModal() {
   const [localPalettes, setLocalPalettes] = useState<Palette[]>([])
@@ -34,7 +37,7 @@ export function LoadLocalModal() {
     if (selectedPalette) setPaletteStates(selectedPalette, actions)
   }, [selectedPalette])
 
-  if (!localPalettes) return //!!!! zwróć NoPaletteFoundModal
+  if (localPalettes.length === 0) return <NoPaletteFoundModal />
 
   const palettesOptions: PaletteOption[] = localPalettes.map((palette) => ({
     value: palette,
@@ -53,17 +56,25 @@ export function LoadLocalModal() {
     setOpenModal(null)
   }
 
-  //stwórz dwa osobne komponenty UI dla buttonów (apply/cancel)
-
   return (
-    <Modal title="Load palette" modalType="load">
+    <Modal
+      title="Load palette"
+      modalType="load"
+      footer={
+        <>
+          <ModalCancelBtn action={onCancel} />
+          <ModalApplyBtn action={onApplay} />
+        </>
+      }
+    >
       <p className="text-lg text-app-gray-100 ">Select palette saved localy:</p>
-      <div className="w-[300px] h-[200px]"></div>
       <SelectField
         options={palettesOptions}
         value={selectedPalette}
         setValue={setSelectedPalette}
-        optionsWidth="240px"
+        selectClasses="border-app-gray-400 text-app-gray-200 px-4 text-md"
+        labelClasses="h-7 mt-1"
+        optionsWidth="220px"
       />
     </Modal>
   )
