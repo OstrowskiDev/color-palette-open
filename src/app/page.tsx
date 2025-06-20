@@ -7,6 +7,7 @@ import ElementWrapper from '@/lib/components/ElementWrapper'
 import InputField from '@/lib/components/InputField'
 import ListenToResize from '@/lib/components/ListenToResize'
 import { DeleteLocalModal } from '@/lib/components/modals/DeleteLocalModal'
+import { ExportModal } from '@/lib/components/modals/ExportModal'
 import { LoadLocalModal } from '@/lib/components/modals/LoadModal'
 import OutputPreview from '@/lib/components/OutputPreview'
 import OverwriteColorsBtn from '@/lib/components/OverwriteColorsBtn'
@@ -67,7 +68,7 @@ export default function Home() {
       </div>
       {openModal === 'load' && <LoadLocalModal />}
       {openModal === 'delete' && <DeleteLocalModal />}
-      {/* {openModal === 'export' && <ExportModal />} */}
+      {openModal === 'export' && <ExportModal />}
       {/* {openModal === 'import' && <ImportModal />} */}
       {/* {openModal === 'signin' && <SigninModal />} */}
     </div>

@@ -9,9 +9,9 @@ import ModalApplyBtn from '@/lib/ui/ModalApplyBtn'
 import { SelectField } from '@/lib/ui/SelectField'
 import { Palette, PaletteOption } from '@/types/palette'
 import { useEffect, useState } from 'react'
-import { NoPaletteFoundModal } from './NoPaletteFoundModal'
 import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 import { deleteLocaly } from '@/lib/actions/deleteLocaly'
+import { NoPaletteForDeletionModal } from './NoPaletteForDeletionModal'
 
 export function DeleteLocalModal() {
   const { state, actions } = useColorSettings()
@@ -38,7 +38,7 @@ export function DeleteLocalModal() {
     if (selectedPalette) setPaletteStates(selectedPalette, actions)
   }, [selectedPalette])
 
-  if (localPalettes.length === 0) return <NoPaletteFoundModal />
+  if (localPalettes.length === 0) return <NoPaletteForDeletionModal />
 
   const palettesOptions: PaletteOption[] = localPalettes.map((palette) => ({
     value: palette,
