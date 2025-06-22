@@ -8,6 +8,7 @@ import InputField from '@/lib/components/InputField'
 import ListenToResize from '@/lib/components/ListenToResize'
 import { DeleteLocalModal } from '@/lib/components/modals/DeleteLocalModal'
 import { ExportModal } from '@/lib/components/modals/ExportModal'
+import { ImportModal } from '@/lib/components/modals/ImportModal'
 import { LoadLocalModal } from '@/lib/components/modals/LoadModal'
 import OutputPreview from '@/lib/components/OutputPreview'
 import OverwriteColorsBtn from '@/lib/components/OverwriteColorsBtn'
@@ -48,9 +49,8 @@ export default function Home() {
             setValue={setPathToTwFile}
             label="path to file"
             type="text"
-            labelWidth="90px"
-            inputWidth="260px"
-            labelClasses="ml-6"
+            inputTailwind="w-[260px]"
+            labelClasses="w-[90pxpx] ml-6"
           />
         </ElementWrapper>
         <ElementWrapper label={'tailwind palettes'} tailwind={'h-[180px]'}>
@@ -69,7 +69,7 @@ export default function Home() {
       {openModal === 'load' && <LoadLocalModal />}
       {openModal === 'delete' && <DeleteLocalModal />}
       {openModal === 'export' && <ExportModal />}
-      {/* {openModal === 'import' && <ImportModal />} */}
+      {openModal === 'import' && <ImportModal />}
       {/* {openModal === 'signin' && <SigninModal />} */}
     </div>
   )

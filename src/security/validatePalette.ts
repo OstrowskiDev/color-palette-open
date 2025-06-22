@@ -1,11 +1,18 @@
 'use server'
 
 import { paletteSchema } from '@/lib/schemas/zodSchemas'
+import { Palette } from '@/types/palette'
 
-function validatePaletteFromInput(inputTextValue: string) {
+type ValidationResult =
+  | { success: true; data: Palette }
+  | { success: false; error: string }
+
+export async function validatePaletteString(
+  inputTextValue: string,
+): Promise<ValidationResult> {
   try {
     const parsed = JSON.parse(inputTextValue)
-    const result = paletteSchema.parse(parsed)
+    const result = paletteSchema.parse(parsed) as Palette
     return { success: true, data: result }
   } catch (error) {
     return {
@@ -13,23 +20,4 @@ function validatePaletteFromInput(inputTextValue: string) {
       error: 'Make sure to pass correct JSON structure.',
     }
   }
-}
-
-function validatePaletteFromFile(file: File): Promise<any> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = () => {
-      try {
-        const json = JSON.parse(reader.result as string)
-        const parsed = paletteSchema.parse(json)
-        resolve({ success: true, data: parsed })
-      } catch (err) {
-        resolve({ success: false, error: err })
-      }
-    }
-    reader.onerror = () => {
-      resolve({ success: false, error: new Error('File reading failed') })
-    }
-    reader.readAsText(file)
-  })
 }
