@@ -40,14 +40,14 @@ export default function TopBar() {
           value={appMode}
           setValue={setAppMode}
           label="App Mode"
-          labelWidth="82px"
-          labelClasses="mr-2"
-          optionsWidth="82px"
+          labelClasses="w-[80px] mr-1"
+          optionsWidth="80px"
         />
         {/* prettier-ignore */}
         <Button 
           type="text" 
           label="save" 
+          tailwind="ml-2"
           action={handleSave} 
         />
         {/* prettier-ignore */}

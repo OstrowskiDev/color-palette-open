@@ -24,8 +24,8 @@ export default function OutputPreview() {
             }}
             label="primary"
             type="text"
-            labelWidth="80px"
-            inputWidth="132px"
+            labelClasses="w-[80px]"
+            inputTailwind="w-[132px]"
           />
         </div>
         <div className="secondary-color-input-container flex flex-row">
@@ -36,8 +36,8 @@ export default function OutputPreview() {
             }}
             label="secondary"
             type="text"
-            labelWidth="80px"
-            inputWidth="132px"
+            labelClasses="w-[80px]"
+            inputTailwind="w-[132px]"
           />
         </div>
         <div className="tertiary-color-input-container flex flex-row">
@@ -48,8 +48,8 @@ export default function OutputPreview() {
             }}
             label="tertiary"
             type="text"
-            labelWidth="80px"
-            inputWidth="132px"
+            labelClasses="w-[80px]"
+            inputTailwind="w-[132px]"
           />
         </div>
       </div>

@@ -12,7 +12,6 @@ interface SelectFieldProps {
   value: any
   setValue: (value: any) => void
   label?: string
-  labelWidth?: string
   labelClasses?: string
   selectClasses?: string
   optionsWidth?: string
@@ -23,7 +22,6 @@ export function SelectField({
   value,
   setValue,
   label,
-  labelWidth,
   labelClasses,
   selectClasses,
   optionsWidth = '144px',
@@ -33,7 +31,7 @@ export function SelectField({
     setValue(selected)
   }
   return (
-    <Label label={label} labelWidth={labelWidth} labelClasses={labelClasses}>
+    <Label label={label} labelClasses={labelClasses}>
       <select
         className={twMerge(
           `select-field px-2 text-app-font-light border border-app-gray-600 rounded-md hover:cursor-pointer text-[15px] ${selectClasses}`,

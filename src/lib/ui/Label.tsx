@@ -1,24 +1,18 @@
 import React from 'react'
+import { twMerge } from 'tailwind-merge'
 
 interface LabelProps {
   children: React.ReactNode
   label?: string
-  labelWidth?: string
   labelClasses?: string
 }
 
-export function Label({
-  children,
-  labelClasses = '',
-  label,
-  labelWidth = '56px',
-}: LabelProps) {
+export function Label({ children, labelClasses = '', label }: LabelProps) {
   return (
-    <label className={`label-container flex flex-row ${labelClasses}`}>
+    <label className={`label-container flex flex-row`}>
       {label && (
         <span
-          className={`label flex flex-row text-app-font-light`}
-          style={{ width: labelWidth }}
+          className={`label  ${twMerge(`flex flex-row w-[58px] text-app-font-light ${labelClasses}`)} `}
         >
           {`${label}:`}
         </span>
