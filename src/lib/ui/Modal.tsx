@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useColorSettings } from '../hooks/ColorSettingsContext'
 
 export default function Modal({
@@ -11,8 +12,21 @@ export default function Modal({
   footer?: React.ReactNode
   modalType: string | null
 }) {
-  const { state } = useColorSettings()
+  const { state, actions } = useColorSettings()
   const { openModal } = state
+  const { setOpenModal } = actions
+
+  useEffect(() => {
+    function handleEsc(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpenModal(null)
+    }
+
+    if (openModal !== modalType) return
+
+    window.addEventListener('keydown', handleEsc)
+    return () => window.removeEventListener('keydown', handleEsc)
+  }, [openModal])
+
   if (openModal !== modalType) return null
 
   return (
