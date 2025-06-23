@@ -14,16 +14,25 @@ import OutputPreview from '@/lib/components/OutputPreview'
 import OverwriteColorsBtn from '@/lib/components/OverwriteColorsBtn'
 import TopBar from '@/lib/components/TopBar'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
+import { useKeyboardShortcut } from '@/lib/hooks/useKeyboardShortcut'
 import { useState } from 'react'
 
 export default function Home() {
-  const { state } = useColorSettings()
+  const { state, actions } = useColorSettings()
   const { openModal } = state
+  const { setOpenModal } = actions
   const [pathToTwFile, setPathToTwFile] = useState<string>(
     'C:\\Tests\\colors.js',
   )
   const [trigger, setTrigger] = useState<number>(0)
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
+
+  useKeyboardShortcut(() => setOpenModal('save'), 's', openModal)
+  useKeyboardShortcut(() => setOpenModal('load'), 'o', openModal)
+  useKeyboardShortcut(() => setOpenModal('delete'), 'Delete', openModal)
+  useKeyboardShortcut(() => setOpenModal('delete'), 'd', openModal)
+  useKeyboardShortcut(() => setOpenModal('import'), 'i', openModal)
+  useKeyboardShortcut(() => setOpenModal('export'), 'e', openModal)
 
   function handleMouseDown() {
     setIsMouseDown(true)
