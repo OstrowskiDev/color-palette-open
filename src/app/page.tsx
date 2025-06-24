@@ -43,13 +43,13 @@ export default function Home() {
 
   return (
     <div
-      className="app-wrapper h-[95vh] w-[540px] mx-auto flex flex-col justify-center text-white text-center overflow-hidden bg-app-background-secondary"
+      className="app-wrapper h-[780x] w-[540px] mx-auto flex flex-col justify-center text-white text-center overflow-hidden bg-app-background-secondary"
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
     >
       <ListenToResize trigger={trigger} />
       <TopBar />
-      <div className="main-app-container select-none flex flex-col flex-wrap h-[90vh] px-5 gap-x-5">
+      <div className="main-app-container select-none flex flex-col flex-wrap h-[740px] px-5 gap-x-5">
         <ElementWrapper label={'color settings'} tailwind={'h-[480px]'}>
           <ColorSettings />
           <ColorSelector isMouseDown={isMouseDown} />
@@ -62,13 +62,13 @@ export default function Home() {
             labelClasses="w-[90pxpx] ml-6"
           />
         </ElementWrapper>
-        <ElementWrapper label={'tailwind palettes'} tailwind={'h-[180px]'}>
+        <ElementWrapper label={'tailwind palettes'} tailwind={'h-[210px]'}>
           <ColorPalettes />
         </ElementWrapper>
         <ElementWrapper label={'output'} tailwind={'h-[480px]'}>
           <OutputPreview />
         </ElementWrapper>
-        <ElementWrapper label={'tests'} tailwind={'h-[180px]'}>
+        <ElementWrapper label={'tests'} tailwind={'h-[210px]'}>
           <div>
             <div className="w-20 h-20 bg-primary-500 border border-amber-100"></div>
             <OverwriteColorsBtn pathToTwFile={pathToTwFile} />
