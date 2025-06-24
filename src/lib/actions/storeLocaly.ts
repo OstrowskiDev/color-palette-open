@@ -4,7 +4,7 @@ import path from 'path'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { paletteSchema } from '../schemas/zodSchemas'
 
-export async function saveLocaly(paletteOptions: any) {
+export async function saveLocally(paletteOptions: any) {
   const paletteObject = {
     id: paletteOptions.paletteName,
     baseHue: paletteOptions.baseHue,

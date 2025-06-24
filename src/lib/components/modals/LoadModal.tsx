@@ -59,7 +59,7 @@ export function LoadLocalModal() {
   return (
     <Modal
       title="Load palette"
-      modalType="load"
+      modalType="load-local"
       footer={
         <>
           <ModalCancelBtn action={onCancel} />
@@ -67,7 +67,9 @@ export function LoadLocalModal() {
         </>
       }
     >
-      <p className="text-lg text-app-gray-100 ">Select palette saved localy:</p>
+      <p className="text-lg text-app-gray-100 ">
+        Select palette saved locally:
+      </p>
       <SelectField
         options={palettesOptions}
         value={selectedPalette}

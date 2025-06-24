@@ -8,6 +8,8 @@ export default function TopBar() {
   const { appMode } = state
   const { setAppMode, setOpenModal } = actions
   const saveModal = appMode === 'local' ? 'save-local' : 'save-remote'
+  const loadModal = appMode === 'local' ? 'load-local' : 'load-remote'
+  const deleteModal = appMode === 'local' ? 'delete-local' : 'delete-remote'
 
   return (
     <div className="app-top-bar flex flex-row h-[40px] mx-5 mt-2 mb-[2px]">
@@ -35,12 +37,12 @@ export default function TopBar() {
         <Button 
           type="text" 
           label="load" 
-          action={() => setOpenModal('load')} 
+          action={() => setOpenModal(loadModal)} 
         />
         <Button
           type="text"
           label="delete"
-          action={() => setOpenModal('delete')}
+          action={() => setOpenModal(deleteModal)}
         />
         <Button
           type="text"

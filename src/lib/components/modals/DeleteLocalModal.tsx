@@ -67,7 +67,7 @@ export function DeleteLocalModal() {
   return (
     <Modal
       title="Delete palette"
-      modalType="delete"
+      modalType="delete-local"
       footer={<ModalCancelBtn label="Close" action={onApplay} />}
     >
       <p className="text-lg text-app-gray-100 ">Select palette saved localy:</p>

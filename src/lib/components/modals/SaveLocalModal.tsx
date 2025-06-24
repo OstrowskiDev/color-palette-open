@@ -1,4 +1,4 @@
-import { saveLocaly } from '@/lib/actions/storeLocaly'
+import { saveLocally } from '@/lib/actions/storeLocaly'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import LabeledState from '@/lib/ui/LabeledState'
 import Modal from '@/lib/ui/Modal'
@@ -13,7 +13,7 @@ export default function SaveLocalModal() {
   const paletteOptions = state
 
   function onSave() {
-    saveLocaly(paletteOptions)
+    saveLocally(paletteOptions)
   }
 
   function onCancel() {

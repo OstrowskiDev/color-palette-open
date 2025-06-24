@@ -27,11 +27,13 @@ export default function Home() {
   const [trigger, setTrigger] = useState<number>(0)
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
   const saveModal = appMode === 'local' ? 'save-local' : 'save-remote'
+  const loadModal = appMode === 'local' ? 'load-local' : 'load-remote'
+  const deleteModal = appMode === 'local' ? 'delete-local' : 'delete-remote'
 
   useKeyboardShortcut(() => setOpenModal(saveModal), 's', openModal)
-  useKeyboardShortcut(() => setOpenModal('load'), 'o', openModal)
-  useKeyboardShortcut(() => setOpenModal('delete'), 'Delete', openModal)
-  useKeyboardShortcut(() => setOpenModal('delete'), 'd', openModal)
+  useKeyboardShortcut(() => setOpenModal(loadModal), 'o', openModal)
+  useKeyboardShortcut(() => setOpenModal(deleteModal), 'Delete', openModal)
+  useKeyboardShortcut(() => setOpenModal(deleteModal), 'd', openModal)
   useKeyboardShortcut(() => setOpenModal('import'), 'i', openModal)
   useKeyboardShortcut(() => setOpenModal('export'), 'e', openModal)
 
@@ -80,8 +82,10 @@ export default function Home() {
       </div>
       {openModal === 'save-local' && <SaveLocalModal />}
       {/* {openModal === 'save-remote' && <SaveRemoteModal />} */}
-      {openModal === 'load' && <LoadLocalModal />}
-      {openModal === 'delete' && <DeleteLocalModal />}
+      {openModal === 'load-local' && <LoadLocalModal />}
+      {/* {openModal === 'load-remote' && <LoadRemoteModal />} */}
+      {openModal === 'delete-local' && <DeleteLocalModal />}
+      {/* {openModal === 'delete-remote' && <DeleteRemoteModal />} */}
       {openModal === 'export' && <ExportModal />}
       {openModal === 'import' && <ImportModal />}
       {/* {openModal === 'signin' && <SigninModal />} */}
