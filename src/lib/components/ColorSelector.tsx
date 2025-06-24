@@ -18,25 +18,6 @@ export default function ColorSelector({
       >
         <ColorWheel isMouseDown={isMouseDown} />
         <OverwriteColorsBtn pathToTwFile={pathToTwFile} />
-        {[...Array(12).keys()].map((i) => {
-          return (
-            <div
-              key={i}
-              className="color-wheel-line"
-              style={{ ['--i' as any]: i }}
-            ></div>
-          )
-        })}
-
-        {[...Array(36).keys()].map((i) => {
-          return (
-            <div
-              key={i}
-              className="color-wheel-short-line"
-              style={{ ['--i' as any]: i }}
-            ></div>
-          )
-        })}
       </div>
     </div>
   )

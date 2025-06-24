@@ -37,7 +37,6 @@ export default function OverwriteColorsBtn({
       <button
         className="apply-btn w-[120px] h-[120px] text-app-gray-200 bg-app-gray-700 border border-app-gray-700 rounded-full cursor-pointer hover:bg-app-gray-600 hover:text-app-gray-50 hover:border-app-gray-800 active:bg-app-gray-800 active:text-app-gray-500 active:border-app-gray-700 z-20"
         onClick={handleClick}
-        style={{ ['--hue' as any]: baseHue }}
       >
         <div className="apply-btn-label-container flex flex-col">
           <span className="apply-btn-label uppercase font-semibold mb-1">

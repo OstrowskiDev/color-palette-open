@@ -45,9 +45,30 @@ export default function ColorWheel({ isMouseDown }: ColorWheelProps) {
           style={{ left: x, top: y, visibility: visibility }}
         ></div>
       ))}
+
       <div
         className={`color-wheel-center ${styles['color-wheel-center']}`}
       ></div>
+
+      {[...Array(12).keys()].map((i) => {
+        return (
+          <div
+            key={i}
+            className={`color-wheel-line ${styles['color-wheel-line']}`}
+            style={{ ['--i' as any]: i }}
+          ></div>
+        )
+      })}
+
+      {[...Array(36).keys()].map((i) => {
+        return (
+          <div
+            key={i}
+            className={`color-wheel-short-line  ${styles['color-wheel-short-line']}`}
+            style={{ ['--i' as any]: i }}
+          ></div>
+        )
+      })}
     </div>
   )
 }
