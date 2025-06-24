@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Palette {
+  id             String      @id
+  baseHue        Int
+  hueOffsetName  String
+  hueOffset      HueOffset   @relation(fields: [hueOffsetName], references: [name])
+  presetSLName   String
+  presetSL       PresetSL    @relation(fields: [presetSLName], references: [name])
+  colorSetNames  String[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model HueOffset {
+  name    String   @id
+  angle   Int[]
+  palettes Palette[]
+}
+
+model PresetSL {
+  name        String   @id
+  sat         Int
+  lightRange  Int[]
+  palettes    Palette[]
+}
