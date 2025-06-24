@@ -10,6 +10,7 @@ import { DeleteLocalModal } from '@/lib/components/modals/DeleteLocalModal'
 import { ExportModal } from '@/lib/components/modals/ExportModal'
 import { ImportModal } from '@/lib/components/modals/ImportModal'
 import { LoadLocalModal } from '@/lib/components/modals/LoadModal'
+import SaveLocalModal from '@/lib/components/modals/SaveLocalModal'
 import OutputPreview from '@/lib/components/OutputPreview'
 import TopBar from '@/lib/components/TopBar'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
@@ -18,15 +19,16 @@ import { useState } from 'react'
 
 export default function Home() {
   const { state, actions } = useColorSettings()
-  const { openModal } = state
+  const { openModal, appMode } = state
   const { setOpenModal } = actions
   const [pathToTwFile, setPathToTwFile] = useState<string>(
     'C:\\Tests\\colors.js',
   )
   const [trigger, setTrigger] = useState<number>(0)
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
+  const saveModal = appMode === 'local' ? 'save-local' : 'save-remote'
 
-  useKeyboardShortcut(() => setOpenModal('save'), 's', openModal)
+  useKeyboardShortcut(() => setOpenModal(saveModal), 's', openModal)
   useKeyboardShortcut(() => setOpenModal('load'), 'o', openModal)
   useKeyboardShortcut(() => setOpenModal('delete'), 'Delete', openModal)
   useKeyboardShortcut(() => setOpenModal('delete'), 'd', openModal)
@@ -76,6 +78,8 @@ export default function Home() {
           </div>
         </ElementWrapper>
       </div>
+      {openModal === 'save-local' && <SaveLocalModal />}
+      {/* {openModal === 'save-remote' && <SaveRemoteModal />} */}
       {openModal === 'load' && <LoadLocalModal />}
       {openModal === 'delete' && <DeleteLocalModal />}
       {openModal === 'export' && <ExportModal />}

@@ -8,7 +8,6 @@ import ModalApplyBtn from '@/lib/ui/ModalApplyBtn'
 import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 import { Palette } from '@/types/palette'
 import { useEffect, useRef, useState } from 'react'
-import InputField from '../InputField'
 import { validatePaletteString } from '@/security/validatePalette'
 
 export function ImportModal() {

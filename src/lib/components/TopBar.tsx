@@ -1,4 +1,3 @@
-import { saveLocaly } from '../actions/storeLocaly'
 import { useColorSettings } from '../hooks/ColorSettingsContext'
 import { appModeOptions } from '../schemas/selectOptions'
 import Button from '../ui/Button'
@@ -6,27 +5,9 @@ import { SelectField } from '../ui/SelectField'
 
 export default function TopBar() {
   const { state, actions } = useColorSettings()
-  const { appMode, paletteName, baseHue, hueOffset, presetSL, colorSetNames } =
-    state
+  const { appMode } = state
   const { setAppMode, setOpenModal } = actions
-
-  const paletteOptions = {
-    paletteName,
-    baseHue,
-    hueOffset,
-    presetSL,
-    colorSetNames,
-  }
-
-  function handleSave() {
-    if (appMode === 'local') {
-      saveLocaly(paletteOptions)
-    } else {
-      //!!!! change to saveRemotely after creating saveRemotely
-      saveLocaly(paletteOptions)
-      // saveRemotely(paletteOptions)
-    }
-  }
+  const saveModal = appMode === 'local' ? 'save-local' : 'save-remote'
 
   return (
     <div className="app-top-bar flex flex-row h-[40px] mx-5 mt-2 mb-[2px]">
@@ -48,7 +29,7 @@ export default function TopBar() {
           type="text" 
           label="save" 
           tailwind="ml-2"
-          action={handleSave} 
+          action={() => setOpenModal(saveModal)} 
         />
         {/* prettier-ignore */}
         <Button 
