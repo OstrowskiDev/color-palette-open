@@ -25,12 +25,12 @@ code {
   width: 16px;
   border-radius: 50%;
   z-index: 3;
-  border: 1px solid hsl(0, 0%, 40%);
-  background-color: hsla(0, 0%, 30%, 0.5);
+  border: 1px solid hsla(0, 0%, 30%, 0.2);
+  background-color: hsla(0, 0%, 30%, 0.4);
   visibility: hidden;
 }
 
-.dot-1 {
+.dot-0 {
   background-color: hsla(0, 0%, 80%, 0.7);
   border: 1px solid white;
   visibility: visible;

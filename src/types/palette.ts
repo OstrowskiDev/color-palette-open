@@ -1,3 +1,6 @@
+import { paletteSchema } from '@/lib/schemas/zodSchemas'
+import { z } from 'zod'
+
 export type Vec2 = [number, number]
 
 export type Coords = { x: number; y: number }
@@ -23,45 +26,12 @@ export interface HueOffset {
 
 export type TailwindColors = Record<string, Record<number, string>>
 
-// !!!! delete if no longer used
-// export interface ColorSettingsProps {
-//   state: {
-//     baseHue: number
-//     hueOffset: HueOffset
-//     presetSL: PresetSL
-//     paletteName: string
-//   }
-//   actions: {
-//     setBaseHue: (value: number) => void
-//     setHueOffset: (value: HueOffset) => void
-//     setPresetSL: (value: PresetSL) => void
-//     setPaletteName: (value: string) => void
-//   }
-// }
+export type Setter<T> = React.Dispatch<React.SetStateAction<T>>
 
-// verify if types below are used:
-export type ShadeMap = Record<
-  '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900',
-  string
->
+export type Palette = z.infer<typeof paletteSchema>
 
-export type ColorSlot = {
-  name: 'primary' | 'accent' | 'highlight'
-  hue: number
-  saturation: number
-  lightnessRange: [number, number]
-  preset: 'soft' | 'bold' | 'muted' | 'pastel'
-  shades: ShadeMap
-}
-
-export type ColorPalette = {
-  id: string
-  name: string
-  mode: 'mono' | 'duo' | 'triadic'
-  createdBy: string
-  createdAt: Date
-  updatedAt: Date
-  colors: ColorSlot[]
-  version?: number
-  tags?: string[]
+export type PaletteOption = {
+  value: Palette | ''
+  label: string
+  hidden?: boolean
 }

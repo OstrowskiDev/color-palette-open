@@ -1,20 +1,30 @@
-import { AppMode, ColorSetNames, HueOffset, PresetSL } from '@/types/palette'
+import {
+  AppMode,
+  ColorSetNames,
+  HueOffset,
+  PresetSL,
+  Setter,
+} from '@/types/palette'
 import { createContext, useContext, useState } from 'react'
 
-interface ColorSettingsState {
+export interface ColorSettingsState {
+  appMode: AppMode
   baseHue: number
   hueOffset: HueOffset
   presetSL: PresetSL
   paletteName: string
   colorSetNames: ColorSetNames
+  openModal: string | null
 }
 
-interface ColorSettingsActions {
-  setBaseHue: React.Dispatch<React.SetStateAction<number>>
-  setHueOffset: React.Dispatch<React.SetStateAction<HueOffset>>
-  setPresetSL: React.Dispatch<React.SetStateAction<PresetSL>>
-  setPaletteName: React.Dispatch<React.SetStateAction<string>>
-  setColorSetNames: React.Dispatch<React.SetStateAction<ColorSetNames>>
+export interface ColorSettingsActions {
+  setAppMode: Setter<AppMode>
+  setBaseHue: Setter<number>
+  setHueOffset: Setter<HueOffset>
+  setPresetSL: Setter<PresetSL>
+  setPaletteName: Setter<string>
+  setColorSetNames: Setter<ColorSetNames>
+  setOpenModal: Setter<string | null>
 }
 
 interface ColorSettingsContextType {
@@ -48,6 +58,7 @@ export function ColorSettingsProvider({
     'accent',
     'highlight',
   ])
+  const [openModal, setOpenModal] = useState<string | null>(null)
 
   const state = {
     appMode,
@@ -56,6 +67,7 @@ export function ColorSettingsProvider({
     presetSL,
     paletteName,
     colorSetNames,
+    openModal,
   }
   const actions = {
     setAppMode,
@@ -64,6 +76,7 @@ export function ColorSettingsProvider({
     setPresetSL,
     setPaletteName,
     setColorSetNames,
+    setOpenModal,
   }
 
   return (

@@ -1,5 +1,4 @@
-import { Coords, HueOffset, Vec2 } from '@/types/palette'
-import { calcHue } from './hue'
+import { HueOffset } from '@/types/palette'
 
 export function calcPositionOnCircle(angle: number): { x: number; y: number } {
   const r = 250 / 2
@@ -11,35 +10,26 @@ export function calcPositionOnCircle(angle: number): { x: number; y: number } {
   }
 }
 
-function positionDotsOnCircle(hueOffset: HueOffset, newAngle: number) {
-  const dotsNum = hueOffset.angle.length
-  const dots = [1, 2, 3].map((num) => {
-    return document.querySelector<HTMLDivElement>(`.dot-${num}`)
-  })
-  dots.forEach((dot, i) => {
-    if (!dot) return
-    if (dotsNum > i) {
-      const { x, y } = calcPositionOnCircle(newAngle + hueOffset.angle[i])
-      dot.style.left = `${x}px`
-      dot.style.top = `${y}px`
-      dot.style.visibility = 'visible'
-    } else {
-      dot.style.visibility = 'hidden'
-    }
-  })
+interface Dot {
+  x: number
+  y: number
+  visibility: 'visible' | 'hidden'
 }
 
-export function positionDotsFromCoords(
-  vecAB: Vec2,
-  vecAC: Vec2,
-  hueOffset: HueOffset,
-  coords: Coords,
-): void {
-  const newAngle = calcHue(vecAB, vecAC, coords) + 180
-  positionDotsOnCircle(hueOffset, newAngle)
+function positionDotsOnCircle(hueOffset: HueOffset, newAngle: number) {
+  const dotsNum = hueOffset.angle.length
+  const dots: Dot[] = [0, 1, 2].map((i) => {
+    if (dotsNum > i) {
+      const { x, y } = calcPositionOnCircle(newAngle + hueOffset.angle[i])
+      return { x, y, visibility: 'visible' }
+    } else {
+      return { x: 0, y: 0, visibility: 'hidden' }
+    }
+  })
+  return dots
 }
 
 export function positionDotsFromHue(baseHue: number, hueOffset: HueOffset) {
   const newAngle = baseHue + 180
-  positionDotsOnCircle(hueOffset, newAngle)
+  return positionDotsOnCircle(hueOffset, newAngle)
 }

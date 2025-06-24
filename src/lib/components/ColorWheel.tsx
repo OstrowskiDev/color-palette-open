@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react'
 import { calcHue } from '../utils/hue'
-import { positionDotsFromCoords, positionDotsFromHue } from '../utils/position'
+import { positionDotsFromHue } from '../utils/position'
 import styles from './ColorWheel.module.css'
 import { useColorSettings } from '../hooks/ColorSettingsContext'
 
@@ -13,40 +12,23 @@ export default function ColorWheel({ isMouseDown }: ColorWheelProps) {
   const { baseHue, hueOffset } = state
   const { setBaseHue } = actions
 
-  const [coords, setCoords] = useState<{ x: number; y: number }>({
-    x: 150,
-    y: 150,
-  })
+  const dotsData = positionDotsFromHue(baseHue, hueOffset)
 
-  const a = { x: 150, y: 150 }
-  const b = { ...coords }
-  const c = { x: 150, y: 0 }
+  function setHueFromWheel(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const a = { x: 150, y: 150 }
+    const b = { x: e.clientX - rect.left, y: e.clientY - rect.top }
+    const c = { x: 150, y: 0 }
 
-  const vecAB: [number, number] = [a.x - b.x, a.y - b.y]
-  const vecAC: [number, number] = [a.x - c.x, a.y - c.y]
+    const vecAB: [number, number] = [a.x - b.x, a.y - b.y]
+    const vecAC: [number, number] = [a.x - c.x, a.y - c.y]
 
-  useEffect(() => {
-    positionDotsFromHue(baseHue, hueOffset)
-  }, [baseHue])
-
-  useEffect(() => {
-    positionDotsFromCoords(vecAB, vecAC, hueOffset, coords)
-  }, [coords, hueOffset])
-
-  function getHueFromWheel() {
-    const newHue = calcHue(vecAB, vecAC, coords)
+    const newHue = calcHue(vecAB, vecAC, b)
     setBaseHue(newHue)
   }
 
-  function getMouseCoords(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    const rect = e.currentTarget.getBoundingClientRect()
-    setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top })
-  }
-
   function handleMouseEvents(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    getHueFromWheel()
-    getMouseCoords(e)
-    positionDotsFromCoords(vecAB, vecAC, hueOffset, coords)
+    setHueFromWheel(e)
   }
 
   return (
@@ -56,18 +38,37 @@ export default function ColorWheel({ isMouseDown }: ColorWheelProps) {
       onMouseDown={handleMouseEvents}
       onMouseUp={handleMouseEvents}
     >
-      {[1, 2, 3].map((num) => (
+      {dotsData.map(({ x, y, visibility }, i) => (
         <div
-          key={num}
-          className={`dot dot-${num}`}
-          style={{ visibility: 'hidden' }}
+          key={i}
+          className={`dot dot-${i}`}
+          style={{ left: x, top: y, visibility: visibility }}
         ></div>
       ))}
-      <div className={`color-wheel-center ${styles['color-wheel-center']}`}>
-        <p>color: {baseHue}</p>
-        <p>calcHue: {calcHue(vecAB, vecAC, coords)}</p>
-        <p>coords: {`${b.x}, ${b.y}`}</p>
-      </div>
+
+      <div
+        className={`color-wheel-center ${styles['color-wheel-center']}`}
+      ></div>
+
+      {[...Array(12).keys()].map((i) => {
+        return (
+          <div
+            key={i}
+            className={`color-wheel-line ${styles['color-wheel-line']}`}
+            style={{ ['--i' as any]: i }}
+          ></div>
+        )
+      })}
+
+      {[...Array(36).keys()].map((i) => {
+        return (
+          <div
+            key={i}
+            className={`color-wheel-short-line  ${styles['color-wheel-short-line']}`}
+            style={{ ['--i' as any]: i }}
+          ></div>
+        )
+      })}
     </div>
   )
 }
