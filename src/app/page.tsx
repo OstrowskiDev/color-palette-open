@@ -11,7 +11,6 @@ import { ExportModal } from '@/lib/components/modals/ExportModal'
 import { ImportModal } from '@/lib/components/modals/ImportModal'
 import { LoadLocalModal } from '@/lib/components/modals/LoadModal'
 import OutputPreview from '@/lib/components/OutputPreview'
-import OverwriteColorsBtn from '@/lib/components/OverwriteColorsBtn'
 import TopBar from '@/lib/components/TopBar'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import { useKeyboardShortcut } from '@/lib/hooks/useKeyboardShortcut'
@@ -52,7 +51,10 @@ export default function Home() {
       <div className="main-app-container select-none flex flex-col flex-wrap h-[740px] px-5 gap-x-5">
         <ElementWrapper label={'color settings'} tailwind={'h-[480px]'}>
           <ColorSettings />
-          <ColorSelector isMouseDown={isMouseDown} />
+          <ColorSelector
+            isMouseDown={isMouseDown}
+            pathToTwFile={pathToTwFile}
+          />
           <InputField
             value={pathToTwFile}
             setValue={setPathToTwFile}
@@ -71,7 +73,6 @@ export default function Home() {
         <ElementWrapper label={'tests'} tailwind={'h-[210px]'}>
           <div>
             <div className="w-20 h-20 bg-primary-500 border border-amber-100"></div>
-            <OverwriteColorsBtn pathToTwFile={pathToTwFile} />
           </div>
         </ElementWrapper>
       </div>

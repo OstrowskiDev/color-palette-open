@@ -133,3 +133,29 @@ input[type='number'] {
   transition: 0s 0s;
   opacity: 1;
 }
+
+.color-wheel-line {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  width: 1px;
+  height: 60px;
+  background-color: hsl(calc(var(--i) * 30deg + 15deg), 80%, 50%);
+  transform-origin: bottom center;
+  transform: rotate(calc(var(--i) * 30deg + 15deg)) translateY(-62px);
+  z-index: 2;
+  cursor: pointer;
+}
+
+.color-wheel-short-line {
+  position: absolute;
+  top: 140px;
+  left: 50%;
+  width: 1px;
+  height: 10px;
+  background-color: hsl(calc(var(--i) * 10deg + 5deg), 80%, 50%);
+  transform-origin: bottom center;
+  transform: rotate(calc(var(--i) * 10deg + 5deg)) translateY(-100px);
+  z-index: 2;
+  cursor: pointer;
+}

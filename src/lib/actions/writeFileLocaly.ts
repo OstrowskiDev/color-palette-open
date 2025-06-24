@@ -8,16 +8,16 @@ export async function writeFileLocaly(
   colorsObject: TailwindColors,
   pathToTwFile: string,
 ) {
-  if (!colorsObject) return { message: 'Incorrect data' }
+  if (!colorsObject) return { message: 'Ooops!' }
   const fileContent =
     'export const testColors = ' + JSON.stringify(colorsObject, null, 2) + '\n'
 
   const filePath = path.join(process.cwd(), 'src/lib/tailwind/testColors.js')
   try {
     writeFileSync(filePath, fileContent, 'utf8')
-    return { message: 'File written successfully' }
+    return { message: 'Success!' }
   } catch (error) {
     console.error('Write error:', error)
-    return { message: 'Failed to write file' }
+    return { message: 'Ooops!' }
   }
 }
