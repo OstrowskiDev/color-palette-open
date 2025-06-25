@@ -84,6 +84,7 @@ export default function Home() {
           </div>
         </ElementWrapper>
       </div>
+
       {openModal === 'save-local' && <SaveLocalModal />}
       {openModal === 'save-remote' && <SaveRemoteModal />}
       {openModal === 'load-local' && <LoadLocalModal />}

@@ -15,7 +15,6 @@ import { MessageModal } from './MessageModal'
 
 export function DeleteRemoteModal() {
   const { state, actions } = useColorSettings()
-  const { showAppLoader } = state
   const { setOpenModal, setShowAppLoader } = actions
 
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -44,7 +43,6 @@ export function DeleteRemoteModal() {
   useEffect(() => {
     if (selectedPalette) setPaletteStates(selectedPalette, actions)
   }, [selectedPalette])
-  // !!!! add spiner/loader here
   if (isLoading) return null
   if (remotePalettes.length === 0) {
     return (

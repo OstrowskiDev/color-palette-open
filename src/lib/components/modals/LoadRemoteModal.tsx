@@ -42,7 +42,6 @@ export default function LoadRemoteModal() {
     if (selectedPalette) setPaletteStates(selectedPalette, actions)
   }, [selectedPalette])
 
-  // !!!! add spiner/loader here
   if (showAppLoader) return null
 
   if (remotePalettes.length === 0) {

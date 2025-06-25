@@ -55,8 +55,8 @@ export default function TopBar() {
         />
         <Button
           type="text"
-          label="signin"
-          action={() => setOpenModal('signin')}
+          label="settings"
+          action={() => setOpenModal('settings')}
         />
       </div>
     </div>
