@@ -66,7 +66,7 @@ export default function Home() {
             label="path to file"
             type="text"
             inputTailwind="w-[260px]"
-            labelClasses="w-[90pxpx] ml-6"
+            labelClasses="w-[90px] ml-6"
           />
         </ElementWrapper>
         <ElementWrapper label={'tailwind palettes'} tailwind={'h-[210px]'}>

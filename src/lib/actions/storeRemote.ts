@@ -22,15 +22,15 @@ export async function saveRemote(paletteOptions: any) {
       where: { id: palette.id },
       update: {
         baseHue: palette.baseHue,
-        hueOffset: { connect: { name: palette.hueOffsetName } },
-        presetSL: { connect: { name: palette.presetSLName } },
+        hueOffset: { connect: { name: palette.hueOffset.name } },
+        presetSL: { connect: { name: palette.presetSL.name } },
         colorSetNames: palette.colorSetNames,
       },
       create: {
         id: palette.id,
         baseHue: palette.baseHue,
-        hueOffset: { connect: { name: palette.hueOffsetName } },
-        presetSL: { connect: { name: palette.presetSLName } },
+        hueOffset: { connect: { name: palette.hueOffset.name } },
+        presetSL: { connect: { name: palette.presetSL.name } },
         colorSetNames: palette.colorSetNames,
       },
     })

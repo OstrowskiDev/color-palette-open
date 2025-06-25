@@ -48,13 +48,11 @@ export default function LoadLocalModal() {
     palettesOptions.unshift({ label: 'current palette', value: currentPalette })
 
   function onCancel() {
-    console.log('🚀 ~ onCancel ~ ')
     setPaletteStates(currentPalette!, actions)
     setOpenModal(null)
   }
 
   function onApplay() {
-    console.log('🚀 ~ onApply ~ ')
     setOpenModal(null)
   }
 
