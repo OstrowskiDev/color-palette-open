@@ -2,7 +2,7 @@ import {
   getCurrentPallette,
   setPaletteStates,
 } from '@/lib/actions/paletteStates'
-import { getLocalPalettes } from '@/lib/actions/readLocaly'
+import { getLocalPalettes } from '@/lib/actions/readLocally'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import Modal from '@/lib/ui/Modal'
 import ModalApplyBtn from '@/lib/ui/ModalApplyBtn'
@@ -10,7 +10,7 @@ import { SelectField } from '@/lib/ui/SelectField'
 import { Palette, PaletteOption } from '@/types/palette'
 import { useEffect, useState } from 'react'
 import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
-import { deleteLocaly } from '@/lib/actions/deleteLocaly'
+import { deleteLocally } from '@/lib/actions/deleteLocally'
 import { MessageModal } from './MessageModal'
 
 export function DeleteLocalModal() {
@@ -62,7 +62,7 @@ export function DeleteLocalModal() {
 
   async function onDelete() {
     if (!selectedPalette) return
-    await deleteLocaly(selectedPalette.id)
+    await deleteLocally(selectedPalette.id)
     const newData = await getLocalPalettes()
     setLocalPalettes(newData)
   }

@@ -3,7 +3,7 @@
 import path from 'path'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 
-export async function deleteLocaly(paletteObjectId: string) {
+export async function deleteLocally(paletteObjectId: string) {
   const filePath = path.join(process.cwd(), 'src/data/palettes.json')
   try {
     let palettes = []

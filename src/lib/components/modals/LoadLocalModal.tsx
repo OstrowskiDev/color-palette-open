@@ -2,7 +2,7 @@ import {
   getCurrentPallette,
   setPaletteStates,
 } from '@/lib/actions/paletteStates'
-import { getLocalPalettes } from '@/lib/actions/readLocaly'
+import { getLocalPalettes } from '@/lib/actions/readLocally'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import Modal from '@/lib/ui/Modal'
 import ModalApplyBtn from '@/lib/ui/ModalApplyBtn'

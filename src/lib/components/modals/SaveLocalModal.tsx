@@ -1,4 +1,4 @@
-import { saveLocally } from '@/lib/actions/storeLocaly'
+import { saveLocally } from '@/lib/actions/storeLocally'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import LabeledState from '@/lib/ui/LabeledState'
 import Modal from '@/lib/ui/Modal'
