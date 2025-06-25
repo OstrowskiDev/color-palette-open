@@ -9,8 +9,9 @@ import ListenToResize from '@/lib/components/ListenToResize'
 import { DeleteLocalModal } from '@/lib/components/modals/DeleteLocalModal'
 import { ExportModal } from '@/lib/components/modals/ExportModal'
 import { ImportModal } from '@/lib/components/modals/ImportModal'
-import { LoadLocalModal } from '@/lib/components/modals/LoadModal'
+import LoadLocalModal from '@/lib/components/modals/LoadLocalModal'
 import SaveLocalModal from '@/lib/components/modals/SaveLocalModal'
+import SaveRemoteModal from '@/lib/components/modals/SaveRemoteModal'
 import OutputPreview from '@/lib/components/OutputPreview'
 import TopBar from '@/lib/components/TopBar'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
@@ -81,7 +82,7 @@ export default function Home() {
         </ElementWrapper>
       </div>
       {openModal === 'save-local' && <SaveLocalModal />}
-      {/* {openModal === 'save-remote' && <SaveRemoteModal />} */}
+      {openModal === 'save-remote' && <SaveRemoteModal />}
       {openModal === 'load-local' && <LoadLocalModal />}
       {/* {openModal === 'load-remote' && <LoadRemoteModal />} */}
       {openModal === 'delete-local' && <DeleteLocalModal />}

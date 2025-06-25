@@ -12,7 +12,7 @@ import { Palette, PaletteOption } from '@/types/palette'
 import { useEffect, useState } from 'react'
 import { NoPaletteFoundModal } from './NoPaletteFoundModal'
 
-export function LoadLocalModal() {
+export default function LoadLocalModal() {
   const [localPalettes, setLocalPalettes] = useState<Palette[]>([])
   const [currentPalette, setCurrentPalette] = useState<Palette | null>(null)
   const [selectedPalette, setSelectedPalette] = useState<Palette | null>(null)
@@ -48,11 +48,13 @@ export function LoadLocalModal() {
     palettesOptions.unshift({ label: 'current palette', value: currentPalette })
 
   function onCancel() {
+    console.log('🚀 ~ onCancel ~ ')
     setPaletteStates(currentPalette!, actions)
     setOpenModal(null)
   }
 
   function onApplay() {
+    console.log('🚀 ~ onApply ~ ')
     setOpenModal(null)
   }
 

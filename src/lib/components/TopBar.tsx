@@ -10,7 +10,6 @@ export default function TopBar() {
   const saveModal = appMode === 'local' ? 'save-local' : 'save-remote'
   const loadModal = appMode === 'local' ? 'load-local' : 'load-remote'
   const deleteModal = appMode === 'local' ? 'delete-local' : 'delete-remote'
-
   return (
     <div className="app-top-bar flex flex-row h-[40px] mx-5 mt-2 mb-[2px]">
       <div className="app-logo w-56 relative bottom-2 flex flex-row">

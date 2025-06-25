@@ -26,8 +26,9 @@ export default function Modal({
     window.addEventListener('keydown', handleEsc)
     return () => window.removeEventListener('keydown', handleEsc)
   }, [openModal])
-
-  if (openModal !== modalType) return null
+  console.log('🚀 ~ modalType:', modalType)
+  console.log('🚀 ~ openModal:', openModal)
+  // if (openModal !== modalType) return null
 
   return (
     <div className="fixed inset-0 bg-black/20 z-50 flex items-center justify-center">

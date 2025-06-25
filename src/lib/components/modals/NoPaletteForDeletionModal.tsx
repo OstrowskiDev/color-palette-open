@@ -13,7 +13,7 @@ export function NoPaletteForDeletionModal() {
   return (
     <Modal
       title="No palettes found"
-      modalType="load"
+      modalType="delete-local"
       footer={
         <>
           <ModalApplyBtn label="Close" action={onApplay} />

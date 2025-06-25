@@ -13,7 +13,7 @@ export function NoPaletteFoundModal() {
   return (
     <Modal
       title="No palettes found"
-      modalType="load"
+      modalType="load-local"
       footer={
         <>
           <ModalApplyBtn label="Close" action={onApplay} />
