@@ -7,6 +7,7 @@ import ElementWrapper from '@/lib/components/ElementWrapper'
 import InputField from '@/lib/components/InputField'
 import ListenToResize from '@/lib/components/ListenToResize'
 import { DeleteLocalModal } from '@/lib/components/modals/DeleteLocalModal'
+import { DeleteRemoteModal } from '@/lib/components/modals/DeleteRemoteModal'
 import { ExportModal } from '@/lib/components/modals/ExportModal'
 import { ImportModal } from '@/lib/components/modals/ImportModal'
 import LoadLocalModal from '@/lib/components/modals/LoadLocalModal'
@@ -87,7 +88,7 @@ export default function Home() {
       {openModal === 'load-local' && <LoadLocalModal />}
       {openModal === 'load-remote' && <LoadRemoteModal />}
       {openModal === 'delete-local' && <DeleteLocalModal />}
-      {/* {openModal === 'delete-remote' && <DeleteRemoteModal />} */}
+      {openModal === 'delete-remote' && <DeleteRemoteModal />}
       {openModal === 'export' && <ExportModal />}
       {openModal === 'import' && <ImportModal />}
       {/* {openModal === 'signin' && <SigninModal />} */}
