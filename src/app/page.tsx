@@ -18,11 +18,12 @@ import OutputPreview from '@/lib/components/OutputPreview'
 import TopBar from '@/lib/components/TopBar'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import { useKeyboardShortcut } from '@/lib/hooks/useKeyboardShortcut'
+import { Loader } from '@/lib/ui/Loader'
 import { useState } from 'react'
 
 export default function Home() {
   const { state, actions } = useColorSettings()
-  const { openModal, appMode } = state
+  const { openModal, appMode, showAppLoader } = state
   const { setOpenModal } = actions
   const [pathToTwFile, setPathToTwFile] = useState<string>(
     'C:\\Tests\\colors.js',
@@ -91,7 +92,8 @@ export default function Home() {
       {openModal === 'delete-remote' && <DeleteRemoteModal />}
       {openModal === 'export' && <ExportModal />}
       {openModal === 'import' && <ImportModal />}
-      {/* {openModal === 'signin' && <SigninModal />} */}
+
+      {showAppLoader && <Loader />}
     </div>
   )
 }

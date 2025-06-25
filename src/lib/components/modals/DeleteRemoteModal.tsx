@@ -15,20 +15,23 @@ import { MessageModal } from './MessageModal'
 
 export function DeleteRemoteModal() {
   const { state, actions } = useColorSettings()
-  const { setOpenModal } = actions
+  const { showAppLoader } = state
+  const { setOpenModal, setShowAppLoader } = actions
 
-  const [isLoaded, setIsLoaded] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [remotePalettes, setRemotePalettes] = useState<Palette[]>([])
   const [currentPalette, setCurrentPalette] = useState<Palette | null>(null)
   const [selectedPalette, setSelectedPalette] = useState<Palette | null>(null)
 
   useEffect(() => {
     async function fetchPalettes() {
+      setShowAppLoader(true)
       const results = await getRemotePalettes()
       results
         ? setRemotePalettes(results as unknown as Palette[])
         : setRemotePalettes([])
-      setIsLoaded(true)
+      setShowAppLoader(false)
+      setIsLoading(false)
     }
     fetchPalettes()
   }, [])
@@ -42,7 +45,7 @@ export function DeleteRemoteModal() {
     if (selectedPalette) setPaletteStates(selectedPalette, actions)
   }, [selectedPalette])
   // !!!! add spiner/loader here
-  if (!isLoaded) return null
+  if (isLoading) return null
   if (remotePalettes.length === 0) {
     return (
       <MessageModal
@@ -67,11 +70,13 @@ export function DeleteRemoteModal() {
 
   async function onDelete() {
     if (!selectedPalette) return
+    setShowAppLoader(true)
     await deleteRemote(selectedPalette.id)
     const newData = await getRemotePalettes()
     newData
       ? setRemotePalettes(newData as unknown as Palette[])
       : setRemotePalettes([])
+    setShowAppLoader(false)
   }
 
   function onApplay() {

@@ -13,21 +13,22 @@ import { getRemotePalettes } from '@/lib/actions/readRemote'
 import { MessageModal } from './MessageModal'
 
 export default function LoadRemoteModal() {
-  const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [remotePalettes, setRemotePalettes] = useState<Palette[]>([])
   const [currentPalette, setCurrentPalette] = useState<Palette | null>(null)
   const [selectedPalette, setSelectedPalette] = useState<Palette | null>(null)
 
   const { state, actions } = useColorSettings()
-  const { setOpenModal } = actions
+  const { showAppLoader } = state
+  const { setOpenModal, setShowAppLoader } = actions
 
   useEffect(() => {
     async function fetchPalettes() {
+      setShowAppLoader(true)
       const results = await getRemotePalettes()
       results
         ? setRemotePalettes(results as unknown as Palette[])
         : setRemotePalettes([])
-      setIsLoaded(true)
+      setShowAppLoader(false)
     }
     fetchPalettes()
   }, [])
@@ -42,7 +43,7 @@ export default function LoadRemoteModal() {
   }, [selectedPalette])
 
   // !!!! add spiner/loader here
-  if (!isLoaded) return null
+  if (showAppLoader) return null
 
   if (remotePalettes.length === 0) {
     return (
