@@ -9,8 +9,8 @@ import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 import { SelectField } from '@/lib/ui/SelectField'
 import { Palette, PaletteOption } from '@/types/palette'
 import { useEffect, useState } from 'react'
-import { NoPaletteFoundModal } from './NoPaletteFoundModal'
 import { getRemotePalettes } from '@/lib/actions/readRemote'
+import { MessageModal } from './MessageModal'
 
 export default function LoadRemoteModal() {
   const [remotePalettes, setRemotePalettes] = useState<Palette[]>([])
@@ -39,7 +39,15 @@ export default function LoadRemoteModal() {
     if (selectedPalette) setPaletteStates(selectedPalette, actions)
   }, [selectedPalette])
 
-  if (remotePalettes.length === 0) return <NoPaletteFoundModal />
+  if (remotePalettes.length === 0) {
+    return (
+      <MessageModal
+        title="No palettes found in DB"
+        modalType="load-remote"
+        message="Save created palettes using save button so they can be loaded here later."
+      />
+    )
+  }
 
   const palettesOptions: PaletteOption[] = remotePalettes.map((palette) => ({
     value: palette,

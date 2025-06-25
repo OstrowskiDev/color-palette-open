@@ -10,7 +10,7 @@ import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 import { SelectField } from '@/lib/ui/SelectField'
 import { Palette, PaletteOption } from '@/types/palette'
 import { useEffect, useState } from 'react'
-import { NoPaletteFoundModal } from './NoPaletteFoundModal'
+import { MessageModal } from './MessageModal'
 
 export default function LoadLocalModal() {
   const [localPalettes, setLocalPalettes] = useState<Palette[]>([])
@@ -37,7 +37,15 @@ export default function LoadLocalModal() {
     if (selectedPalette) setPaletteStates(selectedPalette, actions)
   }, [selectedPalette])
 
-  if (localPalettes.length === 0) return <NoPaletteFoundModal />
+  if (localPalettes.length === 0) {
+    return (
+      <MessageModal
+        title="No palettes found locally"
+        modalType="load-local"
+        message="Save created palettes using save button so they can be loaded here later."
+      />
+    )
+  }
 
   const palettesOptions: PaletteOption[] = localPalettes.map((palette) => ({
     value: palette,

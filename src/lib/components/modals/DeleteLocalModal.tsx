@@ -11,7 +11,7 @@ import { Palette, PaletteOption } from '@/types/palette'
 import { useEffect, useState } from 'react'
 import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 import { deleteLocaly } from '@/lib/actions/deleteLocaly'
-import { NoPaletteForDeletionModal } from './NoPaletteForDeletionModal'
+import { MessageModal } from './MessageModal'
 
 export function DeleteLocalModal() {
   const { state, actions } = useColorSettings()
@@ -38,7 +38,15 @@ export function DeleteLocalModal() {
     if (selectedPalette) setPaletteStates(selectedPalette, actions)
   }, [selectedPalette])
 
-  if (localPalettes.length === 0) return <NoPaletteForDeletionModal />
+  if (localPalettes.length === 0) {
+    return (
+      <MessageModal
+        title="No palettes found locally"
+        modalType="delete-local"
+        message="There are no palettes that could be deleted. If you have saved palettes locally make sure that palettes.json is inside src/data/ dir."
+      />
+    )
+  }
 
   const palettesOptions: PaletteOption[] = localPalettes.map((palette) => ({
     value: palette,
