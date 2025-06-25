@@ -10,6 +10,7 @@ import { DeleteLocalModal } from '@/lib/components/modals/DeleteLocalModal'
 import { ExportModal } from '@/lib/components/modals/ExportModal'
 import { ImportModal } from '@/lib/components/modals/ImportModal'
 import LoadLocalModal from '@/lib/components/modals/LoadLocalModal'
+import LoadRemoteModal from '@/lib/components/modals/LoadRemoteModal'
 import SaveLocalModal from '@/lib/components/modals/SaveLocalModal'
 import SaveRemoteModal from '@/lib/components/modals/SaveRemoteModal'
 import OutputPreview from '@/lib/components/OutputPreview'
@@ -84,7 +85,7 @@ export default function Home() {
       {openModal === 'save-local' && <SaveLocalModal />}
       {openModal === 'save-remote' && <SaveRemoteModal />}
       {openModal === 'load-local' && <LoadLocalModal />}
-      {/* {openModal === 'load-remote' && <LoadRemoteModal />} */}
+      {openModal === 'load-remote' && <LoadRemoteModal />}
       {openModal === 'delete-local' && <DeleteLocalModal />}
       {/* {openModal === 'delete-remote' && <DeleteRemoteModal />} */}
       {openModal === 'export' && <ExportModal />}
