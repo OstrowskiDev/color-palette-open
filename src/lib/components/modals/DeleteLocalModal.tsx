@@ -68,7 +68,7 @@ export function DeleteLocalModal() {
     setLocalPalettes(newData)
   }
 
-  function onApplay() {
+  function onClose() {
     setPaletteStates(currentPalette!, actions)
     setOpenModal(null)
   }
@@ -77,9 +77,11 @@ export function DeleteLocalModal() {
     <Modal
       title="Delete palette"
       modalType="delete-local"
-      footer={<ModalCancelBtn label="Close" action={onApplay} />}
+      footer={<ModalCancelBtn label="Close" action={onClose} />}
     >
-      <p className="text-lg text-app-gray-100 ">Select palette saved localy:</p>
+      <p className="text-lg text-app-gray-100 ">
+        Select palette saved locally:
+      </p>
       <div className="modal-content flex flex-row items-center mt-2">
         <SelectField
           options={palettesOptions}
