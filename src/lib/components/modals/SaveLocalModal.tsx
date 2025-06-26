@@ -9,11 +9,12 @@ export default function SaveLocalModal() {
   const { state, actions } = useColorSettings()
   //prettier-ignore
   const { baseHue, hueOffset, presetSL, paletteName, colorSetNames } = state
-  const { setOpenModal } = actions
+  const { setOpenModal, setTerminalText } = actions
   const paletteOptions = state
 
-  function onSave() {
-    saveLocally(paletteOptions)
+  async function onSave() {
+    const result = await saveLocally(paletteOptions)
+    setTerminalText((prev) => [...prev, result.message])
   }
 
   function onCancel() {

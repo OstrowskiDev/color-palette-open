@@ -17,9 +17,15 @@ export async function deleteLocally(paletteObjectId: string) {
     const newPalettes = palettes.filter((p: any) => p.id !== paletteObjectId)
     writeFileSync(filePath, JSON.stringify(newPalettes, null, 2), 'utf-8')
 
-    return { message: 'Success' }
+    return {
+      success: true,
+      message: `palette "${paletteObjectId}" removed from local storage`,
+    }
   } catch (error) {
     console.error('Error saving palette:', error)
-    return { message: 'Failed' }
+    return {
+      success: false,
+      message: `failed to delete "${paletteObjectId}" from local storage`,
+    }
   }
 }

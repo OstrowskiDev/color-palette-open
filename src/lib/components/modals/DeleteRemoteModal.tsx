@@ -15,7 +15,7 @@ import { MessageModal } from './MessageModal'
 
 export function DeleteRemoteModal() {
   const { state, actions } = useColorSettings()
-  const { setOpenModal, setShowAppLoader } = actions
+  const { setOpenModal, setShowAppLoader, setTerminalText } = actions
 
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [remotePalettes, setRemotePalettes] = useState<Palette[]>([])
@@ -69,7 +69,8 @@ export function DeleteRemoteModal() {
   async function onDelete() {
     if (!selectedPalette) return
     setShowAppLoader(true)
-    await deleteRemote(selectedPalette.id)
+    const result = await deleteRemote(selectedPalette.id)
+    setTerminalText((prev) => [...prev, result.message])
     const newData = await getRemotePalettes()
     newData
       ? setRemotePalettes(newData as unknown as Palette[])

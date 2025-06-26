@@ -2,6 +2,7 @@
 
 import prisma from '@/lib/prisma'
 import { paletteSchema } from '../schemas/zodSchemas'
+import { success } from 'zod/v4'
 
 export async function saveRemote(paletteOptions: any) {
   const paletteObject = {
@@ -13,7 +14,11 @@ export async function saveRemote(paletteOptions: any) {
   }
   const parsed = paletteSchema.safeParse(paletteObject)
   if (!parsed.success) {
-    return { message: 'Invalid data', errors: parsed.error.format() }
+    return {
+      success: false,
+      message: 'Invalid data',
+      errors: parsed.error.format(),
+    }
   }
   const palette = parsed.data
 
@@ -35,9 +40,15 @@ export async function saveRemote(paletteOptions: any) {
       },
     })
 
-    return { success: true, data: response }
+    return {
+      success: true,
+      message: `palette "${paletteOptions.paletteName}" saved to remote database`,
+    }
   } catch (error: any) {
     console.error('DB save error:', error)
-    return { success: false, message: 'Database error', error: error.message }
+    return {
+      success: false,
+      message: `failed to save "${paletteOptions.paletteName}" to remote database`,
+    }
   }
 }

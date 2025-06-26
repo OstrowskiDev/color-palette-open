@@ -1,12 +1,11 @@
 import { useColorSettings } from '../hooks/ColorSettingsContext'
-import { appModeOptions } from '../schemas/selectOptions'
 import Button from '../ui/Button'
-import { SelectField } from '../ui/SelectField'
+import AppModeSelector from './AppModeSelector'
 
 export default function TopBar() {
   const { state, actions } = useColorSettings()
   const { appMode } = state
-  const { setAppMode, setOpenModal } = actions
+  const { setOpenModal } = actions
   const saveModal = appMode === 'local' ? 'save-local' : 'save-remote'
   const loadModal = appMode === 'local' ? 'load-local' : 'load-remote'
   const deleteModal = appMode === 'local' ? 'delete-local' : 'delete-remote'
@@ -17,14 +16,7 @@ export default function TopBar() {
         <p className="font-semibold">PALETTE TOOLS</p>
       </div>
       <div className="toolbar relative flex flex-row w-full justify-end items-end z-10">
-        <SelectField
-          options={appModeOptions}
-          value={appMode}
-          setValue={setAppMode}
-          label="App Mode"
-          labelClasses="w-[80px] mr-1"
-          optionsWidth="80px"
-        />
+        <AppModeSelector />
         {/* prettier-ignore */}
         <Button 
           type="text" 

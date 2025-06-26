@@ -4,69 +4,134 @@
     "baseHue": 255,
     "hueOffset": {
       "name": "split-complementary",
-      "angle": [0, 150, -150]
+      "angle": [
+        0,
+        150,
+        -150
+      ]
     },
     "presetSL": {
       "name": "natural",
       "sat": 60,
-      "lightRange": [96, 92, 87, 80, 72, 64, 56, 48, 40, 32, 24]
+      "lightRange": [
+        96,
+        92,
+        87,
+        80,
+        72,
+        64,
+        56,
+        48,
+        40,
+        32,
+        24
+      ]
     },
-    "colorSetNames": ["primary", "accent", "highlight"]
+    "colorSetNames": [
+      "primary",
+      "accent",
+      "highlight"
+    ]
   },
   {
     "id": "compl blue orange",
     "baseHue": 208,
     "hueOffset": {
       "name": "complementary",
-      "angle": [0, 180]
+      "angle": [
+        0,
+        180
+      ]
     },
     "presetSL": {
       "name": "contrasts",
       "sat": 100,
-      "lightRange": [97, 94, 88, 78, 65, 55, 45, 35, 25, 18, 10]
+      "lightRange": [
+        97,
+        94,
+        88,
+        78,
+        65,
+        55,
+        45,
+        35,
+        25,
+        18,
+        10
+      ]
     },
-    "colorSetNames": ["primary", "accent", "highlight"]
-  },
-  {
-    "id": "new palette 3",
-    "baseHue": 174,
-    "hueOffset": {
-      "name": "triadic",
-      "angle": [0, 120, -120]
-    },
-    "presetSL": {
-      "name": "contrasts",
-      "sat": 100,
-      "lightRange": [97, 94, 88, 78, 65, 55, 45, 35, 25, 18, 10]
-    },
-    "colorSetNames": ["primary", "accent", "highlight"]
+    "colorSetNames": [
+      "primary",
+      "accent",
+      "highlight"
+    ]
   },
   {
     "id": "comp. green",
     "baseHue": 111,
     "hueOffset": {
       "name": "split-complementary",
-      "angle": [0, 150, -150]
+      "angle": [
+        0,
+        150,
+        -150
+      ]
     },
     "presetSL": {
       "name": "natural",
       "sat": 60,
-      "lightRange": [96, 92, 87, 80, 72, 64, 56, 48, 40, 32, 24]
+      "lightRange": [
+        96,
+        92,
+        87,
+        80,
+        72,
+        64,
+        56,
+        48,
+        40,
+        32,
+        24
+      ]
     },
-    "colorSetNames": ["primary", "accent", "highlight"]
+    "colorSetNames": [
+      "primary",
+      "accent",
+      "highlight"
+    ]
   },
   {
     "id": "blue palette",
     "baseHue": 225,
     "hueOffset": {
       "name": "split-complementary",
-      "angle": [0, 150, -150]
+      "angle": [
+        0,
+        150,
+        -150
+      ]
     },
     "presetSL": {
       "name": "natural",
       "sat": 60,
-      "lightRange": [96, 92, 87, 80, 72, 64, 56, 48, 40, 32, 24]
+      "lightRange": [
+        96,
+        92,
+        87,
+        80,
+        72,
+        64,
+        56,
+        48,
+        40,
+        32,
+        24
+      ]
     },
-    "colorSetNames": ["primary", "accent", "highlight"]
+    "colorSetNames": [
+      "primary",
+      "accent",
+      "highlight"
+    ]
   }
 ]

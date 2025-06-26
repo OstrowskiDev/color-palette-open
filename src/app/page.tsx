@@ -15,6 +15,7 @@ import LoadRemoteModal from '@/lib/components/modals/LoadRemoteModal'
 import SaveLocalModal from '@/lib/components/modals/SaveLocalModal'
 import SaveRemoteModal from '@/lib/components/modals/SaveRemoteModal'
 import OutputPreview from '@/lib/components/OutputPreview'
+import Terminal from '@/lib/components/Terminal'
 import TopBar from '@/lib/components/TopBar'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import { useKeyboardShortcut } from '@/lib/hooks/useKeyboardShortcut'
@@ -78,10 +79,9 @@ export default function Home() {
         <ElementWrapper label={'output'} tailwind={'h-[480px]'}>
           <OutputPreview />
         </ElementWrapper>
-        <ElementWrapper label={'tests'} tailwind={'h-[210px]'}>
-          <div>
-            <div className="w-20 h-20 bg-primary-500 border border-amber-100"></div>
-          </div>
+        <ElementWrapper label={'terminal'} tailwind={'h-[210px]'}>
+          <Terminal />
+          {/* <div className="w-20 h-20 bg-primary-500 border border-amber-100"></div> */}
         </ElementWrapper>
       </div>
 

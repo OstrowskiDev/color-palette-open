@@ -18,7 +18,7 @@ export default function LoadLocalModal() {
   const [selectedPalette, setSelectedPalette] = useState<Palette | null>(null)
 
   const { state, actions } = useColorSettings()
-  const { setOpenModal } = actions
+  const { setOpenModal, setTerminalText } = actions
 
   useEffect(() => {
     async function fetchPalettes() {
@@ -61,6 +61,10 @@ export default function LoadLocalModal() {
   }
 
   function onApplay() {
+    if (selectedPalette) {
+      const message = `palette "${selectedPalette.id}" loaded from local storage`
+      setTerminalText((prev) => [...prev, message])
+    }
     setOpenModal(null)
   }
 

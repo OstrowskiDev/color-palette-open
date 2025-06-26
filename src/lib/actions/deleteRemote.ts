@@ -8,9 +8,15 @@ export async function deleteRemote(paletteObjectId: string) {
       where: { id: paletteObjectId },
     })
 
-    return { success: true, message: 'Success' }
+    return {
+      success: true,
+      message: `palette "${paletteObjectId}" removed from remote database`,
+    }
   } catch (error) {
     console.error('Error deleting palette:', error)
-    return { success: false, message: 'Failed' }
+    return {
+      success: false,
+      message: `failed to delete "${paletteObjectId}" from remote database`,
+    }
   }
 }
