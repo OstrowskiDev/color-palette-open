@@ -24,7 +24,7 @@ The app runs locally on port `4000` and connects to any project under active dev
 
 ## Modes of Operation
 
-Open Palette works in two distinct modes:
+Open Palette Dev Tools works in two distinct modes:
 
 | Mode     | Function                                                                      |
 | -------- | ----------------------------------------------------------------------------- |
@@ -98,7 +98,7 @@ Open Palette works in two distinct modes:
 
 ## Developer Workflow Integration
 
-Open Palette is built with **real developer workflows** in mind.
+Open Palette Dev Tools is built with **real developer workflows** in mind.
 
 ### Typical scenario:
 
@@ -162,7 +162,7 @@ DIRECT_URL=your_postgres_direct_connection_url
 
 ## Contributing
 
-Open Palette is open to contributions! Whether it's bug fixes, new features, or feedback — all contributions are welcome.
+Open Palette Dev Tools is open to contributions! Whether it's bug fixes, new features, or feedback — all contributions are welcome.
 
 ## License
 
