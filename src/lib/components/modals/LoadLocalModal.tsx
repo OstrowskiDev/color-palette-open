@@ -6,20 +6,19 @@ import { getLocalPalettes } from '@/lib/actions/readLocally'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import Modal from '@/lib/ui/Modal'
 import ModalApplyBtn from '@/lib/ui/ModalApplyBtn'
+import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 import { SelectField } from '@/lib/ui/SelectField'
 import { Palette, PaletteOption } from '@/types/palette'
 import { useEffect, useState } from 'react'
-import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
-import { deleteLocally } from '@/lib/actions/deleteLocally'
 import { MessageModal } from './MessageModal'
 
-export function DeleteLocalModal() {
-  const { state, actions } = useColorSettings()
-  const { setOpenModal, setTerminalText } = actions
-
+export default function LoadLocalModal() {
   const [localPalettes, setLocalPalettes] = useState<Palette[]>([])
   const [currentPalette, setCurrentPalette] = useState<Palette | null>(null)
   const [selectedPalette, setSelectedPalette] = useState<Palette | null>(null)
+
+  const { state, actions } = useColorSettings()
+  const { setOpenModal, setTerminalText } = actions
 
   useEffect(() => {
     async function fetchPalettes() {
@@ -42,8 +41,8 @@ export function DeleteLocalModal() {
     return (
       <MessageModal
         title="No palettes found locally"
-        modalType="delete-local"
-        message="There are no palettes that could be deleted. If you have saved palettes locally make sure that palettes.json is inside src/data/ dir."
+        modalType="load-local"
+        message="Save created palettes using save button so they can be loaded here later."
       />
     )
   }
@@ -54,45 +53,43 @@ export function DeleteLocalModal() {
   }))
 
   if (currentPalette)
-    palettesOptions.unshift({
-      value: '',
-      label: '',
-      hidden: true,
-    })
+    palettesOptions.unshift({ label: 'current palette', value: currentPalette })
 
-  async function onDelete() {
-    if (!selectedPalette) return
-    const result = await deleteLocally(selectedPalette.id)
-    setTerminalText((prev) => [...prev, result.message])
-    const newData = await getLocalPalettes()
-    setLocalPalettes(newData)
+  function onCancel() {
+    setPaletteStates(currentPalette!, actions)
+    setOpenModal(null)
   }
 
-  function onClose() {
-    setPaletteStates(currentPalette!, actions)
+  function onApplay() {
+    if (selectedPalette) {
+      const message = `palette "${selectedPalette.id}" loaded from local storage`
+      setTerminalText((prev) => [...prev, message])
+    }
     setOpenModal(null)
   }
 
   return (
     <Modal
-      title="Delete palette"
-      modalType="delete-local"
-      footer={<ModalCancelBtn label="Close" action={onClose} />}
+      title="Load palette"
+      modalType="load-local"
+      footer={
+        <>
+          <ModalCancelBtn action={onCancel} />
+          <ModalApplyBtn action={onApplay} />
+        </>
+      }
     >
       <p className="text-lg text-app-gray-100 ">
         Select palette saved locally:
       </p>
-      <div className="modal-content flex flex-row items-center mt-2">
-        <SelectField
-          options={palettesOptions}
-          value={selectedPalette}
-          setValue={setSelectedPalette}
-          selectClasses="border-app-gray-400 text-app-gray-200 px-4 text-md"
-          labelClasses="h-7"
-          optionsWidth="220px"
-        />
-        <ModalApplyBtn tailwind="h-7 ml-3" label="Delete" action={onDelete} />
-      </div>
+      <SelectField
+        options={palettesOptions}
+        value={selectedPalette}
+        setValue={setSelectedPalette}
+        selectClasses="border-app-gray-400 text-app-gray-200 px-4 text-md"
+        labelClasses="h-7 mt-1"
+        optionsWidth="220px"
+      />
     </Modal>
   )
 }

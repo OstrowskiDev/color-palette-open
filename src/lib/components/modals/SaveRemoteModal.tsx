@@ -1,11 +1,11 @@
-import { saveLocally } from '@/lib/actions/storeLocally'
+import { saveRemote } from '@/lib/actions/storeRemote'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import LabeledState from '@/lib/ui/LabeledState'
 import Modal from '@/lib/ui/Modal'
 import ModalApplyBtn from '@/lib/ui/ModalApplyBtn'
 import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 
-export default function SaveLocalModal() {
+export default function SaveRemoteModal() {
   const { state, actions } = useColorSettings()
   //prettier-ignore
   const { baseHue, hueOffset, presetSL, paletteName, colorSetNames } = state
@@ -13,7 +13,7 @@ export default function SaveLocalModal() {
   const paletteOptions = state
 
   async function onSave() {
-    const result = await saveLocally(paletteOptions)
+    const result = await saveRemote(paletteOptions)
     setTerminalText((prev) => [...prev, result.message])
   }
 
@@ -24,7 +24,7 @@ export default function SaveLocalModal() {
   return (
     <Modal
       title="Save palette locally"
-      modalType="save-local"
+      modalType="save-remote"
       footer={
         <>
           <ModalCancelBtn label="Cancel" action={onCancel} />

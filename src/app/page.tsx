@@ -7,19 +7,24 @@ import ElementWrapper from '@/lib/components/ElementWrapper'
 import InputField from '@/lib/components/InputField'
 import ListenToResize from '@/lib/components/ListenToResize'
 import { DeleteLocalModal } from '@/lib/components/modals/DeleteLocalModal'
+import { DeleteRemoteModal } from '@/lib/components/modals/DeleteRemoteModal'
 import { ExportModal } from '@/lib/components/modals/ExportModal'
 import { ImportModal } from '@/lib/components/modals/ImportModal'
-import { LoadLocalModal } from '@/lib/components/modals/LoadModal'
+import LoadLocalModal from '@/lib/components/modals/LoadLocalModal'
+import LoadRemoteModal from '@/lib/components/modals/LoadRemoteModal'
 import SaveLocalModal from '@/lib/components/modals/SaveLocalModal'
+import SaveRemoteModal from '@/lib/components/modals/SaveRemoteModal'
 import OutputPreview from '@/lib/components/OutputPreview'
+import Terminal from '@/lib/components/Terminal'
 import TopBar from '@/lib/components/TopBar'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import { useKeyboardShortcut } from '@/lib/hooks/useKeyboardShortcut'
+import { Loader } from '@/lib/ui/Loader'
 import { useState } from 'react'
 
 export default function Home() {
   const { state, actions } = useColorSettings()
-  const { openModal, appMode } = state
+  const { openModal, appMode, showAppLoader } = state
   const { setOpenModal } = actions
   const [pathToTwFile, setPathToTwFile] = useState<string>(
     'C:\\Tests\\colors.js',
@@ -65,7 +70,7 @@ export default function Home() {
             label="path to file"
             type="text"
             inputTailwind="w-[260px]"
-            labelClasses="w-[90pxpx] ml-6"
+            labelClasses="w-[90px] ml-6"
           />
         </ElementWrapper>
         <ElementWrapper label={'tailwind palettes'} tailwind={'h-[210px]'}>
@@ -74,21 +79,22 @@ export default function Home() {
         <ElementWrapper label={'output'} tailwind={'h-[480px]'}>
           <OutputPreview />
         </ElementWrapper>
-        <ElementWrapper label={'tests'} tailwind={'h-[210px]'}>
-          <div>
-            <div className="w-20 h-20 bg-primary-500 border border-amber-100"></div>
-          </div>
+        <ElementWrapper label={'terminal'} tailwind={'h-[210px]'}>
+          <Terminal />
+          {/* <div className="w-20 h-20 bg-primary-500 border border-amber-100"></div> */}
         </ElementWrapper>
       </div>
+
       {openModal === 'save-local' && <SaveLocalModal />}
-      {/* {openModal === 'save-remote' && <SaveRemoteModal />} */}
+      {openModal === 'save-remote' && <SaveRemoteModal />}
       {openModal === 'load-local' && <LoadLocalModal />}
-      {/* {openModal === 'load-remote' && <LoadRemoteModal />} */}
+      {openModal === 'load-remote' && <LoadRemoteModal />}
       {openModal === 'delete-local' && <DeleteLocalModal />}
-      {/* {openModal === 'delete-remote' && <DeleteRemoteModal />} */}
+      {openModal === 'delete-remote' && <DeleteRemoteModal />}
       {openModal === 'export' && <ExportModal />}
       {openModal === 'import' && <ImportModal />}
-      {/* {openModal === 'signin' && <SigninModal />} */}
+
+      {showAppLoader && <Loader />}
     </div>
   )
 }

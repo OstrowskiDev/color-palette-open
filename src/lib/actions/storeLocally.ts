@@ -3,6 +3,7 @@
 import path from 'path'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { paletteSchema } from '../schemas/zodSchemas'
+import { success } from 'zod/v4'
 
 export async function saveLocally(paletteOptions: any) {
   const paletteObject = {
@@ -14,7 +15,11 @@ export async function saveLocally(paletteOptions: any) {
   }
   const parsed = paletteSchema.safeParse(paletteObject)
   if (!parsed.success) {
-    return { message: 'Invalid data', errors: parsed.error.format() }
+    return {
+      success: false,
+      message: 'Invalid data',
+      errors: parsed.error.format(),
+    }
   }
 
   const filePath = path.join(process.cwd(), 'src/data/palettes.json')
@@ -37,9 +42,15 @@ export async function saveLocally(paletteOptions: any) {
     }
     writeFileSync(filePath, JSON.stringify(palettes, null, 2), 'utf-8')
 
-    return { message: 'Success' }
+    return {
+      success: true,
+      message: `palette "${paletteOptions.paletteName}" saved to local storage`,
+    }
   } catch (error) {
     console.error('Error saving palette:', error)
-    return { message: 'Failed' }
+    return {
+      success: false,
+      message: `Failed to save "${paletteOptions.paletteName}" to local storage`,
+    }
   }
 }

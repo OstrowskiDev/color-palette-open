@@ -15,6 +15,8 @@ export interface ColorSettingsState {
   paletteName: string
   colorSetNames: ColorSetNames
   openModal: string | null
+  showAppLoader: boolean
+  terminalText: string[]
 }
 
 export interface ColorSettingsActions {
@@ -25,6 +27,8 @@ export interface ColorSettingsActions {
   setPaletteName: Setter<string>
   setColorSetNames: Setter<ColorSetNames>
   setOpenModal: Setter<string | null>
+  setShowAppLoader: Setter<boolean>
+  setTerminalText: Setter<string[]>
 }
 
 interface ColorSettingsContextType {
@@ -59,6 +63,8 @@ export function ColorSettingsProvider({
     'highlight',
   ])
   const [openModal, setOpenModal] = useState<string | null>(null)
+  const [showAppLoader, setShowAppLoader] = useState<boolean>(false)
+  const [terminalText, setTerminalText] = useState<string[]>([])
 
   const state = {
     appMode,
@@ -68,6 +74,8 @@ export function ColorSettingsProvider({
     paletteName,
     colorSetNames,
     openModal,
+    showAppLoader,
+    terminalText,
   }
   const actions = {
     setAppMode,
@@ -77,6 +85,8 @@ export function ColorSettingsProvider({
     setPaletteName,
     setColorSetNames,
     setOpenModal,
+    setShowAppLoader,
+    setTerminalText,
   }
 
   return (

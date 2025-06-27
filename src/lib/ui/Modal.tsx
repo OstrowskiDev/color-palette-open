@@ -26,7 +26,6 @@ export default function Modal({
     window.addEventListener('keydown', handleEsc)
     return () => window.removeEventListener('keydown', handleEsc)
   }, [openModal])
-
   if (openModal !== modalType) return null
 
   return (

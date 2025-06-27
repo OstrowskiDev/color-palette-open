@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import generateTailwindColors from '../utils/generateTailwindColors'
-import { writeFileLocaly } from '../actions/writeFileLocaly'
+import { writeFileLocaly } from '../actions/writeFileLocally'
 import { useColorSettings } from '../hooks/ColorSettingsContext'
 
 type OverwriteColorsBtnProps = {

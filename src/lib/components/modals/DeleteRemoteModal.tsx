@@ -2,29 +2,35 @@ import {
   getCurrentPallette,
   setPaletteStates,
 } from '@/lib/actions/paletteStates'
-import { getLocalPalettes } from '@/lib/actions/readLocally'
+import { deleteRemote } from '@/lib/actions/deleteRemote'
+import { getRemotePalettes } from '@/lib/actions/readRemote'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import Modal from '@/lib/ui/Modal'
 import ModalApplyBtn from '@/lib/ui/ModalApplyBtn'
+import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 import { SelectField } from '@/lib/ui/SelectField'
 import { Palette, PaletteOption } from '@/types/palette'
 import { useEffect, useState } from 'react'
-import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
-import { deleteLocally } from '@/lib/actions/deleteLocally'
 import { MessageModal } from './MessageModal'
 
-export function DeleteLocalModal() {
+export function DeleteRemoteModal() {
   const { state, actions } = useColorSettings()
-  const { setOpenModal, setTerminalText } = actions
+  const { setOpenModal, setShowAppLoader, setTerminalText } = actions
 
-  const [localPalettes, setLocalPalettes] = useState<Palette[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [remotePalettes, setRemotePalettes] = useState<Palette[]>([])
   const [currentPalette, setCurrentPalette] = useState<Palette | null>(null)
   const [selectedPalette, setSelectedPalette] = useState<Palette | null>(null)
 
   useEffect(() => {
     async function fetchPalettes() {
-      const results = await getLocalPalettes()
-      setLocalPalettes(results)
+      setShowAppLoader(true)
+      const results = await getRemotePalettes()
+      results
+        ? setRemotePalettes(results as unknown as Palette[])
+        : setRemotePalettes([])
+      setShowAppLoader(false)
+      setIsLoading(false)
     }
     fetchPalettes()
   }, [])
@@ -37,18 +43,18 @@ export function DeleteLocalModal() {
   useEffect(() => {
     if (selectedPalette) setPaletteStates(selectedPalette, actions)
   }, [selectedPalette])
-
-  if (localPalettes.length === 0) {
+  if (isLoading) return null
+  if (remotePalettes.length === 0) {
     return (
       <MessageModal
-        title="No palettes found locally"
-        modalType="delete-local"
-        message="There are no palettes that could be deleted. If you have saved palettes locally make sure that palettes.json is inside src/data/ dir."
+        title="No palettes found in DB"
+        modalType="delete-remote"
+        message="There are no palettes that could be deleted in your database. In case your sure that remote has palettes check your connection with database."
       />
     )
   }
 
-  const palettesOptions: PaletteOption[] = localPalettes.map((palette) => ({
+  const palettesOptions: PaletteOption[] = remotePalettes.map((palette) => ({
     value: palette,
     label: palette.id,
   }))
@@ -62,26 +68,27 @@ export function DeleteLocalModal() {
 
   async function onDelete() {
     if (!selectedPalette) return
-    const result = await deleteLocally(selectedPalette.id)
+    setShowAppLoader(true)
+    const result = await deleteRemote(selectedPalette.id)
     setTerminalText((prev) => [...prev, result.message])
-    const newData = await getLocalPalettes()
-    setLocalPalettes(newData)
+    const newData = await getRemotePalettes()
+    newData
+      ? setRemotePalettes(newData as unknown as Palette[])
+      : setRemotePalettes([])
+    setShowAppLoader(false)
   }
 
-  function onClose() {
+  function onApplay() {
     setPaletteStates(currentPalette!, actions)
     setOpenModal(null)
   }
-
   return (
     <Modal
       title="Delete palette"
-      modalType="delete-local"
-      footer={<ModalCancelBtn label="Close" action={onClose} />}
+      modalType="delete-remote"
+      footer={<ModalCancelBtn label="Close" action={onApplay} />}
     >
-      <p className="text-lg text-app-gray-100 ">
-        Select palette saved locally:
-      </p>
+      <p className="text-lg text-app-gray-100 ">Select palette saved localy:</p>
       <div className="modal-content flex flex-row items-center mt-2">
         <SelectField
           options={palettesOptions}

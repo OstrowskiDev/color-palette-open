@@ -78,8 +78,6 @@ export function ImportModal() {
   }
 
   const disableImport = importedPalette ? false : true
-  console.log('🚀 ~ ImportModal ~ disableImport:', disableImport)
-
   return (
     <Modal
       title="Import palette"
