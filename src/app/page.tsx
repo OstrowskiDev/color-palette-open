@@ -29,7 +29,7 @@ export default function Home() {
   const [pathToTwFile, setPathToTwFile] = useState<string>(
     'C:\\Tests\\colors.js',
   )
-  const [trigger, setTrigger] = useState<number>(0)
+  const [trigger, _setTrigger] = useState<number>(0)
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
   const saveModal = appMode === 'local' ? 'save-local' : 'save-remote'
   const loadModal = appMode === 'local' ? 'load-local' : 'load-remote'

@@ -18,7 +18,7 @@ export function calcAngleDegrees(vecAB: Vec2, vecAC: Vec2): number {
 }
 
 export function calcHue(vecAB: Vec2, vecAC: Vec2, coords: Coords) {
-  let deg = calcAngleDegrees(vecAB, vecAC)
+  const deg = calcAngleDegrees(vecAB, vecAC)
   if (coords.x > 150) return deg
   if (coords.x < 150) return 360 - deg
   if (coords.x === 150 && coords.y > 150) return 180

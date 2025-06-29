@@ -8,6 +8,8 @@
     "dev/linux:4000": "PORT=4000 next dev",
     "build": "next build",
     "start": "next start",
+    "start/win:4000": "set PORT=4000 && next start",
+    "start/linux:4000": "PORT=4000 next start",
     "lint": "next lint"
   },
   "dependencies": {
