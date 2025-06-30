@@ -45,3 +45,10 @@ const twColorShadeSchema = z.object({
 })
 
 export const twColorsSchema = z.record(twColorShadeSchema)
+
+export const uuidSchema = z.string().uuid()
+
+export function isUUID(string: string) {
+  const result = uuidSchema.safeParse(string)
+  return Boolean(result.success)
+}

@@ -17,6 +17,7 @@ import LoadRemoteModal from '@/lib/components/modals/LoadRemoteModal'
 import SaveBrowserModal from '@/lib/components/modals/SaveBrowserModal'
 import SaveLocalModal from '@/lib/components/modals/SaveLocalModal'
 import SaveRemoteModal from '@/lib/components/modals/SaveRemoteModal'
+import WelcomeModal from '@/lib/components/modals/WelcomeModal'
 import OutputPreview from '@/lib/components/OutputPreview'
 import Terminal from '@/lib/components/Terminal'
 import TopBar from '@/lib/components/TopBar'
@@ -28,7 +29,7 @@ import { useState } from 'react'
 
 export default function Home() {
   const { state, actions } = useColorSettings()
-  const { openModal, appMode, showAppLoader } = state
+  const { openModal, appMode, showAppLoader, userId } = state
   const { setOpenModal } = actions
   const [pathToTwFile, setPathToTwFile] = useState<string>(
     'C:\\Tests\\colors.js',
@@ -86,7 +87,6 @@ export default function Home() {
         </ElementWrapper>
         <ElementWrapper label={'terminal'} tailwind={'h-[210px]'}>
           <Terminal />
-          {/* <div className="w-20 h-20 bg-primary-500 border border-amber-100"></div> */}
         </ElementWrapper>
       </div>
 
@@ -104,6 +104,8 @@ export default function Home() {
 
       {!isDemo && openModal === 'export' && <ExportModal />}
       {!isDemo && openModal === 'import' && <ImportModal />}
+
+      {!userId && <WelcomeModal />}
 
       {showAppLoader && <Loader />}
     </div>
