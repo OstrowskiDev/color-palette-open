@@ -1,7 +1,6 @@
-'use server'
+'use client'
 
-import path from 'path'
-import { existsSync, readFileSync, writeFileSync } from 'fs'
+import { Palette } from '@/types/palette'
 import { paletteSchema } from '../schemas/zodSchemas'
 
 export async function saveLocally(paletteOptions: any) {
@@ -21,25 +20,18 @@ export async function saveLocally(paletteOptions: any) {
     }
   }
 
-  const filePath = path.join(process.cwd(), 'src/data/palettes.json')
   try {
-    let palettes = []
-    // sprawdzenie czy plik istnieje
-    if (existsSync(filePath)) {
-      // sprawdzenie czy plik ma zawartość
-      const fileContent = readFileSync(filePath, 'utf-8').trim()
-      if (fileContent) {
-        palettes = JSON.parse(fileContent)
-      }
-    }
+    const key = 'palettes'
+    const stored = localStorage.getItem(key)
+    const existing = stored ? JSON.parse(stored) : []
 
-    const index = palettes.findIndex((p: any) => p.id === paletteObject.id)
+    const index = existing.findIndex((p: Palette) => p.id === parsed.data.id)
+
     if (index !== -1) {
-      palettes[index] = paletteObject
+      existing[index] = parsed.data
     } else {
-      palettes.push(paletteObject)
+      existing.push(parsed.data)
     }
-    writeFileSync(filePath, JSON.stringify(palettes, null, 2), 'utf-8')
 
     return {
       success: true,
