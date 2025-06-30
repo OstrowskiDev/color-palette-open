@@ -9,16 +9,20 @@ export default function WelcomeModal() {
   const { openModal } = state
   const { setUserId, setTerminalText, setOpenModal } = actions
   const [inputValue, setInputValue] = useState('')
+  const [loading, isLoading] = useState(true)
 
   useEffect(() => {
     let id = localStorage.getItem('userId')
     if (!id) {
       id = crypto.randomUUID()
       localStorage.setItem('userId', id)
-      const message = `New user id generated: ${id}. Store it if you want to have access to your account between different browsers/machines.`
+      const message = `New user id generated: ${id}. Store it if you want to  access your account between different browsers/machines.`
       setTerminalText((prev) => [...prev, message])
+      setInputValue(id)
+    } else {
+      setUserId(id)
     }
-    setInputValue(id)
+    isLoading(false)
   }, [])
 
   function onApply() {
@@ -28,6 +32,8 @@ export default function WelcomeModal() {
   }
 
   const inputIsUuid = isUUID(inputValue)
+
+  if (loading) return null
 
   return (
     <Modal
