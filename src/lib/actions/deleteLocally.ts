@@ -4,6 +4,13 @@ import path from 'path'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 
 export async function deleteLocally(paletteObjectId: string) {
+  const isDemo = process.env.NEXT_PUBLIC_IS_DEMO
+  if (isDemo)
+    return {
+      success: false,
+      message: `failed to delete "${paletteObjectId}" from local storage`,
+    }
+
   const filePath = path.join(process.cwd(), 'src/data/palettes.json')
   try {
     let palettes = []

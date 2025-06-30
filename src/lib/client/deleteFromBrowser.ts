@@ -2,7 +2,7 @@
 
 import { Palette } from '@/types/palette'
 
-export async function deleteLocally(paletteObjectId: string) {
+export async function deleteFromBrowser(paletteObjectId: string) {
   try {
     const key = 'palettes'
     const stored = localStorage.getItem(key)
@@ -16,13 +16,13 @@ export async function deleteLocally(paletteObjectId: string) {
 
     return {
       success: true,
-      message: `palette "${paletteObjectId}" removed from local storage`,
+      message: `palette "${paletteObjectId}" removed from browser local storage`,
     }
   } catch (error) {
     console.error('Error saving palette:', error)
     return {
       success: false,
-      message: `failed to delete "${paletteObjectId}" from local storage`,
+      message: `failed to delete "${paletteObjectId}" from browser local storage`,
     }
   }
 }

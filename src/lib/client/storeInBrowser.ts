@@ -3,7 +3,7 @@
 import { Palette } from '@/types/palette'
 import { paletteSchema } from '../schemas/zodSchemas'
 
-export async function saveLocally(paletteOptions: any) {
+export async function storeInBrowser(paletteOptions: any) {
   const paletteObject = {
     id: paletteOptions.paletteName,
     baseHue: paletteOptions.baseHue,
@@ -11,6 +11,7 @@ export async function saveLocally(paletteOptions: any) {
     presetSL: paletteOptions.presetSL,
     colorSetNames: paletteOptions.colorSetNames,
   }
+
   const parsed = paletteSchema.safeParse(paletteObject)
   if (!parsed.success) {
     return {
@@ -23,25 +24,26 @@ export async function saveLocally(paletteOptions: any) {
   try {
     const key = 'palettes'
     const stored = localStorage.getItem(key)
-    const existing = stored ? JSON.parse(stored) : []
-
-    const index = existing.findIndex((p: Palette) => p.id === parsed.data.id)
+    const palettes = stored ? JSON.parse(stored) : []
+    const index = palettes.findIndex((p: Palette) => p.id === parsed.data.id)
 
     if (index !== -1) {
-      existing[index] = parsed.data
+      palettes[index] = parsed.data
     } else {
-      existing.push(parsed.data)
+      palettes.push(parsed.data)
     }
+
+    localStorage.setItem('palettes', JSON.stringify(palettes))
 
     return {
       success: true,
-      message: `palette "${paletteOptions.paletteName}" saved to local storage`,
+      message: `palette "${paletteOptions.paletteName}" saved to browser local storage`,
     }
   } catch (error) {
     console.error('Error saving palette:', error)
     return {
       success: false,
-      message: `Failed to save "${paletteOptions.paletteName}" to local storage`,
+      message: `Failed to save "${paletteOptions.paletteName}" to browser local storage`,
     }
   }
 }

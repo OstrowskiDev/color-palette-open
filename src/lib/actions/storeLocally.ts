@@ -5,6 +5,13 @@ import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { paletteSchema } from '../schemas/zodSchemas'
 
 export async function saveLocally(paletteOptions: any) {
+  const isDemo = process.env.NEXT_PUBLIC_IS_DEMO
+  if (isDemo)
+    return {
+      success: false,
+      message: `failed to save "${paletteOptions.paletteName}" to local storage`,
+    }
+
   const paletteObject = {
     id: paletteOptions.paletteName,
     baseHue: paletteOptions.baseHue,
@@ -49,7 +56,7 @@ export async function saveLocally(paletteOptions: any) {
     console.error('Error saving palette:', error)
     return {
       success: false,
-      message: `Failed to save "${paletteOptions.paletteName}" to local storage`,
+      message: `failed to save "${paletteOptions.paletteName}" to local storage`,
     }
   }
 }

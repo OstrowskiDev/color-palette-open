@@ -6,12 +6,15 @@ import ColorSettings from '@/lib/components/ColorSettings'
 import ElementWrapper from '@/lib/components/ElementWrapper'
 import InputField from '@/lib/components/InputField'
 import ListenToResize from '@/lib/components/ListenToResize'
+import { DeleteBrowserModal } from '@/lib/components/modals/DeleteBrowserModal'
 import { DeleteLocalModal } from '@/lib/components/modals/DeleteLocalModal'
 import { DeleteRemoteModal } from '@/lib/components/modals/DeleteRemoteModal'
 import { ExportModal } from '@/lib/components/modals/ExportModal'
 import { ImportModal } from '@/lib/components/modals/ImportModal'
+import LoadBrowserModal from '@/lib/components/modals/LoadBrowserModal'
 import LoadLocalModal from '@/lib/components/modals/LoadLocalModal'
 import LoadRemoteModal from '@/lib/components/modals/LoadRemoteModal'
+import SaveBrowserModal from '@/lib/components/modals/SaveBrowserModal'
 import SaveLocalModal from '@/lib/components/modals/SaveLocalModal'
 import SaveRemoteModal from '@/lib/components/modals/SaveRemoteModal'
 import OutputPreview from '@/lib/components/OutputPreview'
@@ -20,6 +23,7 @@ import TopBar from '@/lib/components/TopBar'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import { useKeyboardShortcut } from '@/lib/hooks/useKeyboardShortcut'
 import { Loader } from '@/lib/ui/Loader'
+import { getModaltype } from '@/lib/utils/helpers'
 import { useState } from 'react'
 
 export default function Home() {
@@ -31,10 +35,11 @@ export default function Home() {
   )
   const [trigger, _setTrigger] = useState<number>(0)
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
-  const saveModal = appMode === 'local' ? 'save-local' : 'save-remote'
-  const loadModal = appMode === 'local' ? 'load-local' : 'load-remote'
-  const deleteModal = appMode === 'local' ? 'delete-local' : 'delete-remote'
+  const saveModal = getModaltype('save', appMode)
+  const loadModal = getModaltype('load', appMode)
+  const deleteModal = getModaltype('delete', appMode)
 
+  const isDemo = process.env.NEXT_PUBLIC_IS_DEMO
   useKeyboardShortcut(() => setOpenModal(saveModal), 's', openModal)
   useKeyboardShortcut(() => setOpenModal(loadModal), 'o', openModal)
   useKeyboardShortcut(() => setOpenModal(deleteModal), 'Delete', openModal)
@@ -85,14 +90,20 @@ export default function Home() {
         </ElementWrapper>
       </div>
 
-      {openModal === 'save-local' && <SaveLocalModal />}
-      {openModal === 'save-remote' && <SaveRemoteModal />}
-      {openModal === 'load-local' && <LoadLocalModal />}
-      {openModal === 'load-remote' && <LoadRemoteModal />}
-      {openModal === 'delete-local' && <DeleteLocalModal />}
-      {openModal === 'delete-remote' && <DeleteRemoteModal />}
-      {openModal === 'export' && <ExportModal />}
-      {openModal === 'import' && <ImportModal />}
+      {!isDemo && openModal === 'save-local' && <SaveLocalModal />}
+      {isDemo && openModal === 'save-browser' && <SaveBrowserModal />}
+      {!isDemo && openModal === 'save-remote' && <SaveRemoteModal />}
+
+      {!isDemo && openModal === 'load-local' && <LoadLocalModal />}
+      {isDemo && openModal === 'load-browser' && <LoadBrowserModal />}
+      {!isDemo && openModal === 'load-remote' && <LoadRemoteModal />}
+
+      {!isDemo && openModal === 'delete-local' && <DeleteLocalModal />}
+      {isDemo && openModal === 'delete-browser' && <DeleteBrowserModal />}
+      {!isDemo && openModal === 'delete-remote' && <DeleteRemoteModal />}
+
+      {!isDemo && openModal === 'export' && <ExportModal />}
+      {!isDemo && openModal === 'import' && <ImportModal />}
 
       {showAppLoader && <Loader />}
     </div>

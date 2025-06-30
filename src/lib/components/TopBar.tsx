@@ -1,14 +1,15 @@
 import { useColorSettings } from '../hooks/ColorSettingsContext'
 import Button from '../ui/Button'
+import { getModaltype } from '../utils/helpers'
 import AppModeSelector from './AppModeSelector'
 
 export default function TopBar() {
   const { state, actions } = useColorSettings()
   const { appMode } = state
   const { setOpenModal } = actions
-  const saveModal = appMode === 'local' ? 'save-local' : 'save-remote'
-  const loadModal = appMode === 'local' ? 'load-local' : 'load-remote'
-  const deleteModal = appMode === 'local' ? 'delete-local' : 'delete-remote'
+  const saveModal = getModaltype('save', appMode)
+  const loadModal = getModaltype('load', appMode)
+  const deleteModal = getModaltype('delete', appMode)
   return (
     <div className="app-top-bar flex flex-row h-[40px] mx-5 mt-2 mb-[2px]">
       <div className="app-logo w-56 relative bottom-2 flex flex-row">
