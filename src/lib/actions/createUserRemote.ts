@@ -22,7 +22,7 @@ export async function ensureUserExists(userId: unknown) {
     if (existing) {
       return {
         success: true,
-        message: `User "${id}" connected succcessfully.`,
+        message: `User "${id}" connected successfully.`,
       }
     }
 

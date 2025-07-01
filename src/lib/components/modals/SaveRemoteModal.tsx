@@ -15,6 +15,7 @@ export default function SaveRemoteModal() {
   async function onSave() {
     const result = await saveRemote(paletteOptions, userId)
     setTerminalText((prev) => [...prev, result.message])
+    setOpenModal(null)
   }
 
   function onCancel() {
@@ -23,7 +24,7 @@ export default function SaveRemoteModal() {
 
   return (
     <Modal
-      title="Save palette locally"
+      title="Save palette remotely"
       modalType="save-remote"
       footer={
         <>

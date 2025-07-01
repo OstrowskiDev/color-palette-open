@@ -8,7 +8,7 @@ export function setPaletteStates(
   paletteOptions: Palette,
   actions: ColorSettingsActions,
 ) {
-  const { id, baseHue, hueOffset, presetSL, colorSetNames } = paletteOptions
+  const { name, baseHue, hueOffset, presetSL, colorSetNames } = paletteOptions
   const {
     setBaseHue,
     setHueOffset,
@@ -17,7 +17,7 @@ export function setPaletteStates(
     setColorSetNames,
   } = actions
 
-  setPaletteName(id)
+  setPaletteName(name)
   setBaseHue(baseHue)
   setHueOffset(hueOffset)
   setPresetSL(presetSL)
@@ -27,7 +27,7 @@ export function setPaletteStates(
 export function getCurrentPallette(state: ColorSettingsState) {
   const { baseHue, hueOffset, presetSL, paletteName, colorSetNames } = state
   return {
-    id: paletteName,
+    name: paletteName,
     baseHue: baseHue,
     hueOffset: hueOffset,
     presetSL: presetSL,

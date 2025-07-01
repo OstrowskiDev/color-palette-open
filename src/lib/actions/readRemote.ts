@@ -10,7 +10,7 @@ export async function getRemotePalettes() {
         presetSL: true,
       },
       orderBy: {
-        id: 'asc',
+        name: 'asc',
       },
     })
 

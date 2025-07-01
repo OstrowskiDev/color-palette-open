@@ -16,16 +16,14 @@ export function getModaltype(
 
   if (type === 'load') {
     if (!isDemo && appMode === 'local') return 'load-local'
-    if (!isDemo && appMode === 'remote') return 'load-remote'
     if (isDemo && appMode === 'local') return 'load-browser'
-    if (isDemo && appMode === 'remote') return 'load-remote-demo'
+    if (appMode === 'remote') return 'load-remote'
   }
 
   if (type === 'delete') {
     if (!isDemo && appMode === 'local') return 'delete-local'
-    if (!isDemo && appMode === 'remote') return 'delete-remote'
     if (isDemo && appMode === 'local') return 'delete-browser'
-    if (isDemo && appMode === 'remote') return 'delete-remote-demo'
+    if (appMode === 'remote') return 'delete-remote'
   }
   return null
 }

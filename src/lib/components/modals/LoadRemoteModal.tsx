@@ -56,7 +56,7 @@ export default function LoadRemoteModal() {
 
   const palettesOptions: PaletteOption[] = remotePalettes.map((palette) => ({
     value: palette,
-    label: palette.id,
+    label: palette.name,
   }))
 
   if (currentPalette)
@@ -67,9 +67,9 @@ export default function LoadRemoteModal() {
     setOpenModal(null)
   }
 
-  function onApplay() {
+  function onApply() {
     if (selectedPalette) {
-      const message = `palette "${selectedPalette.id}" loaded from remote database`
+      const message = `palette "${selectedPalette.name}" loaded from remote database`
       setTerminalText((prev) => [...prev, message])
     }
     setOpenModal(null)
@@ -82,7 +82,7 @@ export default function LoadRemoteModal() {
       footer={
         <>
           <ModalCancelBtn action={onCancel} />
-          <ModalApplyBtn action={onApplay} />
+          <ModalApplyBtn action={onApply} />
         </>
       }
     >
