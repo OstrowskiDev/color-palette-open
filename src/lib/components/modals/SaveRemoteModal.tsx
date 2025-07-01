@@ -10,7 +10,6 @@ export default function SaveRemoteModal() {
   //prettier-ignore
   const { baseHue, hueOffset, presetSL, paletteName, colorSetNames, userId } = state
   const { setOpenModal, setTerminalText, setShowAppLoader } = actions
-  const paletteOptions = state
 
   async function onSave() {
     setShowAppLoader(true)
@@ -71,10 +70,4 @@ export default function SaveRemoteModal() {
       </div>
     </Modal>
   )
-}
-
-export type PresetSL = {
-  name: string
-  sat: number
-  lightRange: number[]
 }

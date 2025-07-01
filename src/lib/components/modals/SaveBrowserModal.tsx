@@ -10,10 +10,17 @@ export default function SaveBrowserModal() {
   //prettier-ignore
   const { baseHue, hueOffset, presetSL, paletteName, colorSetNames } = state
   const { setOpenModal, setTerminalText } = actions
-  const paletteOptions = state
 
   async function onSave() {
-    const result = await storeInBrowser(paletteOptions)
+    const paletteObj = {
+      name: paletteName,
+      baseHue: baseHue,
+      hueOffset: hueOffset,
+      presetSL: presetSL,
+      colorSetNames: colorSetNames,
+    }
+
+    const result = await storeInBrowser(paletteObj)
     setTerminalText((prev) => [...prev, result.message])
     setOpenModal(null)
   }
@@ -64,10 +71,4 @@ export default function SaveBrowserModal() {
       </div>
     </Modal>
   )
-}
-
-export type PresetSL = {
-  name: string
-  sat: number
-  lightRange: number[]
 }

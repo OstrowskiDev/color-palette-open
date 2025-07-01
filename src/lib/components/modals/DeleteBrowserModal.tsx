@@ -47,7 +47,7 @@ export function DeleteBrowserModal() {
 
   const palettesOptions: PaletteOption[] = localPalettes.map((palette) => ({
     value: palette,
-    label: palette.id,
+    label: palette.name,
   }))
 
   if (currentPalette)
@@ -59,14 +59,13 @@ export function DeleteBrowserModal() {
 
   async function onDelete() {
     if (!selectedPalette) return
-    const result = await deleteFromBrowser(selectedPalette.id)
+    const result = await deleteFromBrowser(selectedPalette.name)
     setTerminalText((prev) => [...prev, result.message])
     const newData = await getBrowserPalettes()
     setLocalPalettes(newData)
   }
 
   function onClose() {
-    setPaletteStates(currentPalette!, actions)
     setOpenModal(null)
   }
 

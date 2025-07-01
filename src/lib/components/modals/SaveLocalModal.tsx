@@ -10,11 +10,19 @@ export default function SaveLocalModal() {
   //prettier-ignore
   const { baseHue, hueOffset, presetSL, paletteName, colorSetNames } = state
   const { setOpenModal, setTerminalText } = actions
-  const paletteOptions = state
 
   async function onSave() {
-    const result = await saveLocally(paletteOptions)
+    const paletteObj = {
+      name: paletteName,
+      baseHue: baseHue,
+      hueOffset: hueOffset,
+      presetSL: presetSL,
+      colorSetNames: colorSetNames,
+    }
+
+    const result = await saveLocally(paletteObj)
     setTerminalText((prev) => [...prev, result.message])
+    setOpenModal(null)
   }
 
   function onCancel() {
@@ -60,10 +68,4 @@ export default function SaveLocalModal() {
       </div>
     </Modal>
   )
-}
-
-export type PresetSL = {
-  name: string
-  sat: number
-  lightRange: number[]
 }

@@ -40,7 +40,6 @@ export default function Home() {
   const loadModal = getModaltype('load', appMode)
   const deleteModal = getModaltype('delete', appMode)
 
-  const isDemo = process.env.NEXT_PUBLIC_IS_DEMO
   useKeyboardShortcut(() => setOpenModal(saveModal), 's', openModal)
   useKeyboardShortcut(() => setOpenModal(loadModal), 'o', openModal)
   useKeyboardShortcut(() => setOpenModal(deleteModal), 'Delete', openModal)
@@ -90,20 +89,20 @@ export default function Home() {
         </ElementWrapper>
       </div>
 
-      {!isDemo && openModal === 'save-local' && <SaveLocalModal />}
-      {isDemo && openModal === 'save-browser' && <SaveBrowserModal />}
+      {openModal === 'save-local' && <SaveLocalModal />}
+      {openModal === 'save-browser' && <SaveBrowserModal />}
       {openModal === 'save-remote' && <SaveRemoteModal />}
 
-      {!isDemo && openModal === 'load-local' && <LoadLocalModal />}
-      {isDemo && openModal === 'load-browser' && <LoadBrowserModal />}
+      {openModal === 'load-local' && <LoadLocalModal />}
+      {openModal === 'load-browser' && <LoadBrowserModal />}
       {openModal === 'load-remote' && <LoadRemoteModal />}
 
-      {!isDemo && openModal === 'delete-local' && <DeleteLocalModal />}
-      {isDemo && openModal === 'delete-browser' && <DeleteBrowserModal />}
+      {openModal === 'delete-local' && <DeleteLocalModal />}
+      {openModal === 'delete-browser' && <DeleteBrowserModal />}
       {openModal === 'delete-remote' && <DeleteRemoteModal />}
 
-      {!isDemo && openModal === 'export' && <ExportModal />}
-      {!isDemo && openModal === 'import' && <ImportModal />}
+      {openModal === 'export' && <ExportModal />}
+      {openModal === 'import' && <ImportModal />}
 
       {!userId && <WelcomeModal />}
 

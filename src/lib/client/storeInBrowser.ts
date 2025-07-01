@@ -3,47 +3,46 @@
 import { Palette } from '@/types/palette'
 import { paletteSchema } from '../schemas/zodSchemas'
 
-export async function storeInBrowser(paletteOptions: any) {
-  const paletteObject = {
-    id: paletteOptions.paletteName,
-    baseHue: paletteOptions.baseHue,
-    hueOffset: paletteOptions.hueOffset,
-    presetSL: paletteOptions.presetSL,
-    colorSetNames: paletteOptions.colorSetNames,
-  }
-
-  const parsed = paletteSchema.safeParse(paletteObject)
-  if (!parsed.success) {
+export async function storeInBrowser(inputPalette: unknown) {
+  const parsedPalette = paletteSchema.safeParse(inputPalette)
+  if (!parsedPalette.success) {
     return {
       success: false,
-      message: 'Invalid data',
-      errors: parsed.error.format(),
+      message: `Error: failed to save palette to browser local storage.`,
     }
+  }
+
+  const palette = {
+    name: parsedPalette.data.name,
+    baseHue: parsedPalette.data.baseHue,
+    hueOffset: parsedPalette.data.hueOffset,
+    presetSL: parsedPalette.data.presetSL,
+    colorSetNames: parsedPalette.data.colorSetNames,
   }
 
   try {
     const key = 'palettes'
     const stored = localStorage.getItem(key)
     const palettes = stored ? JSON.parse(stored) : []
-    const index = palettes.findIndex((p: Palette) => p.id === parsed.data.id)
+    const index = palettes.findIndex((p: Palette) => p.name === palette.name)
 
     if (index !== -1) {
-      palettes[index] = parsed.data
+      palettes[index] = palette
     } else {
-      palettes.push(parsed.data)
+      palettes.push(palette)
     }
 
     localStorage.setItem('palettes', JSON.stringify(palettes))
 
     return {
       success: true,
-      message: `palette "${paletteOptions.paletteName}" saved to browser local storage`,
+      message: `Palette "${palette.name}" saved to browser local storage.`,
     }
   } catch (error) {
     console.error('Error saving palette:', error)
     return {
       success: false,
-      message: `Failed to save "${paletteOptions.paletteName}" to browser local storage`,
+      message: `Failed to save "${palette.name}" to browser local storage.`,
     }
   }
 }

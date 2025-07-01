@@ -29,7 +29,7 @@ export function ExportModal() {
 
     const anchor = document.createElement('a')
     anchor.href = url
-    anchor.download = `${currentPalette.id}.json`
+    anchor.download = `${currentPalette.name}.json`
     anchor.click()
 
     URL.revokeObjectURL(url) // cleanup

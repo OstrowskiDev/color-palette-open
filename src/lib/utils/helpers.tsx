@@ -6,7 +6,7 @@ export function getModaltype(
   type: 'save' | 'load' | 'delete',
   appMode: 'local' | 'remote',
 ) {
-  const isDemo = process.env.NEXT_PUBLIC_IS_DEMO
+  const isDemo = process.env.NEXT_PUBLIC_IS_DEMO === 'true'
 
   if (type === 'save') {
     if (!isDemo && appMode === 'local') return 'save-local'

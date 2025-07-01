@@ -80,7 +80,6 @@ export function DeleteRemoteModal() {
   }
 
   function onApply() {
-    setPaletteStates(currentPalette!, actions)
     setOpenModal(null)
   }
   return (

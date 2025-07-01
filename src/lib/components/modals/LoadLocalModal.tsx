@@ -49,7 +49,7 @@ export default function LoadLocalModal() {
 
   const palettesOptions: PaletteOption[] = localPalettes.map((palette) => ({
     value: palette,
-    label: palette.id,
+    label: palette.name,
   }))
 
   if (currentPalette)
@@ -60,9 +60,9 @@ export default function LoadLocalModal() {
     setOpenModal(null)
   }
 
-  function onApplay() {
+  function onApply() {
     if (selectedPalette) {
-      const message = `palette "${selectedPalette.id}" loaded from local storage`
+      const message = `palette "${selectedPalette.name}" loaded from local storage`
       setTerminalText((prev) => [...prev, message])
     }
     setOpenModal(null)
@@ -75,7 +75,7 @@ export default function LoadLocalModal() {
       footer={
         <>
           <ModalCancelBtn action={onCancel} />
-          <ModalApplyBtn action={onApplay} />
+          <ModalApplyBtn action={onApply} />
         </>
       }
     >

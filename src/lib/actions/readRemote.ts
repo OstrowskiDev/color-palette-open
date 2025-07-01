@@ -6,7 +6,7 @@ import { z } from 'zod'
 export async function getRemotePalettes(inputUserId: unknown) {
   const parsedUserId = z.string().uuid().safeParse(inputUserId)
   if (!parsedUserId.success) {
-    return null
+    return []
   }
 
   const userId = parsedUserId.data
@@ -26,6 +26,6 @@ export async function getRemotePalettes(inputUserId: unknown) {
     return palettes
   } catch (error) {
     console.error('Error fetching remote palettes', error)
-    return null
+    return []
   }
 }
