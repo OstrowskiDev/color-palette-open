@@ -9,12 +9,22 @@ export default function SaveRemoteModal() {
   const { state, actions } = useColorSettings()
   //prettier-ignore
   const { baseHue, hueOffset, presetSL, paletteName, colorSetNames, userId } = state
-  const { setOpenModal, setTerminalText } = actions
+  const { setOpenModal, setTerminalText, setShowAppLoader } = actions
   const paletteOptions = state
 
   async function onSave() {
-    const result = await saveRemote(paletteOptions, userId)
+    setShowAppLoader(true)
+
+    const paletteObj = {
+      name: paletteName,
+      baseHue: baseHue,
+      hueOffset: hueOffset,
+      presetSL: presetSL,
+      colorSetNames: colorSetNames,
+    }
+    const result = await saveRemote(paletteObj, userId)
     setTerminalText((prev) => [...prev, result.message])
+    setShowAppLoader(false)
     setOpenModal(null)
   }
 

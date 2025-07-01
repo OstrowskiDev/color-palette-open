@@ -1,16 +1,14 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import { z } from 'zod'
-
-const uuidSchema = z.string().uuid()
+import { uuidSchema } from '../schemas/zodSchemas'
 
 export async function ensureUserExists(userId: unknown) {
   const parsed = uuidSchema.safeParse(userId)
   if (!parsed.success) {
     return {
       success: false,
-      message: `Error: invalid UUID format.`,
+      message: `Error: failed to create user`,
     }
   }
 

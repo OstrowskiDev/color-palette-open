@@ -15,6 +15,7 @@ import { MessageModal } from './MessageModal'
 
 export function DeleteRemoteModal() {
   const { state, actions } = useColorSettings()
+  const { userId } = state
   const { setOpenModal, setShowAppLoader, setTerminalText } = actions
 
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -25,7 +26,7 @@ export function DeleteRemoteModal() {
   useEffect(() => {
     async function fetchPalettes() {
       setShowAppLoader(true)
-      const results = await getRemotePalettes()
+      const results = await getRemotePalettes(userId)
       results
         ? setRemotePalettes(results as unknown as Palette[])
         : setRemotePalettes([])
@@ -56,7 +57,7 @@ export function DeleteRemoteModal() {
 
   const palettesOptions: PaletteOption[] = remotePalettes.map((palette) => ({
     value: palette,
-    label: palette.id,
+    label: palette.name,
   }))
 
   if (currentPalette)
@@ -69,16 +70,16 @@ export function DeleteRemoteModal() {
   async function onDelete() {
     if (!selectedPalette) return
     setShowAppLoader(true)
-    const result = await deleteRemote(selectedPalette.id)
+    const result = await deleteRemote(selectedPalette.name, userId)
     setTerminalText((prev) => [...prev, result.message])
-    const newData = await getRemotePalettes()
+    const newData = await getRemotePalettes(userId)
     newData
       ? setRemotePalettes(newData as unknown as Palette[])
       : setRemotePalettes([])
     setShowAppLoader(false)
   }
 
-  function onApplay() {
+  function onApply() {
     setPaletteStates(currentPalette!, actions)
     setOpenModal(null)
   }
@@ -86,9 +87,11 @@ export function DeleteRemoteModal() {
     <Modal
       title="Delete palette"
       modalType="delete-remote"
-      footer={<ModalCancelBtn label="Close" action={onApplay} />}
+      footer={<ModalCancelBtn label="Close" action={onApply} />}
     >
-      <p className="text-lg text-app-gray-100 ">Select palette saved localy:</p>
+      <p className="text-lg text-app-gray-100 ">
+        Select palette saved locally:
+      </p>
       <div className="modal-content flex flex-row items-center mt-2">
         <SelectField
           options={palettesOptions}

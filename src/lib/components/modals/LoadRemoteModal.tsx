@@ -18,13 +18,13 @@ export default function LoadRemoteModal() {
   const [selectedPalette, setSelectedPalette] = useState<Palette | null>(null)
 
   const { state, actions } = useColorSettings()
-  const { showAppLoader } = state
+  const { showAppLoader, userId } = state
   const { setOpenModal, setShowAppLoader, setTerminalText } = actions
 
   useEffect(() => {
     async function fetchPalettes() {
       setShowAppLoader(true)
-      const results = await getRemotePalettes()
+      const results = await getRemotePalettes(userId)
       results
         ? setRemotePalettes(results as unknown as Palette[])
         : setRemotePalettes([])
@@ -69,7 +69,7 @@ export default function LoadRemoteModal() {
 
   function onApply() {
     if (selectedPalette) {
-      const message = `palette "${selectedPalette.name}" loaded from remote database`
+      const message = `Palette "${selectedPalette.name}" loaded from remote database.`
       setTerminalText((prev) => [...prev, message])
     }
     setOpenModal(null)
