@@ -1,18 +1,18 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import { paletteSchema } from '../schemas/zodSchemas'
-import { success } from 'zod/v4'
+import { paletteRemoteSchema } from '../schemas/zodSchemas'
 
-export async function saveRemote(paletteOptions: any) {
+export async function saveRemote(paletteOptions: any, userId: any) {
   const paletteObject = {
-    id: paletteOptions.paletteName,
+    name: paletteOptions.paletteName,
+    userId: userId,
     baseHue: paletteOptions.baseHue,
     hueOffset: paletteOptions.hueOffset,
     presetSL: paletteOptions.presetSL,
     colorSetNames: paletteOptions.colorSetNames,
   }
-  const parsed = paletteSchema.safeParse(paletteObject)
+  const parsed = paletteRemoteSchema.safeParse(paletteObject)
   if (!parsed.success) {
     return {
       success: false,
@@ -23,22 +23,35 @@ export async function saveRemote(paletteOptions: any) {
   const palette = parsed.data
 
   try {
-    const response = await prisma.palette.upsert({
-      where: { id: palette.id },
-      update: {
-        baseHue: palette.baseHue,
-        hueOffset: { connect: { name: palette.hueOffset.name } },
-        presetSL: { connect: { name: palette.presetSL.name } },
-        colorSetNames: palette.colorSetNames,
-      },
-      create: {
-        id: palette.id,
-        baseHue: palette.baseHue,
-        hueOffset: { connect: { name: palette.hueOffset.name } },
-        presetSL: { connect: { name: palette.presetSL.name } },
-        colorSetNames: palette.colorSetNames,
+    const existing = await prisma.palette.findUnique({
+      where: {
+        userId_name: { userId, name: palette.name },
       },
     })
+
+    if (existing) {
+      await prisma.palette.update({
+        where: { id: existing.id },
+        data: {
+          baseHue: palette.baseHue,
+          hueOffset: { connect: { name: palette.hueOffset.name } },
+          presetSL: { connect: { name: palette.presetSL.name } },
+          colorSetNames: palette.colorSetNames,
+        },
+      })
+    } else {
+      await prisma.palette.create({
+        data: {
+          id: crypto.randomUUID(),
+          user: { connect: { id: userId } },
+          name: palette.name,
+          baseHue: palette.baseHue,
+          hueOffset: { connect: { name: palette.hueOffset.name } },
+          presetSL: { connect: { name: palette.presetSL.name } },
+          colorSetNames: palette.colorSetNames,
+        },
+      })
+    }
 
     return {
       success: true,

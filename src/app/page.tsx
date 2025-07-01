@@ -92,15 +92,15 @@ export default function Home() {
 
       {!isDemo && openModal === 'save-local' && <SaveLocalModal />}
       {isDemo && openModal === 'save-browser' && <SaveBrowserModal />}
-      {!isDemo && openModal === 'save-remote' && <SaveRemoteModal />}
+      {openModal === 'save-remote' && <SaveRemoteModal />}
 
       {!isDemo && openModal === 'load-local' && <LoadLocalModal />}
       {isDemo && openModal === 'load-browser' && <LoadBrowserModal />}
-      {!isDemo && openModal === 'load-remote' && <LoadRemoteModal />}
+      {openModal === 'load-remote' && <LoadRemoteModal />}
 
       {!isDemo && openModal === 'delete-local' && <DeleteLocalModal />}
       {isDemo && openModal === 'delete-browser' && <DeleteBrowserModal />}
-      {!isDemo && openModal === 'delete-remote' && <DeleteRemoteModal />}
+      {openModal === 'delete-remote' && <DeleteRemoteModal />}
 
       {!isDemo && openModal === 'export' && <ExportModal />}
       {!isDemo && openModal === 'import' && <ImportModal />}

@@ -10,9 +10,8 @@ export function getModaltype(
 
   if (type === 'save') {
     if (!isDemo && appMode === 'local') return 'save-local'
-    if (!isDemo && appMode === 'remote') return 'save-remote'
     if (isDemo && appMode === 'local') return 'save-browser'
-    if (isDemo && appMode === 'remote') return 'save-remote-demo'
+    if (appMode === 'remote') return 'save-remote'
   }
 
   if (type === 'load') {

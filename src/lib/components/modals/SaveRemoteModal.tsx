@@ -8,12 +8,12 @@ import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 export default function SaveRemoteModal() {
   const { state, actions } = useColorSettings()
   //prettier-ignore
-  const { baseHue, hueOffset, presetSL, paletteName, colorSetNames } = state
+  const { baseHue, hueOffset, presetSL, paletteName, colorSetNames, userId } = state
   const { setOpenModal, setTerminalText } = actions
   const paletteOptions = state
 
   async function onSave() {
-    const result = await saveRemote(paletteOptions)
+    const result = await saveRemote(paletteOptions, userId)
     setTerminalText((prev) => [...prev, result.message])
   }
 

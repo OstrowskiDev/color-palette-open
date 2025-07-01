@@ -1,3 +1,4 @@
+import { ensureUserExists } from '@/lib/actions/createUserRemote'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import { isUUID } from '@/lib/schemas/zodSchemas'
 import Modal from '@/lib/ui/Modal'
@@ -16,8 +17,6 @@ export default function WelcomeModal() {
     if (!id) {
       id = crypto.randomUUID()
       localStorage.setItem('userId', id)
-      const message = `New user id generated: ${id}. Store it if you want to  access your account between different browsers/machines.`
-      setTerminalText((prev) => [...prev, message])
       setInputValue(id)
     } else {
       setUserId(id)
@@ -25,9 +24,11 @@ export default function WelcomeModal() {
     isLoading(false)
   }, [])
 
-  function onApply() {
+  async function onApply() {
     localStorage.setItem('userId', inputValue)
     setUserId(inputValue)
+    const result = await ensureUserExists(inputValue)
+    setTerminalText((prev) => [...prev, result.message])
     setOpenModal(null)
   }
 
@@ -37,7 +38,7 @@ export default function WelcomeModal() {
 
   return (
     <Modal
-      title="Welcome to Open Palette Dev Tools!"
+      title="Welcome!"
       modalType={openModal}
       footer={
         <>
