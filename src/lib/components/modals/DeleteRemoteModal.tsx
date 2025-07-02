@@ -2,8 +2,6 @@ import {
   getCurrentPallette,
   setPaletteStates,
 } from '@/lib/actions/paletteStates'
-import { deleteRemote } from '@/lib/actions/deleteRemote'
-import { getRemotePalettes } from '@/lib/actions/readRemote'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import Modal from '@/lib/ui/Modal'
 import ModalApplyBtn from '@/lib/ui/ModalApplyBtn'
@@ -12,6 +10,8 @@ import { SelectField } from '@/lib/ui/SelectField'
 import { Palette, PaletteOption } from '@/types/palette'
 import { useEffect, useState } from 'react'
 import { MessageModal } from './MessageModal'
+import { deleteFromRemote } from '@/lib/client/deleteFromRemote'
+import { getPalettesFromDb } from '@/lib/client/readFromRemote'
 
 export function DeleteRemoteModal() {
   const { state, actions } = useColorSettings()
@@ -26,7 +26,7 @@ export function DeleteRemoteModal() {
   useEffect(() => {
     async function fetchPalettes() {
       setShowAppLoader(true)
-      const results = await getRemotePalettes(userId)
+      const results = await getPalettesFromDb(userId)
       results
         ? setRemotePalettes(results as unknown as Palette[])
         : setRemotePalettes([])
@@ -68,11 +68,12 @@ export function DeleteRemoteModal() {
     })
 
   async function onDelete() {
-    if (!selectedPalette) return
+    if (!selectedPalette || !userId) return
     setShowAppLoader(true)
-    const result = await deleteRemote(selectedPalette.name, userId)
+
+    const result = await deleteFromRemote(userId, selectedPalette.name)
     setTerminalText((prev) => [...prev, result.message])
-    const newData = await getRemotePalettes(userId)
+    const newData = await getPalettesFromDb(userId)
     newData
       ? setRemotePalettes(newData as unknown as Palette[])
       : setRemotePalettes([])

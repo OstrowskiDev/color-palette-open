@@ -9,11 +9,11 @@ import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 import { SelectField } from '@/lib/ui/SelectField'
 import { Palette, PaletteOption } from '@/types/palette'
 import { useEffect, useState } from 'react'
-import { getRemotePalettes } from '@/lib/actions/readRemote'
 import { MessageModal } from './MessageModal'
+import { getPalettesFromDb } from '@/lib/client/readFromRemote'
 
 export default function LoadRemoteModal() {
-  const [remotePalettes, setRemotePalettes] = useState<Palette[]>([])
+  const [remotePalettes, setRemotePalettes] = useState<Palette[] | null>(null)
   const [currentPalette, setCurrentPalette] = useState<Palette | null>(null)
   const [selectedPalette, setSelectedPalette] = useState<Palette | null>(null)
 
@@ -24,7 +24,7 @@ export default function LoadRemoteModal() {
   useEffect(() => {
     async function fetchPalettes() {
       setShowAppLoader(true)
-      const results = await getRemotePalettes(userId)
+      const results = await getPalettesFromDb(userId)
       results
         ? setRemotePalettes(results as unknown as Palette[])
         : setRemotePalettes([])
@@ -42,7 +42,7 @@ export default function LoadRemoteModal() {
     if (selectedPalette) setPaletteStates(selectedPalette, actions)
   }, [selectedPalette])
 
-  if (showAppLoader) return null
+  if (showAppLoader || !remotePalettes) return null
 
   if (remotePalettes.length === 0) {
     return (

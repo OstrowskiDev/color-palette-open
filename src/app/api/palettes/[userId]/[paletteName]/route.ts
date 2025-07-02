@@ -3,18 +3,23 @@ import { paletteSchema, uuidSchema } from '@/lib/schemas/zodSchemas'
 import prisma from '@/lib/prisma'
 import { z } from 'zod'
 
-export async function PUT(
-  request: Request,
-  { params }: { params: { userId: string; paletteName: string } },
-) {
+type PutRouteContext = {
+  params: Promise<{
+    userId: string
+    paletteName: string
+  }>
+}
+
+export async function PUT(request: Request, { params }: PutRouteContext) {
+  const { userId: inputUserId, paletteName: inputPaletteName } = await params
   const inputPalette = await request.json()
-  const parsedUserId = uuidSchema.safeParse(params.userId)
+  const parsedUserId = uuidSchema.safeParse(inputUserId)
   const parsedName = z
     .string()
     .trim()
     .min(1)
     .max(30)
-    .safeParse(params.paletteName)
+    .safeParse(inputPaletteName)
   const parsedPalette = paletteSchema.safeParse(inputPalette)
   if (!parsedUserId.success || !parsedPalette.success || !parsedName.success) {
     return NextResponse.json(
@@ -88,12 +93,18 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: { userId: string; paletteName: string } },
-) {
-  const parsedUserId = z.string().uuid().safeParse(params.userId)
-  const parsedName = z.string().safeParse(params.paletteName)
+type DeleteRouteContext = {
+  params: Promise<{
+    userId: string
+    paletteName: string
+  }>
+}
+
+export async function DELETE(request: Request, { params }: DeleteRouteContext) {
+  const { userId: inputUserId, paletteName: inputPaletteName } = await params
+
+  const parsedUserId = z.string().uuid().safeParse(inputUserId)
+  const parsedName = z.string().safeParse(inputPaletteName)
   if (!parsedUserId.success || !parsedName.success) {
     return NextResponse.json(
       {

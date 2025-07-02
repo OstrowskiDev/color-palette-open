@@ -1,4 +1,4 @@
-import { saveRemote } from '@/lib/actions/storeRemote'
+import { storeInRemote } from '@/lib/client/storeInRemote'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import LabeledState from '@/lib/ui/LabeledState'
 import Modal from '@/lib/ui/Modal'
@@ -12,6 +12,7 @@ export default function SaveRemoteModal() {
   const { setOpenModal, setTerminalText, setShowAppLoader } = actions
 
   async function onSave() {
+    if (!userId) return
     setShowAppLoader(true)
 
     const paletteObj = {
@@ -21,7 +22,7 @@ export default function SaveRemoteModal() {
       presetSL: presetSL,
       colorSetNames: colorSetNames,
     }
-    const result = await saveRemote(paletteObj, userId)
+    const result = await storeInRemote(userId, paletteName, paletteObj)
     setTerminalText((prev) => [...prev, result.message])
     setShowAppLoader(false)
     setOpenModal(null)

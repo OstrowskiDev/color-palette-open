@@ -2,11 +2,16 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import prisma from '@/lib/prisma'
 
-export async function GET(
-  request: Request,
-  { params }: { params: { userId: string } },
-) {
-  const parsedUserId = z.string().uuid().safeParse(params.userId)
+type RouteContext = {
+  params: Promise<{
+    userId: string
+  }>
+}
+
+export async function GET(request: Request, { params }: RouteContext) {
+  const { userId: inputUserId } = await params
+  const parsedUserId = z.string().uuid().safeParse(inputUserId)
+
   if (!parsedUserId.success) {
     return NextResponse.json([], { status: 400 })
   }
