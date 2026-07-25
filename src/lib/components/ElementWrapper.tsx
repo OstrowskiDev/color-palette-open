@@ -18,7 +18,6 @@ export default function ElementWrapper({
     <div
       className={`${kebabCaseLabel}-collapse element-wrapper ${styles['element-wrapper']} ${tailwind}`}
     >
-      <p className={`collapse-btn ${styles['collapse-btn']}`}>collapse</p>
       <span className={styles.beforeLabel}>{label}</span>
       {children}
     </div>
