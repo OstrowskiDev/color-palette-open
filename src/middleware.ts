@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 import { RateLimiterMemory } from 'rate-limiter-flexible'
+import { getFormattedTimestamp } from './lib/utils/helpers'
 
 const getLimiter = new RateLimiterMemory({
   points: 10,
@@ -35,14 +36,6 @@ function getClientIP(request: NextRequest): string {
   // Nginx can add its IP to X-Forwarded-For
   const realIp = request.headers.get('x-real-ip')
 
-  // Debug info (remove in production)
-  // console.log('[IP Debug]', {
-  //   cfConnectingIp,
-  //   forwarded,
-  //   forwardedIp,
-  //   realIp,
-  // })
-
   // Priority order for Cloudflare + Nginx setup
   return cfConnectingIp || forwardedIp || realIp || '127.0.0.1'
 }
@@ -51,13 +44,16 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const method = request.method
   const ip = getClientIP(request)
+  const timestamp = getFormattedTimestamp()
 
   // 1. /api/palettes/ GET protection based on IP
   if (ip) {
     if (pathname.startsWith('/api/palettes/') && method === 'GET') {
       try {
         const res = await getLimiter.consume(ip)
-        console.log(`[API GET] ${ip} - Remaining: ${res.remainingPoints}`)
+        console.log(
+          `[${timestamp}] [API GET] ${ip} - Remaining: ${res.remainingPoints}`,
+        )
       } catch {
         return new NextResponse('Too many API requests', { status: 429 })
       }
@@ -69,7 +65,9 @@ export async function middleware(request: NextRequest) {
     if (pathname.startsWith('/api/palettes/') && method === 'PUT') {
       try {
         const res = await putLimiter.consume(ip)
-        console.log(`[API PUT] ${ip} - Remaining: ${res.remainingPoints}`)
+        console.log(
+          `[${timestamp}] [API PUT] ${ip} - Remaining: ${res.remainingPoints}`,
+        )
       } catch {
         return new NextResponse('Too many API requests', { status: 429 })
       }
@@ -81,7 +79,9 @@ export async function middleware(request: NextRequest) {
     if (pathname.startsWith('/api/palettes/') && method === 'DELETE') {
       try {
         const res = await deleteLimiter.consume(ip)
-        console.log(`[API DELETE] ${ip} - Remaining: ${res.remainingPoints}`)
+        console.log(
+          `[${timestamp}] [API DELETE] ${ip} - Remaining: ${res.remainingPoints}`,
+        )
       } catch {
         return new NextResponse('Too many API requests', { status: 429 })
       }
@@ -91,7 +91,9 @@ export async function middleware(request: NextRequest) {
   // 4. Global API protection from flood
   try {
     const res = await globalFloodLimiter.consume('global')
-    console.log(`[Global limit] Remaining: ${res.remainingPoints}`)
+    console.log(
+      `[${timestamp}] [Global limit] Remaining: ${res.remainingPoints}`,
+    )
   } catch {
     return new NextResponse('Too many requests', {
       status: 429,
@@ -102,5 +104,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/:path*'],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ],
 }
