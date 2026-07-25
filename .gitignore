@@ -40,7 +40,7 @@ next-env.d.ts
 
 # TodoList and Tempfiles
 TodoList.md
-/temporary
+/__notes__/
 
 # Prisma genereated
 /src/generated/prisma
