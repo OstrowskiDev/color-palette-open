@@ -9,6 +9,7 @@ import ListenToResize from '@/lib/components/ListenToResize'
 import { DeleteBrowserModal } from '@/lib/components/modals/DeleteBrowserModal'
 import { DeleteLocalModal } from '@/lib/components/modals/DeleteLocalModal'
 import { DeleteRemoteModal } from '@/lib/components/modals/DeleteRemoteModal'
+import DemoLabel from '@/lib/components/modals/DemoLabel'
 import { ExportModal } from '@/lib/components/modals/ExportModal'
 import { ImportModal } from '@/lib/components/modals/ImportModal'
 import LoadBrowserModal from '@/lib/components/modals/LoadBrowserModal'
@@ -39,6 +40,7 @@ export default function Home() {
   const saveModal = getModaltype('save', appMode)
   const loadModal = getModaltype('load', appMode)
   const deleteModal = getModaltype('delete', appMode)
+  const isDemo = process.env.NEXT_PUBLIC_IS_DEMO === 'true'
 
   useKeyboardShortcut(() => setOpenModal(saveModal), 's', openModal)
   useKeyboardShortcut(() => setOpenModal(loadModal), 'o', openModal)
@@ -69,14 +71,18 @@ export default function Home() {
             isMouseDown={isMouseDown}
             pathToTwFile={pathToTwFile}
           />
-          <InputField
-            value={pathToTwFile}
-            setValue={setPathToTwFile}
-            label="path to file"
-            type="text"
-            inputTailwind="w-[260px]"
-            labelClasses="w-[90px] ml-6"
-          />
+          {isDemo ? (
+            <DemoLabel />
+          ) : (
+            <InputField
+              value={pathToTwFile}
+              setValue={setPathToTwFile}
+              label="path to file"
+              type="text"
+              inputTailwind="w-[260px]"
+              labelClasses="w-[90px] ml-6"
+            />
+          )}
         </ElementWrapper>
         <ElementWrapper label={'tailwind palettes'} tailwind={'h-[210px]'}>
           <ColorPalettes />

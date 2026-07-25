@@ -1,4 +1,5 @@
 import ColorWheel from './ColorWheel'
+import DemoEmptyWheelCenter from './DemoEmptyWheelCenter'
 import OverwriteColorsBtn from './OverwriteColorsBtn'
 
 interface ColorSelectorOptions {
@@ -10,6 +11,7 @@ export default function ColorSelector({
   isMouseDown,
   pathToTwFile,
 }: ColorSelectorOptions) {
+  const isDemo = process.env.NEXT_PUBLIC_IS_DEMO === 'true'
   return (
     <div className="color-selector relative my-[6px] py-[18px] pr-[16px] pb-[14px] pl-[16px]">
       <div
@@ -17,7 +19,11 @@ export default function ColorSelector({
         id="color-selector-container"
       >
         <ColorWheel isMouseDown={isMouseDown} />
-        <OverwriteColorsBtn pathToTwFile={pathToTwFile} />
+        {isDemo ? (
+          <DemoEmptyWheelCenter />
+        ) : (
+          <OverwriteColorsBtn pathToTwFile={pathToTwFile} />
+        )}
       </div>
     </div>
   )
