@@ -48,11 +48,11 @@ export default function TopBar() {
           label="import"
           action={() => setOpenModal('import')}
         />
-        <Button
+        {/* <Button
           type="text"
           label="settings"
           action={() => setOpenModal('settings')}
-        />
+        /> */}
       </div>
     </div>
   )
