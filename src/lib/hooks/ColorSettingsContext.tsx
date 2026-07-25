@@ -17,6 +17,7 @@ export interface ColorSettingsState {
   openModal: string | null
   showAppLoader: boolean
   terminalText: string[]
+  userId: string | null
 }
 
 export interface ColorSettingsActions {
@@ -29,6 +30,7 @@ export interface ColorSettingsActions {
   setOpenModal: Setter<string | null>
   setShowAppLoader: Setter<boolean>
   setTerminalText: Setter<string[]>
+  setUserId: Setter<string | null>
 }
 
 interface ColorSettingsContextType {
@@ -65,6 +67,7 @@ export function ColorSettingsProvider({
   const [openModal, setOpenModal] = useState<string | null>(null)
   const [showAppLoader, setShowAppLoader] = useState<boolean>(false)
   const [terminalText, setTerminalText] = useState<string[]>([])
+  const [userId, setUserId] = useState<string | null>(null)
 
   const state = {
     appMode,
@@ -76,6 +79,7 @@ export function ColorSettingsProvider({
     openModal,
     showAppLoader,
     terminalText,
+    userId,
   }
   const actions = {
     setAppMode,
@@ -87,6 +91,7 @@ export function ColorSettingsProvider({
     setOpenModal,
     setShowAppLoader,
     setTerminalText,
+    setUserId,
   }
 
   return (

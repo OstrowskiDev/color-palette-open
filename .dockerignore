@@ -1,3 +1,6 @@
+.gitignore
+.git
+
 # dependencies
 /node_modules
 /.pnp
@@ -40,7 +43,7 @@ next-env.d.ts
 
 # TodoList and Tempfiles
 TodoList.md
-/__notes__/
+/temporary
 
 # Prisma genereated
 /src/generated/prisma

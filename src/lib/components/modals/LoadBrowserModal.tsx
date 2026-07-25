@@ -10,27 +10,19 @@ import { SelectField } from '@/lib/ui/SelectField'
 import { Palette, PaletteOption } from '@/types/palette'
 import { useEffect, useState } from 'react'
 import { MessageModal } from './MessageModal'
-import { getPalettesFromDb } from '@/lib/client/readFromRemote'
+import { getBrowserPalettes } from '@/lib/client/readFromBrowser'
 
-export default function LoadRemoteModal() {
-  const [remotePalettes, setRemotePalettes] = useState<Palette[] | null>(null)
+export default function LoadBrowserModal() {
+  const [localPalettes, setLocalPalettes] = useState<Palette[]>([])
   const [currentPalette, setCurrentPalette] = useState<Palette | null>(null)
   const [selectedPalette, setSelectedPalette] = useState<Palette | null>(null)
 
   const { state, actions } = useColorSettings()
-  const { showAppLoader, userId } = state
-  const { setOpenModal, setShowAppLoader, setTerminalText } = actions
+  const { setOpenModal, setTerminalText } = actions
 
   useEffect(() => {
-    async function fetchPalettes() {
-      setShowAppLoader(true)
-      const results = await getPalettesFromDb(userId)
-      results
-        ? setRemotePalettes(results as unknown as Palette[])
-        : setRemotePalettes([])
-      setShowAppLoader(false)
-    }
-    fetchPalettes()
+    const results = getBrowserPalettes()
+    setLocalPalettes(results)
   }, [])
 
   useEffect(() => {
@@ -42,19 +34,17 @@ export default function LoadRemoteModal() {
     if (selectedPalette) setPaletteStates(selectedPalette, actions)
   }, [selectedPalette])
 
-  if (showAppLoader || !remotePalettes) return null
-
-  if (remotePalettes.length === 0) {
+  if (localPalettes.length === 0) {
     return (
       <MessageModal
-        title="No palettes found in DB"
-        modalType="load-remote"
-        message="Save created palettes using save button so they can be loaded here later."
+        title="No palettes found"
+        modalType="load-browser"
+        message="No palettes found in browser local storage. Save created palettes using save button so they can be loaded later."
       />
     )
   }
 
-  const palettesOptions: PaletteOption[] = remotePalettes.map((palette) => ({
+  const palettesOptions: PaletteOption[] = localPalettes.map((palette) => ({
     value: palette,
     label: palette.name,
   }))
@@ -69,7 +59,7 @@ export default function LoadRemoteModal() {
 
   function onApply() {
     if (selectedPalette) {
-      const message = `Palette "${selectedPalette.name}" loaded from remote database.`
+      const message = `palette "${selectedPalette.name}" loaded from browser local storage`
       setTerminalText((prev) => [...prev, message])
     }
     setOpenModal(null)
@@ -78,7 +68,7 @@ export default function LoadRemoteModal() {
   return (
     <Modal
       title="Load palette"
-      modalType="load-remote"
+      modalType="load-browser"
       footer={
         <>
           <ModalCancelBtn action={onCancel} />

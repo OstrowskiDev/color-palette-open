@@ -15,7 +15,7 @@ import { MessageModal } from './MessageModal'
 
 export function DeleteLocalModal() {
   const { state, actions } = useColorSettings()
-  const { setOpenModal, setTerminalText } = actions
+  const { setOpenModal, setTerminalText, setShowAppLoader } = actions
 
   const [localPalettes, setLocalPalettes] = useState<Palette[]>([])
   const [currentPalette, setCurrentPalette] = useState<Palette | null>(null)
@@ -50,7 +50,7 @@ export function DeleteLocalModal() {
 
   const palettesOptions: PaletteOption[] = localPalettes.map((palette) => ({
     value: palette,
-    label: palette.id,
+    label: palette.name,
   }))
 
   if (currentPalette)
@@ -62,14 +62,15 @@ export function DeleteLocalModal() {
 
   async function onDelete() {
     if (!selectedPalette) return
-    const result = await deleteLocally(selectedPalette.id)
+    setShowAppLoader(true)
+    const result = await deleteLocally(selectedPalette.name)
     setTerminalText((prev) => [...prev, result.message])
     const newData = await getLocalPalettes()
     setLocalPalettes(newData)
+    setShowAppLoader(false)
   }
 
   function onClose() {
-    setPaletteStates(currentPalette!, actions)
     setOpenModal(null)
   }
 

@@ -1,4 +1,4 @@
-import { saveRemote } from '@/lib/actions/storeRemote'
+import { storeInRemote } from '@/lib/client/storeInRemote'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import LabeledState from '@/lib/ui/LabeledState'
 import Modal from '@/lib/ui/Modal'
@@ -8,13 +8,24 @@ import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 export default function SaveRemoteModal() {
   const { state, actions } = useColorSettings()
   //prettier-ignore
-  const { baseHue, hueOffset, presetSL, paletteName, colorSetNames } = state
-  const { setOpenModal, setTerminalText } = actions
-  const paletteOptions = state
+  const { baseHue, hueOffset, presetSL, paletteName, colorSetNames, userId } = state
+  const { setOpenModal, setTerminalText, setShowAppLoader } = actions
 
   async function onSave() {
-    const result = await saveRemote(paletteOptions)
+    if (!userId) return
+    setShowAppLoader(true)
+
+    const paletteObj = {
+      name: paletteName,
+      baseHue: baseHue,
+      hueOffset: hueOffset,
+      presetSL: presetSL,
+      colorSetNames: colorSetNames,
+    }
+    const result = await storeInRemote(userId, paletteName, paletteObj)
     setTerminalText((prev) => [...prev, result.message])
+    setShowAppLoader(false)
+    setOpenModal(null)
   }
 
   function onCancel() {
@@ -23,7 +34,7 @@ export default function SaveRemoteModal() {
 
   return (
     <Modal
-      title="Save palette locally"
+      title="Save palette remotely"
       modalType="save-remote"
       footer={
         <>
@@ -60,10 +71,4 @@ export default function SaveRemoteModal() {
       </div>
     </Modal>
   )
-}
-
-export type PresetSL = {
-  name: string
-  sat: number
-  lightRange: number[]
 }

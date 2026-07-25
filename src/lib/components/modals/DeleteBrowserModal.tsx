@@ -5,35 +5,25 @@ import {
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import Modal from '@/lib/ui/Modal'
 import ModalApplyBtn from '@/lib/ui/ModalApplyBtn'
-import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 import { SelectField } from '@/lib/ui/SelectField'
 import { Palette, PaletteOption } from '@/types/palette'
 import { useEffect, useState } from 'react'
+import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 import { MessageModal } from './MessageModal'
-import { deleteFromRemote } from '@/lib/client/deleteFromRemote'
-import { getPalettesFromDb } from '@/lib/client/readFromRemote'
+import { deleteFromBrowser } from '@/lib/client/deleteFromBrowser'
+import { getBrowserPalettes } from '@/lib/client/readFromBrowser'
 
-export function DeleteRemoteModal() {
+export function DeleteBrowserModal() {
   const { state, actions } = useColorSettings()
-  const { userId } = state
-  const { setOpenModal, setShowAppLoader, setTerminalText } = actions
+  const { setOpenModal, setTerminalText } = actions
 
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [remotePalettes, setRemotePalettes] = useState<Palette[]>([])
+  const [localPalettes, setLocalPalettes] = useState<Palette[]>([])
   const [currentPalette, setCurrentPalette] = useState<Palette | null>(null)
   const [selectedPalette, setSelectedPalette] = useState<Palette | null>(null)
 
   useEffect(() => {
-    async function fetchPalettes() {
-      setShowAppLoader(true)
-      const results = await getPalettesFromDb(userId)
-      results
-        ? setRemotePalettes(results as unknown as Palette[])
-        : setRemotePalettes([])
-      setShowAppLoader(false)
-      setIsLoading(false)
-    }
-    fetchPalettes()
+    const results = getBrowserPalettes()
+    setLocalPalettes(results)
   }, [])
 
   useEffect(() => {
@@ -44,18 +34,18 @@ export function DeleteRemoteModal() {
   useEffect(() => {
     if (selectedPalette) setPaletteStates(selectedPalette, actions)
   }, [selectedPalette])
-  if (isLoading) return null
-  if (remotePalettes.length === 0) {
+
+  if (localPalettes.length === 0) {
     return (
       <MessageModal
-        title="No palettes found in DB"
-        modalType="delete-remote"
-        message="There are no palettes that could be deleted in your database. In case your sure that remote has palettes check your connection with database."
+        title="No palettes found"
+        modalType="delete-browser"
+        message="There are no palettes saved in browser local storage."
       />
     )
   }
 
-  const palettesOptions: PaletteOption[] = remotePalettes.map((palette) => ({
+  const palettesOptions: PaletteOption[] = localPalettes.map((palette) => ({
     value: palette,
     label: palette.name,
   }))
@@ -68,26 +58,22 @@ export function DeleteRemoteModal() {
     })
 
   async function onDelete() {
-    if (!selectedPalette || !userId) return
-    setShowAppLoader(true)
-
-    const result = await deleteFromRemote(userId, selectedPalette.name)
+    if (!selectedPalette) return
+    const result = await deleteFromBrowser(selectedPalette.name)
     setTerminalText((prev) => [...prev, result.message])
-    const newData = await getPalettesFromDb(userId)
-    newData
-      ? setRemotePalettes(newData as unknown as Palette[])
-      : setRemotePalettes([])
-    setShowAppLoader(false)
+    const newData = await getBrowserPalettes()
+    setLocalPalettes(newData)
   }
 
-  function onApply() {
+  function onClose() {
     setOpenModal(null)
   }
+
   return (
     <Modal
       title="Delete palette"
-      modalType="delete-remote"
-      footer={<ModalCancelBtn label="Close" action={onApply} />}
+      modalType="delete-browser"
+      footer={<ModalCancelBtn label="Close" action={onClose} />}
     >
       <p className="text-lg text-app-gray-100 ">
         Select palette saved locally:

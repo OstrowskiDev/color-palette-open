@@ -1,12 +1,19 @@
-'use server'
-
-import prisma from '@/lib/prisma'
+import { NextResponse } from 'next/server'
 import { z } from 'zod'
+import prisma from '@/lib/prisma'
 
-export async function getRemotePalettes(inputUserId: unknown) {
+type RouteContext = {
+  params: Promise<{
+    userId: string
+  }>
+}
+
+export async function GET(request: Request, { params }: RouteContext) {
+  const { userId: inputUserId } = await params
   const parsedUserId = z.string().uuid().safeParse(inputUserId)
+
   if (!parsedUserId.success) {
-    return []
+    return NextResponse.json([], { status: 400 })
   }
 
   const userId = parsedUserId.data
@@ -23,9 +30,9 @@ export async function getRemotePalettes(inputUserId: unknown) {
       },
     })
 
-    return palettes
+    return NextResponse.json(palettes)
   } catch (error) {
     console.error('Error fetching remote palettes', error)
-    return []
+    return NextResponse.json([], { status: 500 })
   }
 }

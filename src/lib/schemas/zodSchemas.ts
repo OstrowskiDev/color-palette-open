@@ -12,14 +12,19 @@ export const presetSLSchema = z.object({
 })
 
 export const paletteSchema = z.object({
-  id: z.string(),
+  name: z.string(),
   baseHue: z.number().int().min(0).max(360),
   hueOffset: hueOffsetSchema,
   presetSL: presetSLSchema,
   colorSetNames: z.tuple([z.string(), z.string(), z.string()]),
 })
 
+export const paletteRemoteSchema = paletteSchema.extend({
+  userId: z.string().uuid(),
+})
+
 export type Palette = z.infer<typeof paletteSchema>
+export type PaletteRemote = z.infer<typeof paletteRemoteSchema>
 
 //!!!! below schemas for twColors, atm not used in app
 // so if its still not used when moving to prod, just delete it
@@ -45,3 +50,10 @@ const twColorShadeSchema = z.object({
 })
 
 export const twColorsSchema = z.record(twColorShadeSchema)
+
+export const uuidSchema = z.string().uuid()
+
+export function isUUID(string: string) {
+  const result = uuidSchema.safeParse(string)
+  return Boolean(result.success)
+}

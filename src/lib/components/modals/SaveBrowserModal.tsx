@@ -1,11 +1,11 @@
-import { saveLocally } from '@/lib/actions/storeLocally'
+import { storeInBrowser } from '@/lib/client/storeInBrowser'
 import { useColorSettings } from '@/lib/hooks/ColorSettingsContext'
 import LabeledState from '@/lib/ui/LabeledState'
 import Modal from '@/lib/ui/Modal'
 import ModalApplyBtn from '@/lib/ui/ModalApplyBtn'
 import ModalCancelBtn from '@/lib/ui/ModalCancelBtn'
 
-export default function SaveLocalModal() {
+export default function SaveBrowserModal() {
   const { state, actions } = useColorSettings()
   //prettier-ignore
   const { baseHue, hueOffset, presetSL, paletteName, colorSetNames } = state
@@ -20,7 +20,7 @@ export default function SaveLocalModal() {
       colorSetNames: colorSetNames,
     }
 
-    const result = await saveLocally(paletteObj)
+    const result = await storeInBrowser(paletteObj)
     setTerminalText((prev) => [...prev, result.message])
     setOpenModal(null)
   }
@@ -32,7 +32,7 @@ export default function SaveLocalModal() {
   return (
     <Modal
       title="Save palette locally"
-      modalType="save-local"
+      modalType="save-browser"
       footer={
         <>
           <ModalCancelBtn label="Cancel" action={onCancel} />
@@ -41,6 +41,9 @@ export default function SaveLocalModal() {
       }
     >
       <div className="save-states-container flex flex-col w-full ">
+        <p className="label text-left mt-2 mb-1 ">
+          Save palette in browser local storage.
+        </p>
         <p className="label text-left mt-2 mb-1 ">Palette data:</p>
         <div className="bg-app-gray-900 p-1 pl-2">
           <LabeledState label={'name:'} stateValue={paletteName} />

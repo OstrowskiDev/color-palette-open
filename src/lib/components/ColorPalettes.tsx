@@ -4,9 +4,9 @@ export default function ColorPalettes() {
   const { state } = useColorSettings()
   const { baseHue, hueOffset, presetSL } = state
   //get basic HSL values for all palettes:
-  let hues = [baseHue, null, null]
-  let sat = presetSL.sat
-  let lightRange = presetSL.lightRange
+  const hues = [baseHue, null, null]
+  const sat = presetSL.sat
+  const lightRange = presetSL.lightRange
   const paletteNum = hueOffset.angle.length
 
   if (hueOffset.angle[1]) {
@@ -50,9 +50,9 @@ export default function ColorPalettes() {
   }
 
   function generatePalettes() {
-    let palettes = []
+    const palettes = []
     for (let i = 0; i < paletteNum; i++) {
-      let colorPalette = []
+      const colorPalette = []
       for (let j = 0; j < 11; j++) {
         const correctedLightness = getCorrectedLightRange(hues[i]!, lightRange)
         const lightnes = correctedLightness[j]
