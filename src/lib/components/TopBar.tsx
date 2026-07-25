@@ -12,13 +12,13 @@ export default function TopBar() {
   const deleteModal = getModaltype('delete', appMode)
   return (
     <div className="app-top-bar flex flex-row h-[40px] mx-5 mt-2 mb-[2px]">
-      <div className="app-logo w-56 relative bottom-2 flex flex-row">
+      <div className="app-logo w-60 relative hidden lg:flex flex-row">
         <span className="app-logo-text mr-2 uppercase font-semibold ">
           open palette
         </span>
         <p className="app-logo-text">dev tools</p>
       </div>
-      <div className="toolbar relative flex flex-row w-full justify-end items-end z-10">
+      <div className="toolbar relative flex flex-row w-full justify-center  lg:justify-end items-end mb-2 lg:mb-0 z-10">
         <AppModeSelector />
         {/* prettier-ignore */}
         <Button 

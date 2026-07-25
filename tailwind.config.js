@@ -11,6 +11,9 @@ module.exports = {
     './src/ui/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    screens: {
+      lg: '1112px',
+    },
     extend: {
       colors: {
         ...testColors,
