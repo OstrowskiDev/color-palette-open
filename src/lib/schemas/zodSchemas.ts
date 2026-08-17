@@ -1,18 +1,38 @@
 import { z } from 'zod'
 
+const hueOffsetNames = [
+  'monochrome',
+  'complementary',
+  'split-complementary',
+  'triadic',
+  'analogous',
+  'custom',
+] as const
+
+const presetSLNames = [
+  'soft',
+  'contrasts',
+  'dark',
+  'natural',
+  'earthy',
+  'pastel',
+] as const
+
+export const paletteNameSchema = z.string().trim().min(1).max(30)
+
 export const hueOffsetSchema = z.object({
-  name: z.string(),
+  name: z.enum(hueOffsetNames),
   angle: z.array(z.number().int().min(-360).max(360)),
 })
 
 export const presetSLSchema = z.object({
-  name: z.string(),
+  name: z.enum(presetSLNames),
   sat: z.number().int().min(0).max(100),
   lightRange: z.array(z.number().int().min(0).max(100)).length(11),
 })
 
 export const paletteSchema = z.object({
-  name: z.string(),
+  name: paletteNameSchema,
   baseHue: z.number().int().min(0).max(360),
   hueOffset: hueOffsetSchema,
   presetSL: presetSLSchema,
