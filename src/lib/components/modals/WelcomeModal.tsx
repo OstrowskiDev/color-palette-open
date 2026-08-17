@@ -16,7 +16,6 @@ export default function WelcomeModal() {
     let id = localStorage.getItem('userId')
     if (!id) {
       id = crypto.randomUUID()
-      localStorage.setItem('userId', id)
       setInputValue(id)
     } else {
       setUserId(id)

@@ -1,7 +1,34 @@
 import { NextResponse } from 'next/server'
-import { paletteSchema, uuidSchema } from '@/lib/schemas/zodSchemas'
+import {
+  paletteNameSchema,
+  paletteSchema,
+  uuidSchema,
+} from '@/lib/schemas/zodSchemas'
 import prisma from '@/lib/prisma'
-import { z } from 'zod'
+import { Prisma } from '@prisma/client'
+
+// Translates common Prisma database errors into client-facing 4xx HTTP responses.
+function mapKnownPrismaError(error: unknown) {
+  if (!(error instanceof Prisma.PrismaClientKnownRequestError)) {
+    return null
+  }
+
+  if (error.code === 'P2025') {
+    return {
+      status: 404,
+      reason: 'not_found',
+    }
+  }
+
+  if (error.code === 'P2002' || error.code === 'P2003') {
+    return {
+      status: 400,
+      reason: 'invalid_input',
+    }
+  }
+
+  return null
+}
 
 type PutRouteContext = {
   params: Promise<{
@@ -14,12 +41,7 @@ export async function PUT(request: Request, { params }: PutRouteContext) {
   const { userId: inputUserId, paletteName: inputPaletteName } = await params
   const inputPalette = await request.json()
   const parsedUserId = uuidSchema.safeParse(inputUserId)
-  const parsedName = z
-    .string()
-    .trim()
-    .min(1)
-    .max(30)
-    .safeParse(inputPaletteName)
+  const parsedName = paletteNameSchema.safeParse(inputPaletteName)
   const parsedPalette = paletteSchema.safeParse(inputPalette)
   if (!parsedUserId.success || !parsedPalette.success || !parsedName.success) {
     return NextResponse.json(
@@ -81,8 +103,21 @@ export async function PUT(request: Request, { params }: PutRouteContext) {
       },
       { status: 200 },
     )
-  } catch (error: any) {
+  } catch (error) {
     console.error('DB save error:', error)
+
+    const mapped = mapKnownPrismaError(error)
+    if (mapped) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: `Error: failed to save "${name}" to remote database.`,
+          reason: mapped.reason,
+        },
+        { status: mapped.status },
+      )
+    }
+
     return NextResponse.json(
       {
         success: false,
@@ -103,8 +138,8 @@ type DeleteRouteContext = {
 export async function DELETE(request: Request, { params }: DeleteRouteContext) {
   const { userId: inputUserId, paletteName: inputPaletteName } = await params
 
-  const parsedUserId = z.string().uuid().safeParse(inputUserId)
-  const parsedName = z.string().safeParse(inputPaletteName)
+  const parsedUserId = uuidSchema.safeParse(inputUserId)
+  const parsedName = paletteNameSchema.safeParse(inputPaletteName)
   if (!parsedUserId.success || !parsedName.success) {
     return NextResponse.json(
       {
@@ -134,6 +169,18 @@ export async function DELETE(request: Request, { params }: DeleteRouteContext) {
     )
   } catch (error) {
     console.error('Error deleting palette:', error)
+
+    const mapped = mapKnownPrismaError(error)
+    if (mapped) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: `Error: failed to delete "${name}" from remote database.`,
+          reason: mapped.reason,
+        },
+        { status: mapped.status },
+      )
+    }
 
     return NextResponse.json(
       {

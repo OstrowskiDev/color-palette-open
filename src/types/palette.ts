@@ -14,13 +14,19 @@ export type ColorSetNames = [string, string, string]
 export type AppMode = 'local' | 'remote'
 
 export type PresetSL = {
-  name: string
+  name: 'soft' | 'contrasts' | 'dark' | 'natural' | 'earthy' | 'pastel'
   sat: number
   lightRange: number[]
 }
 
 export interface HueOffset {
-  name: string
+  name:
+    | 'custom'
+    | 'monochrome'
+    | 'complementary'
+    | 'split-complementary'
+    | 'triadic'
+    | 'analogous'
   angle: number[]
 }
 
