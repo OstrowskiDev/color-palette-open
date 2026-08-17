@@ -7,8 +7,7 @@ export async function getPalettesFromDb(
 ): Promise<Palette[] | []> {
   if (!userId) return []
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  const url = `${baseUrl}/api/palettes/${userId}`
+  const url = `/api/palettes/${encodeURIComponent(userId)}`
 
   try {
     const res = await fetch(url, { method: 'GET', cache: 'no-store' })

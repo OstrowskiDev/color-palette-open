@@ -6,8 +6,7 @@ export async function deleteFromRemote(
   userId: string,
   paletteName: string,
 ): Promise<SafeFetchResult> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  const url = `${baseUrl}/api/palettes/${userId}/${paletteName}`
+  const url = `/api/palettes/${encodeURIComponent(userId)}/${encodeURIComponent(paletteName)}`
 
   return await safeFetch(url, { method: 'DELETE' })
 }
