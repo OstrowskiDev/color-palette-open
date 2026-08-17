@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-
 import { RateLimiterMemory } from 'rate-limiter-flexible'
 import { getFormattedTimestamp } from './lib/utils/helpers'
+
+const ipLimiter = new RateLimiterMemory({
+  points: 15,
+  duration: 60,
+})
 
 const getLimiter = new RateLimiterMemory({
   points: 10,
@@ -40,21 +44,121 @@ function getClientIP(request: NextRequest): string {
   return cfConnectingIp || forwardedIp || realIp || '127.0.0.1'
 }
 
+function buildRequestContext(
+  request: NextRequest,
+  extra: Record<string, string | number | null | undefined> = {},
+) {
+  const path = `${request.nextUrl.pathname}${request.nextUrl.search}`
+
+  return {
+    ts: getFormattedTimestamp(),
+    method: request.method,
+    path,
+    ip: getClientIP(request),
+    host: request.headers.get('host') ?? '-',
+    country: request.headers.get('cf-ipcountry') ?? '-',
+    userAgent: request.headers.get('user-agent') ?? '-',
+    referer: request.headers.get('referer') ?? '-',
+    forwardedFor: request.headers.get('x-forwarded-for') ?? '-',
+    realIp: request.headers.get('x-real-ip') ?? '-',
+    cfRay: request.headers.get('cf-ray') ?? '-',
+    ...extra,
+  }
+}
+
+function logStructured(
+  level: 'info' | 'warn' | 'error',
+  event: string,
+  request: NextRequest,
+  extra: Record<string, string | number | null | undefined> = {},
+) {
+  console.log(
+    JSON.stringify({
+      level,
+      event,
+      ...buildRequestContext(request, extra),
+    }),
+  )
+}
+
+async function consumeWithLogging({
+  request,
+  limiter,
+  key,
+  label,
+  route,
+}: {
+  request: NextRequest
+  limiter: RateLimiterMemory
+  key: string
+  label: string
+  route: string
+}) {
+  try {
+    const res = await limiter.consume(key)
+
+    logStructured('info', 'api.rate_limit', request, {
+      route,
+      limiter: label,
+      remainingPoints: res.remainingPoints,
+      outcome: 'allowed',
+      status: 200,
+    })
+
+    return true
+  } catch {
+    logStructured('warn', 'api.rate_limit', request, {
+      route,
+      limiter: label,
+      remainingPoints: 0,
+      outcome: 'blocked',
+      status: 429,
+      reason: 'too_many_requests',
+    })
+
+    return false
+  }
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const method = request.method
   const ip = getClientIP(request)
-  const timestamp = getFormattedTimestamp()
+
+  if (pathname.startsWith('/api/palettes/')) {
+    logStructured('info', 'api.request', request, {
+      route: 'api.palettes',
+      outcome: 'checked',
+      status: 200,
+    })
+
+    if (ip) {
+      const allowed = await consumeWithLogging({
+        request,
+        limiter: ipLimiter,
+        key: ip,
+        label: 'IP',
+        route: 'api.palettes',
+      })
+
+      if (!allowed) {
+        return new NextResponse('Too many API requests', { status: 429 })
+      }
+    }
+  }
 
   // 1. /api/palettes/ GET protection based on IP
   if (ip) {
     if (pathname.startsWith('/api/palettes/') && method === 'GET') {
-      try {
-        const res = await getLimiter.consume(ip)
-        console.log(
-          `[${timestamp}] [API GET] ${ip} - Remaining: ${res.remainingPoints}`,
-        )
-      } catch {
+      const allowed = await consumeWithLogging({
+        request,
+        limiter: getLimiter,
+        key: ip,
+        label: 'GET',
+        route: 'api.palettes',
+      })
+
+      if (!allowed) {
         return new NextResponse('Too many API requests', { status: 429 })
       }
     }
@@ -63,12 +167,15 @@ export async function middleware(request: NextRequest) {
   // 2. /api/palettes/ PUT protection based on IP
   if (ip) {
     if (pathname.startsWith('/api/palettes/') && method === 'PUT') {
-      try {
-        const res = await putLimiter.consume(ip)
-        console.log(
-          `[${timestamp}] [API PUT] ${ip} - Remaining: ${res.remainingPoints}`,
-        )
-      } catch {
+      const allowed = await consumeWithLogging({
+        request,
+        limiter: putLimiter,
+        key: ip,
+        label: 'PUT',
+        route: 'api.palettes',
+      })
+
+      if (!allowed) {
         return new NextResponse('Too many API requests', { status: 429 })
       }
     }
@@ -77,12 +184,15 @@ export async function middleware(request: NextRequest) {
   // 3 /api/palettes/ DELETE protection based on IP
   if (ip) {
     if (pathname.startsWith('/api/palettes/') && method === 'DELETE') {
-      try {
-        const res = await deleteLimiter.consume(ip)
-        console.log(
-          `[${timestamp}] [API DELETE] ${ip} - Remaining: ${res.remainingPoints}`,
-        )
-      } catch {
+      const allowed = await consumeWithLogging({
+        request,
+        limiter: deleteLimiter,
+        key: ip,
+        label: 'DELETE',
+        route: 'api.palettes',
+      })
+
+      if (!allowed) {
         return new NextResponse('Too many API requests', { status: 429 })
       }
     }
@@ -91,10 +201,23 @@ export async function middleware(request: NextRequest) {
   // 4. Global API protection from flood
   try {
     const res = await globalFloodLimiter.consume('global')
-    console.log(
-      `[${timestamp}] [Global limit] Remaining: ${res.remainingPoints}`,
-    )
+    logStructured('info', 'api.rate_limit', request, {
+      route: 'api.global',
+      limiter: 'GLOBAL',
+      remainingPoints: res.remainingPoints,
+      outcome: 'allowed',
+      status: 200,
+    })
   } catch {
+    logStructured('warn', 'api.rate_limit', request, {
+      route: 'api.global',
+      limiter: 'GLOBAL',
+      remainingPoints: 0,
+      outcome: 'blocked',
+      status: 429,
+      reason: 'too_many_requests',
+    })
+
     return new NextResponse('Too many requests', {
       status: 429,
     })
