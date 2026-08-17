@@ -26,9 +26,7 @@ The app runs locally on port `4000` and connects to any project under active dev
 
 **[Try the live demo →](https://openpalette.ostrowskidev.com/)**
 
-This demo exists **only** to let recruiters and curious visitors check out the UI. It is **not** the intended way to use this project, and you should **not** build on it.
-
-This demo exists **only** to let recruiters and curious visitors check out the UI. It is **not** the intended way to use this project, and you should **not** build on it. The demo runs the full backend, including Supabase DB CRUD through its own API endpoints, but it comes with a few important limitations:
+This demo exists **only** to let curious visitors and recruiters check out the UI. It is **not** the intended way to use this project, and you should **not** build on it. The demo runs the full backend, including Supabase DB CRUD through its own API endpoints, but it comes with a few important limitations:
 
 - ❌ **No live sync** — the core feature (writing colors directly into your local `tailwindColors.js`) is disabled. That's impossible from a browser and only works when running the app locally.
 - ❌ **No authentication** — any `userID` can be entered freely; treat it as a sandbox, not a real account system.
